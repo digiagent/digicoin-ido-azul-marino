@@ -16,60 +16,132 @@ export const TOKENOMICS: Slice[] = [
   { key: "advisors", label: "Advisors & Partners", pct: 6, tokens: "60,000,000", vesting: "9mo cliff · 24mo", color: "var(--chart-6)" },
 ];
 
-export const ROUNDS = [
+export type Round = {
+  id: string;
+  label: string;
+  title: string;
+  launchPrice: string;
+  roundFunding: string;
+  supplyPct: string;
+  supplyAmount: string;
+  currencies: string;
+  network: string;
+  initMarketCap: string;
+  fdv: string;
+  minTicket: string;
+  maxTicket: string;
+  cliff: string;
+  vesting: string;
+};
+
+export const ROUNDS: Round[] = [
   {
     id: "bridge",
-    name: "Bridge Sale",
-    status: "Live now",
-    price: "$0.0420",
-    raise: "$4.2M",
-    allocation: "100,000,000 DIGI",
-    fdv: "$42M",
-    min: "$500",
-    lockup: "15% TGE · 9mo linear",
-    progress: 68,
-    note: "Final round before exchange listing. Bridges private commitments into public liquidity.",
+    label: "Bridge Sale",
+    title: "Bridge Round",
+    launchPrice: "$0.008",
+    roundFunding: "$250,000",
+    supplyPct: "3%",
+    supplyAmount: "30,000,000 DIGIM",
+    currencies: "USDT, DAI, USDC",
+    network: "TBA",
+    initMarketCap: "$1,000,000",
+    fdv: "$2,500,000",
+    minTicket: "$5K",
+    maxTicket: "$50K",
+    cliff: "6 months",
+    vesting: "12 months",
   },
   {
     id: "private",
-    name: "Private Sale",
-    status: "Closed · 3.1x oversubscribed",
-    price: "$0.0310",
-    raise: "$6.2M",
-    allocation: "200,000,000 DIGI",
-    fdv: "$31M",
-    min: "$25,000",
-    lockup: "10% TGE · 18mo linear",
-    progress: 100,
-    note: "Strategic capital from LatAm payment operators and agent infrastructure funds.",
+    label: "Private Sale",
+    title: "Private Sale",
+    launchPrice: "$0.014",
+    roundFunding: "$1,250,000",
+    supplyPct: "9%",
+    supplyAmount: "90,000,000 DIGIM",
+    currencies: "USDT, DAI, USDC",
+    network: "TBA",
+    initMarketCap: "$1,777,778",
+    fdv: "$13,000,000",
+    minTicket: "$25K",
+    maxTicket: "$250K",
+    cliff: "6 months",
+    vesting: "6 months",
   },
   {
-    id: "preseed",
-    name: "Pre-Seed",
-    status: "Closed",
-    price: "$0.0085",
-    raise: "$850K",
-    allocation: "100,000,000 DIGI",
-    fdv: "$8.5M",
-    min: "$5,000",
-    lockup: "24mo linear",
-    progress: 100,
-    note: "Founding capital covering protocol research and the first merchant corridor.",
+    id: "presale",
+    label: "Pre-Sale",
+    title: "Pre-Sale",
+    launchPrice: "$0.025",
+    roundFunding: "$500,000",
+    supplyPct: "2%",
+    supplyAmount: "20,000,000 DIGIM",
+    currencies: "USDT, DAI, USDC",
+    network: "TBA",
+    initMarketCap: "$3,200,000",
+    fdv: "$25,000,000",
+    minTicket: "$50",
+    maxTicket: "$10K",
+    cliff: "2 months",
+    vesting: "1 month",
   },
   {
-    id: "seed",
-    name: "Seed",
-    status: "Closed",
-    price: "$0.0175",
-    raise: "$2.6M",
-    allocation: "150,000,000 DIGI",
-    fdv: "$17.5M",
-    min: "$10,000",
-    lockup: "6mo cliff · 24mo linear",
-    progress: 100,
-    note: "Scaled the settlement layer and shipped the DigiPaga consumer wallet.",
+    id: "public",
+    label: "Public Sale",
+    title: "Public Sale",
+    launchPrice: "$0.063",
+    roundFunding: "$500,000",
+    supplyPct: "4%",
+    supplyAmount: "40,000,000 DIGIM",
+    currencies: "USDT, DAI, USDC",
+    network: "TBA",
+    initMarketCap: "$8,000,000",
+    fdv: "$62,000,000",
+    minTicket: "$50",
+    maxTicket: "$10K",
+    cliff: "0 months",
+    vesting: "0 months",
   },
-] as const;
+];
+
+export const CENTRALIZED = [
+  "Exchange's Crypto",
+  "AI Battleroom",
+  "Digital Markets Vaults",
+  "Debit Card Rewards",
+  "Swap Engine",
+];
+
+export const DECENTRALIZED = [
+  "Access to Staking Vaults",
+  "Best Price Routing",
+  "Access DeFi Marketplace",
+  "Enables AI Co-Pilot",
+  "Governance Voting",
+];
+
+export const HERO_STATS = [
+  { k: "Total raise", v: "$4.25M" },
+  { k: "Total supply", v: "1,000,000,000" },
+  { k: "ICS", v: "7.9%" },
+  { k: "TGE", v: "Q3 · 2027" },
+  { k: "Mintable", v: "No" },
+  { k: "Burnable", v: "Yes" },
+  { k: "Chain", v: "TBA" },
+];
+
+export const HERO_TICKER = [
+  "DIGIM",
+  "IDO · Q3 2027",
+  "1,000,000,000 SUPPLY",
+  "$4.25M TOTAL RAISE",
+  "DUAL PLATFORM",
+  "DIGIPAGA × DIGIMERCADOS",
+  "CONFIDENTIAL — DO NOT DISTRIBUTE",
+  "PRIVATE INVESTOR BRIEF",
+  "REV. 01",
+];
 
 export const RUNWAY = [
   { name: "Protocol Eng.", value: 34 },
