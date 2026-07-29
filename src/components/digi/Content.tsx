@@ -129,12 +129,12 @@ export function DualUtility() {
                 alt=""
                 aria-hidden
                 loading="lazy"
-                className="pointer-events-none absolute -left-10 top-1/2 z-0 w-[160px] -translate-y-1/2 opacity-80 md:w-[240px] lg:w-[320px]"
+                className="pointer-events-none absolute -left-16 top-1/2 z-0 w-[180px] -translate-y-1/2 opacity-30 md:w-[240px] md:opacity-60 lg:w-[300px]"
               />
             )}
             <div
-              className={`relative z-10 max-w-[520px] ${
-                panel.side === "left" ? "ml-auto lg:pr-14" : "mr-auto lg:pl-14"
+              className={`relative z-10 max-w-[420px] ${
+                panel.side === "left" ? "ml-auto lg:pr-10" : "mr-auto lg:pl-14"
               }`}
             >
               <span className="mb-10 block font-display text-3xl tracking-tight">{panel.title}</span>
