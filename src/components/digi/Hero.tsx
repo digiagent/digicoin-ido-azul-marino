@@ -2,14 +2,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import { useRef } from "react";
 import coin from "@/assets/digi_coin_green_center.png.asset.json";
 import agent from "@/assets/digim-rocket.png.asset.json";
-
-const STATS = [
-  { k: "Token", v: "DIGI" },
-  { k: "Bridge price", v: "$0.0420" },
-  { k: "Raised to date", v: "$13.85M" },
-  { k: "FDV", v: "$42M" },
-  { k: "Network", v: "Base · Solana" },
-];
+import { HERO_STATS as STATS, HERO_TICKER } from "./data";
 
 export function Hero() {
   const reduced = useReducedMotion();
@@ -143,18 +136,29 @@ export function Hero() {
       </motion.div>
 
       <div className="hairline-t relative">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 px-6 md:grid-cols-5">
+        <div className="mx-auto grid max-w-6xl grid-cols-2 px-6 sm:grid-cols-4 lg:grid-cols-7">
           {STATS.map((s, i) => (
             <motion.div
               key={s.k}
               initial={reduced ? false : { opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 + i * 0.07, duration: 0.6 }}
-              className="border-hairline py-7 md:border-l md:first:border-l-0 md:pl-6"
+              className="border-hairline py-7 md:border-l md:first:border-l-0 md:pl-4"
             >
               <div className="eyebrow">{s.k}</div>
-              <div className="mt-2 font-mono text-lg text-foreground">{s.v}</div>
+              <div className="mt-2 font-mono text-base text-foreground">{s.v}</div>
             </motion.div>
+          ))}
+        </div>
+      </div>
+
+      <div className="hairline-t relative overflow-hidden border-b border-hairline py-4">
+        <div className="flex w-max gap-14 whitespace-nowrap font-mono text-[11px] uppercase tracking-[0.25em] text-muted-foreground [animation:digi-ticker_38s_linear_infinite] motion-reduce:animate-none">
+          {[...HERO_TICKER, ...HERO_TICKER].map((t, i) => (
+            <span key={i} className="flex items-center gap-14">
+              {t}
+              <span className="text-primary">◆</span>
+            </span>
           ))}
         </div>
       </div>

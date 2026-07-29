@@ -1,9 +1,10 @@
 import { Bar, BarChart, Cell, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import { Reveal, Section } from "./Section";
-import { RUNWAY, TEAM } from "./data";
+import { CENTRALIZED, DECENTRALIZED, RUNWAY, TEAM } from "./data";
 import phone from "@/assets/digi_mockup_mobile.png.asset.json";
 import burner from "@/assets/digi_burner_supply.png.asset.json";
 import agentCoin from "@/assets/digi-agent-coin.png.asset.json";
+import rocket from "@/assets/digim-rocket.png.asset.json";
 
 export function Summary() {
   return (
@@ -89,43 +90,77 @@ export function Platforms() {
 }
 
 export function DualUtility() {
-  const rows = [
-    ["Payments", "Checkout, remittance, payroll", "Agent-to-agent settlement"],
-    ["Fees", "Discounted merchant rate", "Priority execution lane"],
-    ["Staking", "Cashback multiplier", "Agent bonding collateral"],
-    ["Governance", "Corridor prioritisation", "Marketplace parameters"],
-  ];
   return (
-    <Section
-      id="utility"
-      index="04"
-      eyebrow="Utility"
-      title="Dual utility across environments"
-      lead="The same token behaves differently depending on who holds it — a person or an agent."
-    >
-      <Reveal>
-        <div className="overflow-x-auto rounded-xl border border-hairline">
-          <table className="w-full min-w-[640px] border-collapse text-left">
-            <thead>
-              <tr>
-                <th className="eyebrow px-6 py-4 font-normal">Vector</th>
-                <th className="eyebrow px-6 py-4 font-normal">Human · DigiPaga</th>
-                <th className="eyebrow px-6 py-4 font-normal">Machine · DigiMercados</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map(([a, b, c]) => (
-                <tr key={a} className="border-t border-hairline transition-colors hover:bg-surface">
-                  <td className="px-6 py-5 text-sm font-medium">{a}</td>
-                  <td className="px-6 py-5 text-sm text-muted-foreground">{b}</td>
-                  <td className="px-6 py-5 text-sm text-muted-foreground">{c}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+    <section id="utility" className="hairline-t relative overflow-hidden">
+      <div className="mx-auto grid max-w-6xl grid-cols-12 items-end gap-8 px-6 pb-16 pt-28 lg:pb-24">
+        <div className="col-span-12 flex flex-col gap-4 lg:col-span-6">
+          <span className="eyebrow">§ 04 · Utility design</span>
+          <h2 className="font-display text-[clamp(2.4rem,5vw,4rem)] leading-[0.95] tracking-tight">
+            <span className="text-primary">Dual utility</span>
+            <br />
+            across environments.
+          </h2>
         </div>
-      </Reveal>
-    </Section>
+        <div className="col-span-12 max-w-[440px] text-[15px] leading-[1.7] text-muted-foreground lg:col-span-5 lg:col-start-8">
+          <strong className="font-semibold text-foreground">Nowadays</strong>, it&apos;s not enough for a
+          cryptocurrency to rely on a single platform.{" "}
+          <strong className="font-semibold text-foreground">DIGI</strong> unlocks value across
+          centralized and decentralized environments, powering two mobile apps with one shared token
+          supply — network effects compounding with every user, every platform.
+        </div>
+      </div>
+
+      <div className="relative grid min-h-[520px] grid-cols-1 lg:grid-cols-2">
+        {[
+          { title: "Centralized", items: CENTRALIZED, side: "left" as const },
+          { title: "Decentralized", items: DECENTRALIZED, side: "right" as const },
+        ].map((panel) => (
+          <Reveal
+            key={panel.title}
+            className={`relative overflow-hidden border-hairline px-6 py-16 md:px-14 lg:py-24 ${
+              panel.side === "left"
+                ? "border-b bg-card/40 lg:border-b-0 lg:border-r"
+                : "bg-surface"
+            }`}
+          >
+            {panel.side === "left" && (
+              <img
+                src={rocket.url}
+                alt=""
+                aria-hidden
+                loading="lazy"
+                className="pointer-events-none absolute -left-16 top-1/2 z-0 w-[180px] -translate-y-1/2 opacity-30 md:w-[240px] md:opacity-60 lg:w-[300px]"
+              />
+            )}
+            <div
+              className={`relative z-10 max-w-[420px] ${
+                panel.side === "left" ? "ml-auto lg:pr-10" : "mr-auto lg:pl-14"
+              }`}
+            >
+              <span className="mb-10 block font-display text-3xl tracking-tight">{panel.title}</span>
+              <ul className="flex flex-col divide-y divide-hairline">
+                {panel.items.map((c) => (
+                  <li
+                    key={c}
+                    className="group flex cursor-default items-center justify-between py-4 text-foreground/80 transition-colors hover:text-foreground"
+                  >
+                    <span className="flex items-center gap-4">
+                      <span className="select-none text-xs leading-none text-primary">◆</span>
+                      <span className="text-base md:text-[17px]">{c}</span>
+                    </span>
+                    <span
+                      className={`h-px w-6 scale-x-0 bg-primary transition-transform duration-500 group-hover:scale-x-100 ${
+                        panel.side === "left" ? "origin-left" : "origin-right"
+                      }`}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -163,28 +198,27 @@ export function AgentNomics() {
       id="agentnomics"
       index="07"
       eyebrow="Agent-nomics"
-      title="Agents pay to work, and burn as they earn"
-      lead="Every autonomous agent bonds DIGI to operate. A share of each settled contract is burned, tying supply contraction directly to machine throughput."
+      title="Defeating inflation with active AI tokenomics"
+      lead="Meet the Digi Incinerator — the first autonomous agent designed to help equalize circulating supply as real utility expands across the DIGIM ecosystem."
     >
       <div className="grid items-center gap-12 md:grid-cols-2">
         <Reveal>
-          <img src={burner.url} alt="Agent burning DIGI supply" loading="lazy" className="mx-auto max-h-[460px] object-contain" />
+          <div className="flex items-center justify-center overflow-hidden rounded-2xl border border-hairline bg-card/40 p-8">
+            <img
+              src={burner.url}
+              alt="Digimercados Incinerator burning DIGI supply"
+              loading="lazy"
+              className="mx-auto max-h-[420px] object-contain"
+            />
+          </div>
         </Reveal>
-        <div className="space-y-8">
+        <div className="flex max-w-[540px] flex-col gap-6 text-base leading-[1.7] text-muted-foreground">
           {[
-            ["Bond to operate", "Agents lock 2,500 DIGI minimum to gain marketplace identity and escrow rights."],
-            ["Burn on settle", "0.35% of every settled contract value is permanently removed from supply."],
-            ["Slash on failure", "Disputed settlements slash the agent bond into the merchant protection pool."],
-            ["Earn on uptime", "Reliable agents accrue emissions from the 24% ecosystem allocation."],
-          ].map(([t, d], idx) => (
-            <Reveal key={t} delay={idx * 0.07}>
-              <div className="flex gap-5 border-l border-hairline pl-5">
-                <span className="font-mono text-xs text-primary">0{idx + 1}</span>
-                <div>
-                  <h3 className="text-base font-medium">{t}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{d}</p>
-                </div>
-              </div>
+            "Most token projects keep increasing circulating supply long after usability fades. DIGI is designed differently: it acts as a balancer for dynamic token circulation, responding to network activity across both centralized and decentralized environments.",
+            "By programmatically removing supply based on real network usage, we establish a deflationary gravity that protects long-term holders and rewards genuine ecosystem participation.",
+          ].map((p, idx) => (
+            <Reveal key={idx} delay={idx * 0.08}>
+              <p>{p}</p>
             </Reveal>
           ))}
         </div>
