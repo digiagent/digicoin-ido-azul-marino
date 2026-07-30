@@ -69,7 +69,7 @@ export function Platforms() {
           </h2>
         </Reveal>
 
-        <div className="mt-20 grid items-center gap-8 lg:grid-cols-[0.8fr_1.5fr_0.8fr]">
+        <div className="mt-20 grid items-center gap-6 lg:grid-cols-[0.62fr_2fr_0.62fr]">
           <Reveal className="order-2 flex justify-center lg:order-1">
             <img
               src={phoneMercados.url}
