@@ -1,8 +1,58 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import coin from "@/assets/digi_coin_green_center.png.asset.json";
-import agent from "@/assets/digim-rocket.png.asset.json";
+import agentCoin from "@/assets/digi-agent-coin-2.png.asset.json";
 import { HERO_STATS as STATS, HERO_TICKER } from "./data";
+
+const RING_INNER =
+  "CONFIDENTIAL · REV 01 · INVESTOR · PRIVATE · DIGIM · TGE Q3 2027 · $4.25M RAISE · 36-MONTH RUNWAY · DUAL PLATFORM · ";
+const RING_OUTER =
+  "DIGIMERCADOS · DIGIPAGA · 1,000,000,000 SUPPLY · DIGIMERCADOS · DIGIPAGA · 1,000,000,000 SUPPLY · ";
+
+function CircularText({
+  text,
+  radius,
+  size,
+  duration,
+  reverse,
+  className,
+  reduced,
+}: {
+  text: string;
+  radius: number;
+  size: number;
+  duration: number;
+  reverse?: boolean;
+  className?: string;
+  reduced?: boolean | null;
+}) {
+  const id = `ring-${radius}`;
+  return (
+    <motion.svg
+      viewBox="0 0 200 200"
+      className={`pointer-events-none absolute inset-0 h-full w-full ${className ?? ""}`}
+      aria-hidden
+      animate={reduced ? undefined : { rotate: reverse ? -360 : 360 }}
+      transition={{ duration, repeat: Infinity, ease: "linear" }}
+    >
+      <defs>
+        <path
+          id={id}
+          d={`M 100,100 m -${radius},0 a ${radius},${radius} 0 1,1 ${radius * 2},0 a ${radius},${radius} 0 1,1 -${radius * 2},0`}
+          fill="none"
+        />
+      </defs>
+      <text
+        fill="currentColor"
+        fontSize={size}
+        letterSpacing="1.6"
+        style={{ fontFamily: "var(--font-mono, monospace)", textTransform: "uppercase" }}
+      >
+        <textPath href={`#${id}`}>{text}</textPath>
+      </text>
+    </motion.svg>
+  );
+}
 
 export function Hero() {
   const reduced = useReducedMotion();
@@ -97,39 +147,37 @@ export function Hero() {
             </motion.div>
           </div>
 
-          <motion.div style={{ y, scale }} className="relative mx-auto aspect-square w-full max-w-[440px]">
-            <motion.div
-              className="absolute inset-0 rounded-full border border-hairline"
-              animate={reduced ? undefined : { rotate: 360 }}
-              transition={{ duration: 46, repeat: Infinity, ease: "linear" }}
-            >
-              <span className="absolute left-1/2 top-0 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-primary" />
-            </motion.div>
-            <motion.div
-              className="absolute inset-[12%] rounded-full border border-primary/15"
-              animate={reduced ? undefined : { rotate: -360 }}
-              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-            >
-              <span className="absolute bottom-0 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-primary/60" />
-            </motion.div>
+          <motion.div style={{ y, scale }} className="relative mx-auto aspect-square w-full max-w-[480px]">
             <div
-              className="absolute inset-[18%] rounded-full blur-3xl"
-              style={{ background: "radial-gradient(circle, oklch(0.6 0.16 140 / 35%), transparent 70%)" }}
+              className="absolute inset-[6%] rounded-full blur-3xl"
+              style={{ background: "radial-gradient(circle, oklch(0.6 0.16 140 / 22%), transparent 70%)" }}
               aria-hidden
             />
-            <motion.img
-              src={coin.url}
-              alt="DIGI coin"
-              className="absolute inset-[20%] h-[60%] w-[60%] object-contain drop-shadow-2xl"
-              animate={reduced ? undefined : { y: [0, -14, 0] }}
-              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+            <div className="absolute inset-[4%] rounded-full border border-hairline" aria-hidden />
+            <div className="absolute inset-[18%] rounded-full border border-primary/10" aria-hidden />
+            <CircularText
+              text={RING_OUTER}
+              radius={92}
+              size={5.2}
+              duration={90}
+              reduced={reduced}
+              className="text-muted-foreground/40"
+            />
+            <CircularText
+              text={RING_INNER}
+              radius={76}
+              size={5.6}
+              duration={62}
+              reverse
+              reduced={reduced}
+              className="text-primary/50"
             />
             <motion.img
-              src={agent.url}
-              alt="DigiAgent"
-              className="absolute -right-4 bottom-0 w-[42%] object-contain"
-              animate={reduced ? undefined : { y: [0, 12, 0] }}
-              transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+              src={agentCoin.url}
+              alt="DigiAgent holding the DIGI coin"
+              className="absolute inset-[22%] h-[56%] w-[56%] object-contain drop-shadow-2xl"
+              animate={reduced ? undefined : { y: [0, -12, 0] }}
+              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
             />
           </motion.div>
         </div>

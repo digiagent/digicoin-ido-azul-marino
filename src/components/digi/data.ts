@@ -153,10 +153,51 @@ export const RUNWAY = [
 ];
 
 export const TEAM = [
-  { name: "Mateo Rivas", role: "Founder & CEO", prev: "Prev. Mercado Pago, Bitso" },
-  { name: "Ana Krieger", role: "Chief Protocol Architect", prev: "Prev. Chainlink Labs" },
-  { name: "Daniel Oyelaran", role: "Head of Agent Systems", prev: "Prev. DeepMind Applied" },
-  { name: "Sofia Delgado", role: "Head of Compliance", prev: "Prev. Circle LatAm" },
-  { name: "Yuki Tanaka", role: "Head of Markets", prev: "Prev. Wintermute" },
-  { name: "Luis Bermudez", role: "Head of Merchant Growth", prev: "Prev. Rappi Pay" },
+  {
+    name: "John Doe",
+    role: "Founder & CEO",
+    prev: "Former Wall Street quant with 15 years in digital asset markets and exchange infrastructure.",
+  },
+  {
+    name: "Maria Garcia",
+    role: "Chief Technology Officer",
+    prev: "Ex-Stripe engineer who built payment rails for three fintech unicorns across LATAM.",
+  },
+  {
+    name: "David Kim",
+    role: "Head of AI",
+    prev: "PhD in Machine Learning from MIT. Published 40+ papers on autonomous financial systems.",
+  },
+  {
+    name: "Sarah Chen",
+    role: "Head of Partnerships",
+    prev: "Former Binance BD lead. Built the LATAM expansion strategy from zero to 2M users.",
+  },
+  {
+    name: "James Wilson",
+    role: "Chief Security Officer",
+    prev: "Ex-Coinbase security. Audited and secured over $2B in smart contract value.",
+  },
+  {
+    name: "Aisha Patel",
+    role: "Head of Community",
+    prev: "Built and managed crypto-native communities of 500K+ members across emerging markets.",
+  },
 ];
+
+export const DISTRIBUTION_DETAILS: [string, string][] = [
+  ["Bridge Round", "Early-stage high-risk round for Angel Investors. Q2–Q3 2026. Min $5K · Max $50K"],
+  ["Private Sale", "Pre-Seed round. Locked 6 months, 6-month vesting. Q1–Q2 2027. Min $25K · Max $250K"],
+  ["Pre-Sale", "Pre-TGE sale at partner Launchpads and Communities. Q2 2027. Min $20 · Max $3,000"],
+  ["Public Sale", "Multi-launchpad fixed-price sale for community access. Q3 2027. Min $10 · Max $10,000"],
+  ["Listing & Market Making", "Locked liquidity to fulfill AMM and order books across DEX and CEX. Q3 2027."],
+  ["Incinerator", "Systematic burns to balance new issuance and enable cross-chain wrapping of DIGI."],
+  ["Wallet Community", "Users receive 10 DIGIM on download when they invite 3 contacts to join."],
+  ["Team", "Core team committed to burning at least 30% of team-allocated supply."],
+  ["DAO Treasury", "Multi-sig vault unlockable by community vote — reserved for growth hacking and emergency burns."],
+];
+
+export const PLATFORM_FEATURES = {
+  digimercados: ["Hybrid Smart Wallet", "CEX + DEX in one", "AI Trading & Yield", "Digital Markets"],
+  digipaga: ["Agentic Commerce", "Borderless Payments", "Debit Card", "On and Off Ramps"],
+};
