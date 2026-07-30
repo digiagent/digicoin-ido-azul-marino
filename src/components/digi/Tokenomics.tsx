@@ -103,7 +103,11 @@ export function Tokenomics() {
                   <span className="text-right font-mono text-xs text-muted-foreground">{s.pct}%</span>
                   <span className="text-right font-mono text-xs text-foreground/80">{s.tokens}</span>
                   <span className="text-right font-mono text-xs text-muted-foreground">{s.price}</span>
-                  <span className="text-right font-mono text-xs text-primary">{s.raise}</span>
+                  <span
+                    className={`text-right font-mono text-xs ${s.raise === "—" ? "text-muted-foreground" : "text-primary"}`}
+                  >
+                    {s.raise}
+                  </span>
                   <span className="text-right font-mono text-xs text-muted-foreground">{s.tge}</span>
                   <span className="text-right font-mono text-xs text-muted-foreground">{s.cliff}</span>
                   <span className="text-right font-mono text-xs text-muted-foreground">{s.vesting}</span>

@@ -69,7 +69,7 @@ export function Platforms() {
           </h2>
         </Reveal>
 
-        <div className="mt-20 grid items-center gap-12 lg:grid-cols-[1fr_1.1fr_1fr]">
+        <div className="mt-20 grid items-center gap-8 lg:grid-cols-[0.8fr_1.5fr_0.8fr]">
           <Reveal className="order-2 flex justify-center lg:order-1">
             <img
               src={phoneMercados.url}
@@ -81,7 +81,7 @@ export function Platforms() {
 
           <Reveal delay={0.1} className="order-1 lg:order-2">
             <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-6">
-              <ul className="flex flex-col gap-4 text-right text-sm text-foreground md:text-[15px]">
+              <ul className="flex flex-col gap-4 text-right text-sm text-foreground md:whitespace-nowrap md:text-[15px]">
                 <li className="font-mono text-[13px] font-semibold uppercase tracking-[0.08em] text-primary">
                   Digimercados
                 </li>
@@ -104,7 +104,7 @@ export function Platforms() {
                   className="relative h-full w-full object-contain"
                 />
               </div>
-              <ul className="flex flex-col gap-4 text-left text-sm text-foreground md:text-[15px]">
+              <ul className="flex flex-col gap-4 text-left text-sm text-foreground md:whitespace-nowrap md:text-[15px]">
                 <li className="font-mono text-[13px] font-semibold uppercase tracking-[0.08em] text-primary">
                   DigiPaga
                 </li>
