@@ -1,91 +1,126 @@
 import { Bar, BarChart, Cell, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import { Reveal, Section } from "./Section";
-import { CENTRALIZED, DECENTRALIZED, RUNWAY, TEAM } from "./data";
+import {
+  CENTRALIZED,
+  DECENTRALIZED,
+  DISTRIBUTION_DETAILS,
+  PLATFORM_FEATURES,
+  RUNWAY,
+  TEAM,
+} from "./data";
 import phone from "@/assets/digi_mockup_mobile.png.asset.json";
 import burner from "@/assets/digi_burner_supply.png.asset.json";
-import agentCoin from "@/assets/digi-agent-coin.png.asset.json";
+import centerCoin from "@/assets/digi_coin_green_center.png.asset.json";
 import rocket from "@/assets/digim-rocket.png.asset.json";
 
 export function Summary() {
   return (
-    <Section
-      id="summary"
-      index="02"
-      eyebrow="Summary"
-      title="An investment in the settlement layer for agent commerce"
-      lead="DigiAgent operates two production surfaces: a consumer payments wallet in Latin America and an autonomous marketplace where AI agents transact on behalf of merchants. DIGI is the settlement asset for both."
-    >
-      <div className="grid gap-px overflow-hidden rounded-xl border border-hairline bg-hairline md:grid-cols-3">
-        {[
-          ["$13.85M", "Committed across four rounds", "Fully attested on-chain, no side letters."],
-          ["412K", "Monthly settled transactions", "Live volume across DigiPaga corridors."],
-          ["1,900+", "Merchants onboarded", "Colombia, Mexico, Peru and Argentina."],
-        ].map(([v, k, d]) => (
-          <Reveal key={k} className="bg-background p-8">
-            <div className="font-display text-4xl tracking-tight text-primary">{v}</div>
-            <div className="mt-3 text-sm font-medium">{k}</div>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{d}</p>
+    <section id="summary" className="hairline-t scroll-mt-24">
+      <div className="mx-auto grid max-w-6xl gap-12 px-6 py-24 md:grid-cols-[0.85fr_1.15fr] md:py-32">
+        <Reveal>
+          <span className="eyebrow">§ 01 Project details</span>
+          <h2 className="mt-6 font-display text-[clamp(3rem,7vw,5rem)] leading-[0.95] tracking-tight">
+            Summary<span className="text-primary">.</span>
+          </h2>
+        </Reveal>
+        <div className="flex flex-col gap-6 text-[17px] leading-[1.65] text-muted-foreground md:text-lg">
+          {[
+            ["DigiPaga", " is an Agentic Stablecoin Orchestration Engine designed to power payments across Latin America and the Global South."],
+            ["Digimercados", " is a Hybrid Smart Wallet and Exchange that brings advanced trading tools, structured access, and digital market participation to the same regions."],
+            ["Digi Agent", " serves as the AI-guided avatar layer across both platforms, helping users navigate payments, stablecoins, wallets, and market tools with greater clarity."],
+            ["DIGIM", " unlocks premium functionality across the ecosystem and operates in both centralized and decentralized environments, making advanced financial infrastructure more accessible to users regardless of technical background."],
+          ].map(([b, rest], i) => (
+            <Reveal key={b} delay={i * 0.06}>
+              <p>
+                <strong className="font-semibold text-foreground">{b}</strong>
+                {rest}
+              </p>
+            </Reveal>
+          ))}
+          <Reveal delay={0.24}>
+            <div className="hairline-t mt-6 flex flex-wrap gap-3 pt-8">
+              {["Payments", "Smart Exchange", "Stablecoins", "AI Agent", "Global South", "Hybrid Finance"].map((t) => (
+                <span
+                  key={t}
+                  className="rounded-full border border-primary/25 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-foreground/70"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
           </Reveal>
-        ))}
+        </div>
       </div>
-    </Section>
+    </section>
   );
 }
 
 export function Platforms() {
   return (
-    <Section
-      id="platforms"
-      index="03"
-      eyebrow="Two platforms"
-      title="Two platforms. One cryptocurrency."
-      lead="DigiPaga serves people. DigiMercados serves machines. Both clear in DIGI, so liquidity compounds instead of fragmenting."
-    >
-      <div className="grid gap-8 md:grid-cols-2">
-        {[
-          {
-            name: "DigiPaga",
-            kind: "Consumer wallet",
-            copy: "Stablecoin cards, remittances and merchant checkout with instant local settlement.",
-            points: ["Apple / Google Wallet", "Sub-second settlement", "Fiat off-ramp in 4 markets"],
-            img: phone.url,
-          },
-          {
-            name: "DigiMercados",
-            kind: "Agent marketplace",
-            copy: "Autonomous agents source, negotiate and settle inventory contracts without human intervention.",
-            points: ["Agent identity & escrow", "Programmable fee routing", "Machine-readable orderbook"],
-            img: agentCoin.url,
-          },
-        ].map((p) => (
-          <Reveal key={p.name}>
-            <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-hairline bg-card/40 transition-colors hover:border-primary/30">
-              <div className="flex items-baseline justify-between px-8 pt-8">
-                <h3 className="font-display text-3xl tracking-tight">{p.name}</h3>
-                <span className="eyebrow">{p.kind}</span>
-              </div>
-              <p className="mt-4 px-8 text-sm leading-relaxed text-muted-foreground">{p.copy}</p>
-              <ul className="mt-6 space-y-2 px-8">
-                {p.points.map((pt) => (
-                  <li key={pt} className="flex items-center gap-3 text-sm text-foreground/80">
-                    <span className="h-1 w-1 rounded-full bg-primary" />
-                    {pt}
-                  </li>
+    <section id="platforms" className="hairline-t scroll-mt-24 overflow-hidden">
+      <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
+        <Reveal>
+          <span className="eyebrow">§ 02 Product stack</span>
+          <h2 className="mt-6 font-display text-[clamp(2.6rem,6vw,4.5rem)] leading-[1.02] tracking-tight">
+            Two platforms.
+            <br />
+            <span className="text-primary">One cryptocurrency.</span>
+          </h2>
+        </Reveal>
+
+        <div className="mt-20 grid items-center gap-12 lg:grid-cols-[1fr_1.1fr_1fr]">
+          <Reveal className="order-2 flex justify-center lg:order-1">
+            <img
+              src={phone.url}
+              alt="Digimercados app"
+              loading="lazy"
+              className="h-[420px] w-auto object-contain [transform:rotate(-8deg)] drop-shadow-2xl"
+            />
+          </Reveal>
+
+          <Reveal delay={0.1} className="order-1 lg:order-2">
+            <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-6">
+              <ul className="flex flex-col gap-3 text-right text-sm text-muted-foreground md:text-[15px]">
+                <li className="font-medium text-primary">Digimercados</li>
+                {PLATFORM_FEATURES.digimercados.map((f) => (
+                  <li key={f}>{f}</li>
                 ))}
               </ul>
-              <div className="mt-8 flex h-64 items-end justify-center overflow-hidden px-8">
+              <div className="relative aspect-square w-[130px] shrink-0 md:w-[190px]">
+                <div
+                  className="absolute inset-0 rounded-full blur-2xl"
+                  style={{ background: "radial-gradient(circle, oklch(0.6 0.16 140 / 30%), transparent 70%)" }}
+                  aria-hidden
+                />
+                <div className="absolute -inset-4 rounded-full border border-primary/10" aria-hidden />
+                <div className="absolute -inset-9 rounded-full border border-hairline" aria-hidden />
                 <img
-                  src={p.img}
-                  alt={p.name}
+                  src={centerCoin.url}
+                  alt="DIGI coin"
                   loading="lazy"
-                  className="max-h-full object-contain transition-transform duration-700 group-hover:-translate-y-2"
+                  className="relative h-full w-full object-contain"
                 />
               </div>
-            </article>
+              <ul className="flex flex-col gap-3 text-left text-sm text-muted-foreground md:text-[15px]">
+                <li className="font-medium text-primary">DigiPaga</li>
+                {PLATFORM_FEATURES.digipaga.map((f) => (
+                  <li key={f}>{f}</li>
+                ))}
+              </ul>
+            </div>
           </Reveal>
-        ))}
+
+          <Reveal delay={0.16} className="order-3 flex justify-center">
+            <img
+              src={phone.url}
+              alt="DigiPaga app"
+              loading="lazy"
+              className="h-[420px] w-auto object-contain [transform:rotate(8deg)] drop-shadow-2xl"
+            />
+          </Reveal>
+        </div>
       </div>
-    </Section>
+    </section>
   );
 }
 
