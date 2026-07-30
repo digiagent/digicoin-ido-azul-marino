@@ -3,6 +3,9 @@ import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import { Reveal, Section } from "./Section";
 import { TOKENOMICS } from "./data";
 
+const ROW =
+  "grid grid-cols-[1.5fr_0.5fr_1fr_0.6fr_0.9fr_0.5fr_0.5fr_0.5fr] items-center gap-4";
+
 export function Tokenomics() {
   const [active, setActive] = useState<string | null>(null);
 
@@ -14,7 +17,7 @@ export function Tokenomics() {
       title="One billion DIGI, allocated for durability"
       lead="Supply is fixed at 1,000,000,000 DIGI. Allocations are weighted toward the agent economy and long-dated liquidity rather than short-term distribution."
     >
-      <div className="grid gap-12 lg:grid-cols-[420px_1fr] lg:items-center">
+      <div className="grid gap-12 lg:grid-cols-[360px_1fr] lg:items-center">
         <Reveal>
           <div className="relative aspect-square w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -67,36 +70,60 @@ export function Tokenomics() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <div className="overflow-hidden rounded-xl border border-hairline">
-            <div className="grid grid-cols-[1fr_auto] gap-4 px-5 py-3 text-left md:grid-cols-[1.4fr_0.8fr_1fr_auto]">
-              <span className="eyebrow">Allocation</span>
-              <span className="eyebrow hidden md:block">Tokens</span>
-              <span className="eyebrow hidden md:block">Unlock</span>
-              <span className="eyebrow text-right">Share</span>
-            </div>
-            {TOKENOMICS.map((s) => (
-              <button
-                key={s.key}
-                type="button"
-                onMouseEnter={() => setActive(s.key)}
-                onMouseLeave={() => setActive(null)}
-                onFocus={() => setActive(s.key)}
-                onBlur={() => setActive(null)}
-                className="grid w-full grid-cols-[1fr_auto] items-center gap-4 border-t border-hairline px-5 py-4 text-left transition-colors md:grid-cols-[1.4fr_0.8fr_1fr_auto]"
-                style={{ background: active === s.key ? "var(--surface)" : "transparent" }}
-              >
-                <span className="flex items-center gap-3">
+          <div className="overflow-x-auto rounded-xl border border-hairline">
+            <div className="min-w-[720px]">
+              <div className={ROW + " px-5 py-3"}>
+                <span className="eyebrow">Allocation</span>
+                <span className="eyebrow text-right">Share</span>
+                <span className="eyebrow text-right">Tokens</span>
+                <span className="eyebrow text-right">Price</span>
+                <span className="eyebrow text-right">Raise</span>
+                <span className="eyebrow text-right">TGE</span>
+                <span className="eyebrow text-right">Cliff</span>
+                <span className="eyebrow text-right">Vest</span>
+              </div>
+              {TOKENOMICS.map((s) => (
+                <button
+                  key={s.key}
+                  type="button"
+                  onMouseEnter={() => setActive(s.key)}
+                  onMouseLeave={() => setActive(null)}
+                  onFocus={() => setActive(s.key)}
+                  onBlur={() => setActive(null)}
+                  className={ROW + " w-full border-t border-hairline px-5 py-3.5 text-left transition-colors"}
+                  style={{ background: active === s.key ? "var(--surface)" : "transparent" }}
+                >
+                  <span className="flex items-center gap-3">
+                    <span
+                      className="h-2.5 w-2.5 shrink-0 rounded-[2px] transition-transform"
+                      style={{ background: s.color, transform: active === s.key ? "scale(1.5)" : "scale(1)" }}
+                    />
+                    <span className="text-sm text-foreground">{s.label}</span>
+                  </span>
+                  <span className="text-right font-mono text-xs text-muted-foreground">{s.pct}%</span>
+                  <span className="text-right font-mono text-xs text-foreground/80">{s.tokens}</span>
+                  <span className="text-right font-mono text-xs text-muted-foreground">{s.price}</span>
                   <span
-                    className="h-2.5 w-2.5 shrink-0 rounded-[2px] transition-transform"
-                    style={{ background: s.color, transform: active === s.key ? "scale(1.5)" : "scale(1)" }}
-                  />
-                  <span className="text-sm text-foreground">{s.label}</span>
-                </span>
-                <span className="hidden font-mono text-sm text-muted-foreground md:block">{s.tokens}</span>
-                <span className="hidden text-sm text-muted-foreground md:block">{s.vesting}</span>
-                <span className="text-right font-mono text-sm text-primary">{s.pct}%</span>
-              </button>
-            ))}
+                    className={`text-right font-mono text-xs ${s.raise === "—" ? "text-muted-foreground" : "text-primary"}`}
+                  >
+                    {s.raise}
+                  </span>
+                  <span className="text-right font-mono text-xs text-muted-foreground">{s.tge}</span>
+                  <span className="text-right font-mono text-xs text-muted-foreground">{s.cliff}</span>
+                  <span className="text-right font-mono text-xs text-muted-foreground">{s.vesting}</span>
+                </button>
+              ))}
+              <div className={ROW + " border-t border-hairline px-5 py-4"}>
+                <span className="text-sm text-foreground">Total Supply</span>
+                <span className="text-right font-mono text-xs text-muted-foreground">100%</span>
+                <span className="text-right font-mono text-xs text-primary">1,000,000,000</span>
+                <span className="text-right font-mono text-xs text-muted-foreground">—</span>
+                <span className="text-right font-mono text-xs text-foreground">$4,250,000</span>
+                <span />
+                <span />
+                <span />
+              </div>
+            </div>
           </div>
         </Reveal>
       </div>

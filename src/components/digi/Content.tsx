@@ -9,6 +9,7 @@ import {
   TEAM,
 } from "./data";
 import phone from "@/assets/digi_mockup_mobile.png.asset.json";
+import phoneMercados from "@/assets/digi_m_temp_mockup.png.asset.json";
 import burner from "@/assets/digi_burner_supply.png.asset.json";
 import centerCoin from "@/assets/digi_coin_green_center.png.asset.json";
 import rocket from "@/assets/digim-rocket.png.asset.json";
@@ -38,11 +39,11 @@ export function Summary() {
             </Reveal>
           ))}
           <Reveal delay={0.24}>
-            <div className="hairline-t mt-6 flex flex-wrap gap-3 pt-8">
+            <div className="hairline-t mt-6 flex gap-3 overflow-x-auto whitespace-nowrap pt-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {["Payments", "Smart Exchange", "Stablecoins", "AI Agent", "Global South", "Hybrid Finance"].map((t) => (
                 <span
                   key={t}
-                  className="rounded-full border border-primary/25 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-foreground/70"
+                  className="shrink-0 cursor-default rounded-full border border-primary/25 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-foreground/70 transition-colors duration-300 hover:border-primary hover:text-foreground"
                 >
                   {t}
                 </span>
@@ -68,28 +69,30 @@ export function Platforms() {
           </h2>
         </Reveal>
 
-        <div className="mt-20 grid items-center gap-12 lg:grid-cols-[1fr_1.1fr_1fr]">
+        <div className="mt-20 grid items-center gap-6 lg:grid-cols-[0.62fr_2fr_0.62fr]">
           <Reveal className="order-2 flex justify-center lg:order-1">
             <img
-              src={phone.url}
+              src={phoneMercados.url}
               alt="Digimercados app"
               loading="lazy"
-              className="h-[420px] w-auto object-contain [transform:rotate(-8deg)] drop-shadow-2xl"
+              className="h-[420px] w-auto object-contain drop-shadow-2xl"
             />
           </Reveal>
 
           <Reveal delay={0.1} className="order-1 lg:order-2">
             <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-6">
-              <ul className="flex flex-col gap-3 text-right text-sm text-muted-foreground md:text-[15px]">
-                <li className="font-medium text-primary">Digimercados</li>
+              <ul className="flex flex-col gap-4 text-right text-sm text-foreground md:whitespace-nowrap md:text-[15px]">
+                <li className="font-mono text-[13px] font-semibold uppercase tracking-[0.08em] text-primary">
+                  Digimercados
+                </li>
                 {PLATFORM_FEATURES.digimercados.map((f) => (
                   <li key={f}>{f}</li>
                 ))}
               </ul>
-              <div className="relative aspect-square w-[130px] shrink-0 md:w-[190px]">
+              <div className="relative aspect-square w-[150px] shrink-0 md:w-[230px]">
                 <div
-                  className="absolute inset-0 rounded-full blur-2xl"
-                  style={{ background: "radial-gradient(circle, oklch(0.6 0.16 140 / 30%), transparent 70%)" }}
+                  className="absolute -inset-6 rounded-full blur-3xl"
+                  style={{ background: "radial-gradient(circle, oklch(0.6 0.16 140 / 38%), transparent 70%)" }}
                   aria-hidden
                 />
                 <div className="absolute -inset-4 rounded-full border border-primary/10" aria-hidden />
@@ -101,8 +104,10 @@ export function Platforms() {
                   className="relative h-full w-full object-contain"
                 />
               </div>
-              <ul className="flex flex-col gap-3 text-left text-sm text-muted-foreground md:text-[15px]">
-                <li className="font-medium text-primary">DigiPaga</li>
+              <ul className="flex flex-col gap-4 text-left text-sm text-foreground md:whitespace-nowrap md:text-[15px]">
+                <li className="font-mono text-[13px] font-semibold uppercase tracking-[0.08em] text-primary">
+                  DigiPaga
+                </li>
                 {PLATFORM_FEATURES.digipaga.map((f) => (
                   <li key={f}>{f}</li>
                 ))}
@@ -115,7 +120,7 @@ export function Platforms() {
               src={phone.url}
               alt="DigiPaga app"
               loading="lazy"
-              className="h-[420px] w-auto object-contain [transform:rotate(8deg)] drop-shadow-2xl"
+              className="h-[420px] w-auto object-contain drop-shadow-2xl"
             />
           </Reveal>
         </div>
@@ -213,7 +218,7 @@ export function Distribution() {
                   className="grid gap-2 py-6 md:grid-cols-[280px_1fr] md:gap-10"
                 >
                   <dt className="text-[15px] text-primary md:text-base">{k}</dt>
-                  <dd className="text-[15px] leading-relaxed text-muted-foreground md:text-base">{v}</dd>
+                  <dd className="text-[15px] leading-relaxed text-foreground md:text-base">{v}</dd>
                 </div>
               ))}
             </dl>
@@ -230,22 +235,22 @@ export function AgentNomics() {
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
         <Reveal>
           <span className="eyebrow">§ 06 AI environments</span>
+          <p className="mt-6 font-display text-[clamp(3rem,7vw,5.5rem)] italic leading-[0.95] tracking-tight text-primary">
+            Agent-nomics
+          </p>
         </Reveal>
-        <div className="mt-12 grid items-start gap-14 md:grid-cols-2">
-          <Reveal>
-            <div className="flex items-center justify-center overflow-hidden rounded-[28px] border border-hairline bg-card/30 p-6">
-              <img
-                src={burner.url}
-                alt="Digi Incinerator burning DIGI supply"
-                loading="lazy"
-                className="mx-auto max-h-[440px] object-contain"
-              />
-            </div>
+        <div className="mt-10 grid items-center gap-10 md:grid-cols-[1.15fr_0.85fr] md:gap-4">
+          <Reveal className="flex justify-center md:justify-end">
+            <img
+              src={burner.url}
+              alt="Digi Incinerator burning DIGI supply"
+              loading="lazy"
+              className="w-full max-w-[680px] object-contain md:-mr-6"
+            />
           </Reveal>
           <div className="flex max-w-[560px] flex-col gap-6">
             <Reveal>
-              <p className="font-display text-3xl italic tracking-tight text-primary">Agent-nomics</p>
-              <h2 className="mt-2 font-display text-[clamp(2rem,4vw,3rem)] font-semibold leading-[1.1] tracking-tight">
+              <h2 className="font-display text-[clamp(2rem,4vw,3rem)] font-semibold leading-[1.1] tracking-tight">
                 Defeating Inflation with Active AI Tokenomics.
               </h2>
             </Reveal>

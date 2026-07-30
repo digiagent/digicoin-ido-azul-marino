@@ -3,17 +3,24 @@ export type Slice = {
   label: string;
   pct: number;
   tokens: string;
+  price: string;
+  raise: string;
+  tge: string;
+  cliff: string;
   vesting: string;
   color: string;
 };
 
 export const TOKENOMICS: Slice[] = [
-  { key: "sale", label: "Public & Private Sale", pct: 28, tokens: "280,000,000", vesting: "10% TGE · 12mo linear", color: "var(--chart-1)" },
-  { key: "ecosystem", label: "Ecosystem & Agent Rewards", pct: 24, tokens: "240,000,000", vesting: "48mo emission curve", color: "var(--chart-2)" },
-  { key: "treasury", label: "Treasury & Liquidity", pct: 18, tokens: "180,000,000", vesting: "6mo cliff · 24mo", color: "var(--chart-3)" },
-  { key: "team", label: "Team & Contributors", pct: 15, tokens: "150,000,000", vesting: "12mo cliff · 36mo", color: "var(--chart-4)" },
-  { key: "merchants", label: "Merchant Onboarding", pct: 9, tokens: "90,000,000", vesting: "Performance unlock", color: "var(--chart-5)" },
-  { key: "advisors", label: "Advisors & Partners", pct: 6, tokens: "60,000,000", vesting: "9mo cliff · 24mo", color: "var(--chart-6)" },
+  { key: "bridge", label: "Bridge Round", pct: 5, tokens: "50,000,000", price: "$0.005", raise: "$250,000", tge: "10%", cliff: "6", vesting: "12", color: "var(--chart-1)" },
+  { key: "private", label: "Private Sale", pct: 11, tokens: "110,000,000", price: "$0.009", raise: "$1,000,000", tge: "20%", cliff: "6", vesting: "6", color: "var(--chart-2)" },
+  { key: "presale", label: "Pre-Sale", pct: 2, tokens: "20,000,000", price: "$0.025", raise: "$500,000", tge: "50%", cliff: "2", vesting: "0", color: "var(--chart-3)" },
+  { key: "public", label: "Public Sale", pct: 6, tokens: "60,000,000", price: "$0.033", raise: "$2,000,000", tge: "100%", cliff: "0", vesting: "0", color: "var(--chart-4)" },
+  { key: "listing", label: "Listing & Market Making", pct: 20, tokens: "200,000,000", price: "—", raise: "—", tge: "10%", cliff: "6", vesting: "0", color: "var(--chart-5)" },
+  { key: "incinerator", label: "Incinerator", pct: 10, tokens: "100,000,000", price: "—", raise: "—", tge: "25%", cliff: "0", vesting: "42", color: "var(--chart-6)" },
+  { key: "wallet", label: "Wallet Community", pct: 5, tokens: "50,000,000", price: "—", raise: "—", tge: "25%", cliff: "0", vesting: "60", color: "var(--chart-7)" },
+  { key: "team", label: "Team", pct: 11, tokens: "110,000,000", price: "—", raise: "—", tge: "0%", cliff: "12", vesting: "12", color: "var(--chart-8)" },
+  { key: "dao", label: "DAO Treasury", pct: 30, tokens: "300,000,000", price: "—", raise: "—", tge: "0%", cliff: "0", vesting: "0", color: "var(--chart-9)" },
 ];
 
 export type Round = {
