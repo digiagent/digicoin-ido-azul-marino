@@ -38,11 +38,11 @@ export function Summary() {
             </Reveal>
           ))}
           <Reveal delay={0.24}>
-            <div className="hairline-t mt-6 flex flex-wrap gap-3 pt-8">
+            <div className="hairline-t mt-6 flex gap-3 overflow-x-auto whitespace-nowrap pt-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {["Payments", "Smart Exchange", "Stablecoins", "AI Agent", "Global South", "Hybrid Finance"].map((t) => (
                 <span
                   key={t}
-                  className="rounded-full border border-primary/25 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-foreground/70"
+                  className="shrink-0 cursor-default rounded-full border border-primary/25 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-foreground/70 transition-colors duration-300 hover:border-primary hover:text-foreground"
                 >
                   {t}
                 </span>

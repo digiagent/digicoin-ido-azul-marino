@@ -109,12 +109,12 @@ export function Hero() {
               initial={reduced ? false : { opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-6 font-display text-[clamp(3rem,9vw,6.5rem)] leading-[0.92] tracking-tight"
+              className="mt-6 font-display text-[clamp(3.5rem,11vw,8rem)] leading-[0.86] tracking-tight"
             >
-              The currency of
-              <br />
-              autonomous
-              <span className="text-primary"> commerce</span>
+              <span className="block text-primary">DIGI</span>
+              <span className="block text-foreground">
+                Agent<span className="text-primary">.</span>
+              </span>
             </motion.h1>
             <motion.p
               initial={reduced ? false : { opacity: 0, y: 20 }}
