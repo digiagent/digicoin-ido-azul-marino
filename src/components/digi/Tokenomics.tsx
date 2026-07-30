@@ -3,6 +3,9 @@ import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import { Reveal, Section } from "./Section";
 import { TOKENOMICS } from "./data";
 
+const ROW =
+  "grid grid-cols-[1.5fr_0.5fr_1fr_0.6fr_0.9fr_0.5fr_0.5fr_0.5fr] items-center gap-4";
+
 export function Tokenomics() {
   const [active, setActive] = useState<string | null>(null);
 
