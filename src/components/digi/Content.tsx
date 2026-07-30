@@ -201,64 +201,67 @@ export function DualUtility() {
 
 export function Distribution() {
   return (
-    <Section
-      id="distribution"
-      index="06"
-      eyebrow="Distribution"
-      title="Distribution details"
-      lead="Circulating supply at TGE is 11.4%. Every unlock is enforced by contract, published in advance, and independently verifiable."
-    >
-      <div className="grid gap-10 md:grid-cols-3">
-        {[
-          ["TGE circulating", "114,000,000 DIGI", "11.4% of total supply"],
-          ["Longest lock", "48 months", "Ecosystem emission curve"],
-          ["Cliffed supply", "39%", "Team, advisors and treasury"],
-        ].map(([k, v, d], idx) => (
-          <Reveal key={k} delay={idx * 0.08}>
-            <div className="border-t border-primary/30 pt-6">
-              <div className="eyebrow">{k}</div>
-              <div className="mt-3 font-display text-3xl tracking-tight">{v}</div>
-              <p className="mt-2 text-sm text-muted-foreground">{d}</p>
-            </div>
-          </Reveal>
-        ))}
+    <section id="distribution" className="scroll-mt-24">
+      <div className="mx-auto max-w-6xl px-6 py-16 md:py-24">
+        <Reveal>
+          <div className="rounded-[28px] border border-hairline bg-card/30 px-6 py-12 md:px-14 md:py-16">
+            <h2 className="font-display text-3xl tracking-tight md:text-4xl">Distribution Details</h2>
+            <dl className="mt-10 divide-y divide-hairline">
+              {DISTRIBUTION_DETAILS.map(([k, v]) => (
+                <div
+                  key={k}
+                  className="grid gap-2 py-6 md:grid-cols-[280px_1fr] md:gap-10"
+                >
+                  <dt className="text-[15px] text-primary md:text-base">{k}</dt>
+                  <dd className="text-[15px] leading-relaxed text-muted-foreground md:text-base">{v}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </Reveal>
       </div>
-    </Section>
+    </section>
   );
 }
 
 export function AgentNomics() {
   return (
-    <Section
-      id="agentnomics"
-      index="07"
-      eyebrow="Agent-nomics"
-      title="Defeating inflation with active AI tokenomics"
-      lead="Meet the Digi Incinerator — the first autonomous agent designed to help equalize circulating supply as real utility expands across the DIGIM ecosystem."
-    >
-      <div className="grid items-center gap-12 md:grid-cols-2">
+    <section id="agentnomics" className="scroll-mt-24">
+      <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
         <Reveal>
-          <div className="flex items-center justify-center overflow-hidden rounded-2xl border border-hairline bg-card/40 p-8">
-            <img
-              src={burner.url}
-              alt="Digimercados Incinerator burning DIGI supply"
-              loading="lazy"
-              className="mx-auto max-h-[420px] object-contain"
-            />
-          </div>
+          <span className="eyebrow">§ 06 AI environments</span>
         </Reveal>
-        <div className="flex max-w-[540px] flex-col gap-6 text-base leading-[1.7] text-muted-foreground">
-          {[
-            "Most token projects keep increasing circulating supply long after usability fades. DIGI is designed differently: it acts as a balancer for dynamic token circulation, responding to network activity across both centralized and decentralized environments.",
-            "By programmatically removing supply based on real network usage, we establish a deflationary gravity that protects long-term holders and rewards genuine ecosystem participation.",
-          ].map((p, idx) => (
-            <Reveal key={idx} delay={idx * 0.08}>
-              <p>{p}</p>
+        <div className="mt-12 grid items-start gap-14 md:grid-cols-2">
+          <Reveal>
+            <div className="flex items-center justify-center overflow-hidden rounded-[28px] border border-hairline bg-card/30 p-6">
+              <img
+                src={burner.url}
+                alt="Digi Incinerator burning DIGI supply"
+                loading="lazy"
+                className="mx-auto max-h-[440px] object-contain"
+              />
+            </div>
+          </Reveal>
+          <div className="flex max-w-[560px] flex-col gap-6">
+            <Reveal>
+              <p className="font-display text-3xl italic tracking-tight text-primary">Agent-nomics</p>
+              <h2 className="mt-2 font-display text-[clamp(2rem,4vw,3rem)] font-semibold leading-[1.1] tracking-tight">
+                Defeating Inflation with Active AI Tokenomics.
+              </h2>
             </Reveal>
-          ))}
+            {[
+              "Meet the Digi Incinerator, the first autonomous agent designed to help equalize circulating supply as real utility expands across the DIGIM ecosystem.",
+              "Most token projects keep increasing circulating supply long after usability fades. DIGI is designed differently: it acts as a balancer for dynamic token circulation, responding to network activity across both centralized and decentralized environments.",
+              "By programmatically removing supply based on real network usage, we establish a deflationary gravity that protects long-term holders and rewards genuine ecosystem participation.",
+            ].map((p, idx) => (
+              <Reveal key={idx} delay={idx * 0.06}>
+                <p className="text-[15px] leading-[1.75] text-muted-foreground md:text-base">{p}</p>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </div>
-    </Section>
+    </section>
   );
 }
 
@@ -313,28 +316,38 @@ export function Runway() {
 
 export function Team() {
   return (
-    <Section
-      id="team"
-      index="10"
-      eyebrow="Team"
-      title="Operators from payments, protocol and applied AI"
-    >
-      <div className="grid gap-px overflow-hidden rounded-xl border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-3">
-        {TEAM.map((m, i) => (
-          <Reveal key={m.name} delay={i * 0.05} className="bg-background p-8 transition-colors hover:bg-card/60">
-            <div
-              className="flex h-12 w-12 items-center justify-center rounded-full font-display text-lg text-primary-foreground"
-              style={{ background: "var(--gradient-accent)" }}
+    <section id="team" className="scroll-mt-24">
+      <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
+        <Reveal>
+          <span className="eyebrow">§ 09 Team</span>
+          <h2 className="mt-5 font-display text-[clamp(2.5rem,5vw,3.5rem)] font-semibold leading-none tracking-tight">
+            Team<span className="text-primary">.</span>
+          </h2>
+        </Reveal>
+        <div className="mt-12 grid gap-px overflow-hidden rounded-xl border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-3">
+          {TEAM.map((m, i) => (
+            <Reveal
+              key={m.name}
+              delay={i * 0.05}
+              className="bg-background p-7 transition-colors hover:bg-card/60"
             >
-              {m.name.split(" ").map((n) => n[0]).join("")}
-            </div>
-            <h3 className="mt-6 font-display text-2xl tracking-tight">{m.name}</h3>
-            <div className="mt-1 text-sm text-primary">{m.role}</div>
-            <p className="mt-2 text-sm text-muted-foreground">{m.prev}</p>
-          </Reveal>
-        ))}
+              <div className="flex items-center gap-4">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-secondary text-base font-medium text-primary">
+                  {m.name[0]}
+                </div>
+                <div>
+                  <h3 className="text-[15px] font-semibold">{m.name}</h3>
+                  <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.16em] text-primary/80">
+                    {m.role}
+                  </div>
+                </div>
+              </div>
+              <p className="mt-5 text-sm leading-relaxed text-muted-foreground">{m.prev}</p>
+            </Reveal>
+          ))}
+        </div>
       </div>
-    </Section>
+    </section>
   );
 }
 
