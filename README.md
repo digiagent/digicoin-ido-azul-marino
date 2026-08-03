@@ -1,4 +1,4 @@
-# DigiAgent Landing Page for Arc Network Hackathon
+# DigiAgent Coin ICO Landing Page
 
 Build a premium, cinematic Next.js landing page for DigiAgent.
 
