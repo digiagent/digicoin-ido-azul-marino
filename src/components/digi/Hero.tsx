@@ -3,6 +3,7 @@ import { useRef } from "react";
 import coin from "@/assets/digi_coin_green_center.png.asset.json";
 import agentCoin from "@/assets/digi-agent-coin-2.png.asset.json";
 import { HERO_STATS as STATS, HERO_TICKER } from "./data";
+import { Magnetic } from "./Magnetic";
 import { gsap, SplitText, useGSAP, MOTION_OK } from "./scroll";
 
 const RING_INNER =
@@ -129,12 +130,14 @@ export function Hero() {
             </a>
           ))}
         </div>
-        <a
-          href="#sale"
-          className="cta-pulse rounded-full border border-primary/50 bg-primary/15 px-5 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/25"
-        >
-          Join bridge sale
-        </a>
+        <Magnetic>
+          <a
+            href="#sale"
+            className="cta-pulse block rounded-full border border-primary/50 bg-primary/15 px-5 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/25"
+          >
+            Join bridge sale
+          </a>
+        </Magnetic>
       </nav>
 
       <div
@@ -175,19 +178,23 @@ export function Hero() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="mt-10 flex flex-wrap items-center gap-4"
             >
-              <a
-                href="#sale"
-                className="cta-pulse rounded-full px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5"
-                style={{ background: "var(--gradient-accent)" }}
-              >
-                Secure allocation
-              </a>
-              <a
-                href="#tokenomics"
-                className="rounded-full border border-hairline px-7 py-3.5 text-sm font-medium text-foreground/80 transition-colors hover:border-primary/40 hover:text-foreground"
-              >
-                Read tokenomics
-              </a>
+              <Magnetic>
+                <a
+                  href="#sale"
+                  className="cta-pulse block rounded-full px-7 py-3.5 text-sm font-semibold text-primary-foreground"
+                  style={{ background: "var(--gradient-accent)" }}
+                >
+                  Secure allocation
+                </a>
+              </Magnetic>
+              <Magnetic strength={0.2}>
+                <a
+                  href="#tokenomics"
+                  className="block rounded-full border border-hairline px-7 py-3.5 text-sm font-medium text-foreground/80 transition-colors hover:border-primary/40 hover:text-foreground"
+                >
+                  Read tokenomics
+                </a>
+              </Magnetic>
             </motion.div>
           </div>
 

@@ -1,0 +1,34 @@
+{
+  "summary": "Frontend-only Playwright testing of the DigiAgent TanStack Start landing page on the public preview URL (1920x800 desktop + 390x844 mobile). Verified the reported 'Blocked request. This host is not allowed.' bug is FIXED, plus the 3 new features (scroll progress bar, sale step dots, magnetic buttons) and all regression items (hero pin, summary cards, tokenomics counters, CTA pin, images, console errors). No backend exists (by design), so no backend tests were written. 100% of executed frontend checks pass.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {
+        "screen": "Sale section (#sale) dots vs card position at 1920x800",
+        "issues": [
+          "Minor/cosmetic: sale-dot-active reaches index 3 slightly before the 4th card is fully centered (progress->index uses Math.round(progress*3), so dot 3 lights at ~83% pin progress; with Lenis smoothing it looked earlier). Dot 0 is also skipped immediately once the pin engages. Not a functional break — feature works as specified."
+        ]
+      }
+    ]
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Hero CTA buttons ('Secure allocation', 'Read tokenomics') and the nav 'Join bridge sale' link have no data-testid attributes; tests had to rely on text selectors. Adding data-testid to Magnetic-wrapped CTAs would make future automation robust.",
+    "Magnetic.tsx sets x/y only on onMouseMove of the wrapper; a single teleporting pointer event (common in automation) can leave transform at 0. Consider also handling onMouseEnter to seed the offset — behaviour with real cursor movement is correct.",
+    "ScrollProgress ScrollTrigger uses start:0/end:'max' with no trigger element; works, but consider ScrollTrigger.refresh dependency if page height changes dynamically."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A - no backend by design", "frontend": "100%"},
+  "seed_data_creation": "None - static landing page, no data layer",
+  "should_call_test_agent_after_fix": false,
+  "should_main_agent_self_test": false,
+  "test_credentials": "None required (no auth). /app/memory contains only PRD.md - no test_credentials.md, which is fine for this app.",
+  "context_for_next_testing_agent": "Detailed verified results: (1) BUG FIX CONFIRMED - https://f7265319-c3d7-4f4e-aa96-ccf1627d7d84.preview.emergentagent.com returns 200, SSR HTML renders, h1 innerText = 'DIGI AGENT.', no 'Blocked request' text; vite.config.ts server.allowedHosts:true works. (2) Scroll progress: [data-testid='scroll-progress-track'] box = x0,y0,w1920,h3; bar initial transform matrix(0,0,0,1,0,0) (scaleX 0) -> samples (scrollY,scaleX): (5063,0.405),(10523,0.843),(13004,1.0); final scaleX 1.0 at page bottom. scrollHeight 13394. (3) Sale dots: 4 dots present, dot-0 has 'sale-dot-active' on load, hidden on mobile (correct, lg only); track transform progresses matrix(...,-491,0) -> -1344 (== scrollWidth - innerWidth) while section pinned; active index progression [1,2,2,3,3,...] reaching 3. (4) Magnetic: IMPORTANT TESTING NOTE - a single page.mouse.move() jump gives transform 'none' (false negative). Use page.mouse.move(outside) then move into the element with steps=10+. With stepped moves: Secure allocation matrix(1,0,0,1,19.9,-3.2), Join bridge sale (16.5,-3.4), Read tokenomics (14.5,-3.6); all reset to 'none' on mouse leave. prefers-reduced-motion resolves to no-preference in default Playwright, so animations run. (5) Regression: 3 GSAP pin-spacers created; hero content transform 1->0.92 scale and opacity 1->0 while pinned; counters '1,000,000,000', '$4,250,000', '7.9%' all rendered; 8 images, 0 broken; #cta present and pins; nav anchor 'Tokenomics' scrolls to scrollY 4671 with #tokenomics visible; ZERO console errors and zero failed requests across all runs. Mobile 390x844 hero/sale render correctly with vertical stacking and horizontal card scroll fallback.",
+  "rca_of_the_issue": "Original user bug: Vite dev server rejects non-allowlisted Host headers, so the k8s ingress hostname produced 'Blocked request. This host is not allowed.'. Fix (vite.server.allowedHosts: true in /app/vite.config.ts + full dev server restart) is verified working end-to-end. The only test-run failure observed (magnetic buttons reporting transform 'none') was a test artifact from Playwright's instantaneous mouse.move, not an application defect; confirmed by stepped mouse moves and a screenshot showing the offset button."
+}

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useRef } from "react";
+import { Magnetic } from "./Magnetic";
 import { gsap, ScrollTrigger, useGSAP, MOTION_OK } from "./scroll";
 import agentCoin from "@/assets/digi-agent-coin-2.png.asset.json";
 
@@ -59,21 +60,25 @@ export function CTA() {
           paying each other, you&apos;ll want to have been early.
         </p>
         <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
-          <motion.a
-            href="#sale"
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="cta-pulse rounded-full px-9 py-4 text-sm font-semibold text-primary-foreground"
-            style={{ background: "var(--gradient-accent)" }}
-          >
-            Secure allocation now
-          </motion.a>
-          <a
-            href="#summary"
-            className="rounded-full border border-hairline px-9 py-4 text-sm font-medium text-foreground/80 transition-colors duration-300 hover:border-primary/40 hover:text-foreground"
-          >
-            Re-read the story
-          </a>
+          <Magnetic>
+            <motion.a
+              href="#sale"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="cta-pulse block rounded-full px-9 py-4 text-sm font-semibold text-primary-foreground"
+              style={{ background: "var(--gradient-accent)" }}
+            >
+              Secure allocation now
+            </motion.a>
+          </Magnetic>
+          <Magnetic strength={0.2}>
+            <a
+              href="#summary"
+              className="block rounded-full border border-hairline px-9 py-4 text-sm font-medium text-foreground/80 transition-colors duration-300 hover:border-primary/40 hover:text-foreground"
+            >
+              Re-read the story
+            </a>
+          </Magnetic>
         </div>
         <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
           Min $5K · Max $50K · USDT / DAI / USDC

@@ -2,6 +2,8 @@ import { useRef } from "react";
 import { gsap, ScrollTrigger, useGSAP, MOTION_OK } from "./scroll";
 import { ROUNDS, type Round } from "./data";
 
+const STEP_COUNT = ROUNDS.length;
+
 function metricsFor(round: Round): [string, string][] {
   return [
     ["Tokens", round.supplyAmount],
@@ -26,6 +28,7 @@ export function SaleDetails() {
         const track = trackRef.current;
         if (!track) return;
         const distance = () => track.scrollWidth - window.innerWidth;
+        const dots = gsap.utils.toArray<HTMLElement>(".sale-dot", sectionRef.current);
 
         const tween = gsap.to(track, {
           x: () => -distance(),
@@ -38,6 +41,10 @@ export function SaleDetails() {
             scrub: true,
             invalidateOnRefresh: true,
             anticipatePin: 1,
+            onUpdate: (self) => {
+              const i = Math.round(self.progress * (STEP_COUNT - 1));
+              dots.forEach((d, di) => d.classList.toggle("sale-dot-active", di === i));
+            },
           },
         });
 
@@ -86,6 +93,15 @@ export function SaleDetails() {
               Keep scrolling — the rounds slide sideways →
             </span>
           </p>
+          <div data-testid="sale-step-dots" className="mt-6 hidden items-center gap-2.5 lg:flex">
+            {ROUNDS.map((r, i) => (
+              <span
+                key={r.id}
+                data-testid={`sale-dot-${i}`}
+                className={`sale-dot h-2 w-2 rounded-full ${i === 0 ? "sale-dot-active" : ""}`}
+              />
+            ))}
+          </div>
         </div>
 
         <div className="overflow-x-auto pb-6 lg:overflow-visible lg:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">

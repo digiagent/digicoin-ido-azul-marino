@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Hero } from "@/components/digi/Hero";
 import { CTA } from "@/components/digi/CTA";
+import { ScrollProgress } from "@/components/digi/ScrollProgress";
 import { useLenis } from "@/components/digi/scroll";
 import { Tokenomics } from "@/components/digi/Tokenomics";
 import { SaleDetails } from "@/components/digi/SaleDetails";
@@ -38,6 +39,7 @@ function Index() {
 
   return (
     <main className="min-h-screen bg-background font-sans text-foreground antialiased">
+      <ScrollProgress />
       <Hero />
       <Summary />
       <Platforms />

@@ -210,6 +210,16 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
+.sale-dot {
+  background: var(--hairline);
+  transition: background-color 250ms ease, transform 250ms ease;
+}
+
+.sale-dot-active {
+  background: var(--primary);
+  transform: scale(1.4);
+}
+
 html.lenis,
 html.lenis body {
   height: auto;
