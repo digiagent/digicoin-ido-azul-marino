@@ -102,6 +102,7 @@
   --shadow-lift: 0 24px 70px -30px oklch(0.85 0.21 128 / 25%);
   --shadow-deep: 0 40px 120px -60px oklch(0 0 0 / 90%);
   --font-display: "Instrument Serif", Georgia, serif;
+  --font-brand: "Syne", "Instrument Serif", Georgia, serif;
   --font-sans: "Inter Tight", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
@@ -114,6 +115,7 @@
   --color-surface: var(--surface);
   --color-hairline: var(--hairline);
   --font-display: var(--font-display);
+  --font-brand: var(--font-brand);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
 }
@@ -149,6 +151,27 @@
   }
   to {
     transform: translateX(-50%);
+  }
+}
+
+@keyframes digi-cta-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0 oklch(0.82 0.21 130 / 45%),
+      var(--shadow-lift);
+  }
+  50% {
+    box-shadow:
+      0 0 0 14px oklch(0.82 0.21 130 / 0%),
+      var(--shadow-lift);
+  }
+}
+
+@utility cta-pulse {
+  animation: digi-cta-pulse 2.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
   }
 }
 
