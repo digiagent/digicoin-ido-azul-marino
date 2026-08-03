@@ -1,4 +1,4 @@
-# DigiAgent Prime
+# DigiAgent Landing Page for Arc Network Hackathon
 
 Build a premium, cinematic Next.js landing page for DigiAgent.
 
