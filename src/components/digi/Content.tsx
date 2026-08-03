@@ -1,5 +1,7 @@
+import { useRef } from "react";
 import { Bar, BarChart, Cell, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import { Reveal, Section } from "./Section";
+import { gsap, ScrollTrigger, useGSAP, MOTION_OK } from "./scroll";
 import {
   CENTRALIZED,
   DECENTRALIZED,
@@ -15,41 +17,64 @@ import centerCoin from "@/assets/digi_coin_green_center.png.asset.json";
 import rocket from "@/assets/digim-rocket.png.asset.json";
 
 export function Summary() {
+  const ref = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add(MOTION_OK, () => {
+        const cards = gsap.utils.toArray<HTMLElement>(".summary-card", ref.current);
+        gsap.set(cards, { autoAlpha: 0, x: 56 });
+        ScrollTrigger.batch(cards, {
+          start: "top 85%",
+          once: true,
+          onEnter: (els) =>
+            gsap.to(els, { autoAlpha: 1, x: 0, duration: 0.8, ease: "power3.out", stagger: 0.1 }),
+        });
+      });
+    },
+    { scope: ref },
+  );
+
   return (
-    <section id="summary" className="hairline-t scroll-mt-24">
-      <div className="mx-auto grid max-w-6xl gap-12 px-6 py-24 md:grid-cols-[0.85fr_1.15fr] md:py-32">
-        <Reveal>
+    <section id="summary" ref={ref} className="hairline-t scroll-mt-24">
+      <div className="mx-auto grid max-w-6xl gap-12 px-6 py-24 md:grid-cols-[0.85fr_1.15fr] md:items-start md:py-32">
+        <div className="md:sticky md:top-28">
           <span className="eyebrow">§ 01 Project details</span>
           <h2 className="mt-6 font-display text-[clamp(3rem,7vw,5rem)] leading-[0.95] tracking-tight">
             Summary<span className="text-primary">.</span>
           </h2>
-        </Reveal>
-        <div className="flex flex-col gap-6 text-[17px] leading-[1.65] text-muted-foreground md:text-lg">
+          <p className="mt-8 hidden max-w-[260px] text-sm leading-relaxed text-muted-foreground md:block">
+            One ecosystem, four moving parts — each card is a chapter of the story.
+          </p>
+        </div>
+        <div className="flex flex-col gap-5 text-[17px] leading-[1.65] text-muted-foreground md:text-lg">
           {[
             ["DigiPaga", " is an Agentic Stablecoin Orchestration Engine designed to power payments across Latin America and the Global South."],
             ["Digimercados", " is a Hybrid Smart Wallet and Exchange that brings advanced trading tools, structured access, and digital market participation to the same regions."],
             ["Digi Agent", " serves as the AI-guided avatar layer across both platforms, helping users navigate payments, stablecoins, wallets, and market tools with greater clarity."],
             ["DIGIM", " unlocks premium functionality across the ecosystem and operates in both centralized and decentralized environments, making advanced financial infrastructure more accessible to users regardless of technical background."],
-          ].map(([b, rest], i) => (
-            <Reveal key={b} delay={i * 0.06}>
+          ].map(([b, rest]) => (
+            <div
+              key={b}
+              className="summary-card rounded-2xl border border-hairline bg-card/40 p-6 transition-[border-color,box-shadow] duration-300 hover:border-primary/25 hover:shadow-[var(--shadow-lift)] md:p-7"
+            >
               <p>
                 <strong className="font-semibold text-foreground">{b}</strong>
                 {rest}
               </p>
-            </Reveal>
-          ))}
-          <Reveal delay={0.24}>
-            <div className="hairline-t mt-6 flex gap-3 overflow-x-auto whitespace-nowrap pt-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              {["Payments", "Smart Exchange", "Stablecoins", "AI Agent", "Global South", "Hybrid Finance"].map((t) => (
-                <span
-                  key={t}
-                  className="shrink-0 cursor-default rounded-full border border-primary/25 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-foreground/70 transition-colors duration-300 hover:border-primary hover:text-foreground"
-                >
-                  {t}
-                </span>
-              ))}
             </div>
-          </Reveal>
+          ))}
+          <div className="summary-card hairline-t mt-2 flex gap-3 overflow-x-auto whitespace-nowrap pt-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {["Payments", "Smart Exchange", "Stablecoins", "AI Agent", "Global South", "Hybrid Finance"].map((t) => (
+              <span
+                key={t}
+                className="shrink-0 cursor-default rounded-full border border-primary/25 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-foreground/70 transition-colors duration-300 hover:border-primary hover:text-foreground"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>

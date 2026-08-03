@@ -1,8 +1,9 @@
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 import coin from "@/assets/digi_coin_green_center.png.asset.json";
 import agentCoin from "@/assets/digi-agent-coin-2.png.asset.json";
 import { HERO_STATS as STATS, HERO_TICKER } from "./data";
+import { gsap, SplitText, useGSAP, MOTION_OK } from "./scroll";
 
 const RING_INNER =
   "CONFIDENTIAL · REV 01 · INVESTOR · PRIVATE · DIGIM · TGE Q3 2027 · $4.25M RAISE · 36-MONTH RUNWAY · DUAL PLATFORM · ";
@@ -56,16 +57,58 @@ function CircularText({
 
 export function Hero() {
   const reduced = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : 140]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, reduced ? 1 : 1.08]);
-  const fade = useTransform(scrollYProgress, [0, 0.8], [1, reduced ? 1 : 0]);
+  const ref = useRef<HTMLElement>(null);
+  const headlineRef = useRef<HTMLHeadingElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const coinRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add(MOTION_OK, () => {
+        let split: SplitText | undefined;
+        if (headlineRef.current) {
+          split = new SplitText(headlineRef.current, { type: "chars" });
+          gsap.from(split.chars, {
+            yPercent: 110,
+            opacity: 0,
+            duration: 0.9,
+            ease: "power3.out",
+            stagger: 0.045,
+            delay: 0.1,
+          });
+        }
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: ref.current,
+            start: "top top",
+            end: "+=100%",
+            pin: true,
+            scrub: true,
+            anticipatePin: 1,
+          },
+        });
+        tl.to(bgRef.current, { yPercent: 30, ease: "none" }, 0)
+          .to(coinRef.current, { yPercent: -14, scale: 1.06, ease: "none" }, 0)
+          .to(
+            contentRef.current,
+            { opacity: 0, scale: 0.92, transformOrigin: "50% 30%", ease: "none" },
+            0,
+          );
+
+        return () => split?.revert();
+      });
+    },
+    { scope: ref },
+  );
 
   return (
     <header ref={ref} className="grain relative flex min-h-screen flex-col overflow-hidden">
       <div
-        className="pointer-events-none absolute inset-0"
+        ref={bgRef}
+        className="pointer-events-none absolute inset-0 will-change-transform"
         style={{ background: "var(--gradient-hero)" }}
         aria-hidden
       />
@@ -94,9 +137,9 @@ export function Hero() {
         </a>
       </nav>
 
-      <motion.div
-        style={{ opacity: fade }}
-        className="relative mx-auto flex w-full max-w-6xl flex-1 items-center px-6 pb-14 pt-10 md:pt-16"
+      <div
+        ref={contentRef}
+        className="relative mx-auto flex w-full max-w-6xl flex-1 items-center px-6 pb-14 pt-10 will-change-transform md:pt-16"
       >
         <div className="grid items-center gap-16 md:grid-cols-[1.05fr_0.95fr]">
           <div>
@@ -108,17 +151,15 @@ export function Hero() {
             >
               Token sale · Round 04 of 04
             </motion.p>
-            <motion.h1
-              initial={reduced ? false : { opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+            <h1
+              ref={headlineRef}
               className="mt-6 font-brand text-[clamp(3rem,9.5vw,6.8rem)] font-extrabold uppercase leading-[0.88] tracking-[-0.02em]"
             >
-              <span className="block text-primary">DIGI</span>
-              <span className="block text-foreground">
+              <span className="block whitespace-nowrap text-primary">DIGI</span>
+              <span className="block whitespace-nowrap text-foreground">
                 Agent<span className="text-primary">.</span>
               </span>
-            </motion.h1>
+            </h1>
             <motion.p
               initial={reduced ? false : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -150,7 +191,10 @@ export function Hero() {
             </motion.div>
           </div>
 
-          <motion.div style={{ y, scale }} className="relative mx-auto aspect-square w-full max-w-[480px]">
+          <div
+            ref={coinRef}
+            className="relative mx-auto aspect-square w-full max-w-[480px] will-change-transform"
+          >
             <div
               className="absolute inset-[6%] rounded-full blur-3xl"
               style={{ background: "radial-gradient(circle, oklch(0.6 0.16 140 / 22%), transparent 70%)" }}
@@ -182,9 +226,9 @@ export function Hero() {
               animate={reduced ? undefined : { y: [0, -12, 0] }}
               transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
             />
-          </motion.div>
+          </div>
         </div>
-      </motion.div>
+      </div>
 
       <div className="hairline-t relative mt-auto">
         <div className="mx-auto grid max-w-6xl grid-cols-2 px-6 sm:grid-cols-4 lg:grid-cols-7">

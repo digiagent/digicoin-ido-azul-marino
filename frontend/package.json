@@ -1,0 +1,7 @@
+{
+  "name": "digi-frontend-shim",
+  "private": true,
+  "scripts": {
+    "start": "cd /app && /root/.bun/bin/bun run dev --port 3000 --host 0.0.0.0"
+  }
+}

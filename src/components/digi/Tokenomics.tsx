@@ -1,13 +1,79 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import type { ReactNode } from "react";
+import { motion, useReducedMotion, useSpring } from "framer-motion";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import { Reveal, Section } from "./Section";
+import { gsap, useGSAP, MOTION_OK } from "./scroll";
 import { TOKENOMICS } from "./data";
 
 const ROW =
   "grid grid-cols-[1.5fr_0.5fr_1fr_0.6fr_0.9fr_0.5fr_0.5fr_0.5fr] items-center gap-4";
 
+const BENTO = [
+  { label: "Total supply", count: 1_000_000_000, display: "1,000,000,000", prefix: "", suffix: "", decimals: 0, note: "Fixed — no mint function", span: "sm:col-span-2" },
+  { label: "Total raise", count: 4_250_000, display: "4,250,000", prefix: "$", suffix: "", decimals: 0, note: "Across four rounds", span: "" },
+  { label: "Initial circulating", count: 7.9, display: "7.9", prefix: "", suffix: "%", decimals: 1, note: "At TGE · Q3 2027", span: "" },
+];
+
+function TiltCard({ children, className = "" }: { children: ReactNode; className?: string }) {
+  const reduced = useReducedMotion();
+  const rx = useSpring(0, { stiffness: 280, damping: 22 });
+  const ry = useSpring(0, { stiffness: 280, damping: 22 });
+
+  return (
+    <motion.div
+      className={`rounded-2xl border border-hairline bg-card/40 p-7 transition-shadow duration-300 hover:shadow-[var(--shadow-lift)] ${className}`}
+      style={{ rotateX: rx, rotateY: ry, transformPerspective: 1000, transformStyle: "preserve-3d" }}
+      onMouseMove={(e) => {
+        if (reduced) return;
+        const r = e.currentTarget.getBoundingClientRect();
+        ry.set(((e.clientX - r.left) / r.width - 0.5) * 10);
+        rx.set((0.5 - (e.clientY - r.top) / r.height) * 8);
+      }}
+      onMouseLeave={() => {
+        rx.set(0);
+        ry.set(0);
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export function Tokenomics() {
   const [active, setActive] = useState<string | null>(null);
+  const bentoRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add(MOTION_OK, () => {
+        gsap.utils.toArray<HTMLElement>("[data-count]", bentoRef.current).forEach((el) => {
+          const end = parseFloat(el.dataset.count || "0");
+          const decimals = Number(el.dataset.decimals || 0);
+          const prefix = el.dataset.prefix || "";
+          const suffix = el.dataset.suffix || "";
+          const state = { v: 0 };
+          gsap.to(state, {
+            v: end,
+            duration: 1.8,
+            ease: "power3.out",
+            scrollTrigger: { trigger: el, start: "top 88%", once: true },
+            onUpdate() {
+              el.textContent =
+                prefix +
+                state.v.toLocaleString("en-US", {
+                  minimumFractionDigits: decimals,
+                  maximumFractionDigits: decimals,
+                }) +
+                suffix;
+            },
+          });
+        });
+      });
+    },
+    { scope: bentoRef },
+  );
 
   return (
     <Section
@@ -17,6 +83,29 @@ export function Tokenomics() {
       title="One billion DIGI, allocated for durability"
       lead="Supply is fixed at 1,000,000,000 DIGI. Allocations are weighted toward the agent economy and long-dated liquidity rather than short-term distribution."
     >
+      <div
+        ref={bentoRef}
+        className="mb-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 [perspective:1000px]"
+      >
+        {BENTO.map((b) => (
+          <TiltCard key={b.label} className={b.span}>
+            <div className="eyebrow">{b.label}</div>
+            <div
+              className="mt-3 font-display text-4xl tracking-tight text-foreground md:text-5xl"
+              data-count={b.count}
+              data-prefix={b.prefix}
+              data-suffix={b.suffix}
+              data-decimals={b.decimals}
+            >
+              {b.prefix + b.display + b.suffix}
+            </div>
+            <div className="mt-3 font-mono text-[11px] uppercase tracking-[0.18em] text-primary/80">
+              {b.note}
+            </div>
+          </TiltCard>
+        ))}
+      </div>
+
       <div className="grid gap-12 lg:grid-cols-[360px_1fr] lg:items-center">
         <Reveal>
           <div className="relative aspect-square w-full">

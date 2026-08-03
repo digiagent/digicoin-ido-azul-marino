@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Hero } from "@/components/digi/Hero";
+import { CTA } from "@/components/digi/CTA";
+import { useLenis } from "@/components/digi/scroll";
 import { Tokenomics } from "@/components/digi/Tokenomics";
 import { SaleDetails } from "@/components/digi/SaleDetails";
 import {
@@ -32,6 +34,8 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  useLenis();
+
   return (
     <main className="min-h-screen bg-background font-sans text-foreground antialiased">
       <Hero />
@@ -44,6 +48,7 @@ function Index() {
       <SaleDetails />
       <Runway />
       <Team />
+      <CTA />
       <Footer />
     </main>
   );
