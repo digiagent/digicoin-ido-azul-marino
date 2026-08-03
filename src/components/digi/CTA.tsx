@@ -63,6 +63,7 @@ export function CTA() {
           <Magnetic>
             <motion.a
               href="#sale"
+              data-testid="cta-secure-allocation-btn"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
               className="cta-pulse block rounded-full px-9 py-4 text-sm font-semibold text-primary-foreground"

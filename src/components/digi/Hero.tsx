@@ -133,6 +133,7 @@ export function Hero() {
         <Magnetic>
           <a
             href="#sale"
+            data-testid="nav-join-sale-btn"
             className="cta-pulse block rounded-full border border-primary/50 bg-primary/15 px-5 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/25"
           >
             Join bridge sale
@@ -181,6 +182,7 @@ export function Hero() {
               <Magnetic>
                 <a
                   href="#sale"
+                  data-testid="hero-secure-allocation-btn"
                   className="cta-pulse block rounded-full px-7 py-3.5 text-sm font-semibold text-primary-foreground"
                   style={{ background: "var(--gradient-accent)" }}
                 >

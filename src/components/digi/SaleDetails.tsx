@@ -42,7 +42,7 @@ export function SaleDetails() {
             invalidateOnRefresh: true,
             anticipatePin: 1,
             onUpdate: (self) => {
-              const i = Math.round(self.progress * (STEP_COUNT - 1));
+              const i = Math.min(Math.floor(self.progress * STEP_COUNT), STEP_COUNT - 1);
               dots.forEach((d, di) => d.classList.toggle("sale-dot-active", di === i));
             },
           },

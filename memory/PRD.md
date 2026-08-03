@@ -29,7 +29,10 @@ Transform an existing (imported from Lovable) TanStack Start (Vite + React 19) +
 - Lovable-hosted assets (/__l5e/assets-v1/...) 404'd outside Lovable → downloaded all 7 images into /app/public/__l5e/assets-v1/... (same paths; no code changes)
 - SplitText kerning loss made "AGENT." wrap → whitespace-nowrap on headline spans
 
+## What's Been Implemented (updates)
+- Jun 2026 (session 2): Verified allowedHosts fix end-to-end (testing agent iteration_1: 100% pass, zero console errors). Added: ScrollProgress.tsx (fixed top bar, GSAP scrub scaleX, data-testid scroll-progress-bar), sale step dots in SaleDetails.tsx (4 dots, .sale-dot-active toggled via ScrollTrigger onUpdate with floor mapping, lg-only), Magnetic.tsx (framer-motion spring wrapper) applied to hero/nav/CTA buttons. data-testids: nav-join-sale-btn, hero-secure-allocation-btn, cta-secure-allocation-btn, sale-step-dots, sale-dot-0..3.
+
 ## Backlog / Next
-- P1: Horizontal scrub progress indicator for SaleDetails; scroll progress bar in nav
-- P2: ScrollTrigger.batch for Team grid; DualUtility panels split-reveal; magnetic CTA buttons
-- P2: `bun run build` production verification against nitro/cloudflare target
+- P1: Scroll progress section labels; keyboard focus states for magnetic buttons
+- P2: ScrollTrigger.batch for Team grid; DualUtility panels split-reveal
+- P2 (user deferred): `bun run build` production verification against nitro/cloudflare target
