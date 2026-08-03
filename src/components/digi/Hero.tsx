@@ -69,7 +69,7 @@ export function Hero() {
         style={{ background: "var(--gradient-hero)" }}
         aria-hidden
       />
-      <nav className="relative mx-auto flex max-w-6xl items-center justify-between px-6 py-7">
+      <nav className="relative mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-7">
         <div className="flex items-center gap-3">
           <img src={coin.url} alt="" className="h-8 w-8" />
           <span className="font-display text-xl tracking-tight">DigiAgent</span>
