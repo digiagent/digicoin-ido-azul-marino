@@ -235,7 +235,7 @@ export function AgentNomics() {
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
         <Reveal>
           <span className="eyebrow">§ 06 AI environments</span>
-          <p className="mt-6 font-display text-[clamp(3rem,7vw,5.5rem)] italic leading-[0.95] tracking-tight text-primary">
+          <p className="mt-6 font-brand text-[clamp(2.6rem,6.4vw,5rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.02em] text-primary">
             Agent-nomics
           </p>
         </Reveal>
@@ -250,6 +250,9 @@ export function AgentNomics() {
           </Reveal>
           <div className="flex max-w-[560px] flex-col gap-6">
             <Reveal>
+              <p className="mb-3 font-brand text-[clamp(1.6rem,3vw,2.4rem)] font-bold uppercase tracking-[-0.01em] text-primary">
+                Incinerator
+              </p>
               <h2 className="font-display text-[clamp(2rem,4vw,3rem)] font-semibold leading-[1.1] tracking-tight">
                 Defeating Inflation with Active AI Tokenomics.
               </h2>

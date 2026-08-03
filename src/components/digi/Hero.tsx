@@ -86,9 +86,9 @@ export function Hero() {
             </a>
           ))}
         </div>
-          <a
+        <a
           href="#sale"
-          className="rounded-full border border-primary/40 bg-primary/10 px-5 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/20"
+          className="cta-pulse rounded-full border border-primary/50 bg-primary/15 px-5 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/25"
         >
           Join bridge sale
         </a>
