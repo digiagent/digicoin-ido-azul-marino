@@ -63,7 +63,7 @@ export function Hero() {
   const fade = useTransform(scrollYProgress, [0, 0.8], [1, reduced ? 1 : 0]);
 
   return (
-    <header ref={ref} className="grain relative overflow-hidden">
+    <header ref={ref} className="grain relative flex min-h-screen flex-col overflow-hidden">
       <div
         className="pointer-events-none absolute inset-0"
         style={{ background: "var(--gradient-hero)" }}
@@ -86,7 +86,7 @@ export function Hero() {
             </a>
           ))}
         </div>
-        <a
+          <a
           href="#sale"
           className="rounded-full border border-primary/40 bg-primary/10 px-5 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/20"
         >
@@ -94,7 +94,10 @@ export function Hero() {
         </a>
       </nav>
 
-      <motion.div style={{ opacity: fade }} className="relative mx-auto max-w-6xl px-6 pb-20 pt-14 md:pt-24">
+      <motion.div
+        style={{ opacity: fade }}
+        className="relative mx-auto flex w-full max-w-6xl flex-1 items-center px-6 pb-14 pt-10 md:pt-16"
+      >
         <div className="grid items-center gap-16 md:grid-cols-[1.05fr_0.95fr]">
           <div>
             <motion.p
@@ -109,7 +112,7 @@ export function Hero() {
               initial={reduced ? false : { opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-6 font-display text-[clamp(3.5rem,11vw,8rem)] leading-[0.86] tracking-tight"
+              className="mt-6 font-brand text-[clamp(3rem,9.5vw,6.8rem)] font-extrabold uppercase leading-[0.88] tracking-[-0.02em]"
             >
               <span className="block text-primary">DIGI</span>
               <span className="block text-foreground">
@@ -133,7 +136,7 @@ export function Hero() {
             >
               <a
                 href="#sale"
-                className="rounded-full px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-[var(--shadow-lift)] transition-transform hover:-translate-y-0.5"
+                className="cta-pulse rounded-full px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5"
                 style={{ background: "var(--gradient-accent)" }}
               >
                 Secure allocation
@@ -183,7 +186,7 @@ export function Hero() {
         </div>
       </motion.div>
 
-      <div className="hairline-t relative">
+      <div className="hairline-t relative mt-auto">
         <div className="mx-auto grid max-w-6xl grid-cols-2 px-6 sm:grid-cols-4 lg:grid-cols-7">
           {STATS.map((s, i) => (
             <motion.div
@@ -191,7 +194,7 @@ export function Hero() {
               initial={reduced ? false : { opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 + i * 0.07, duration: 0.6 }}
-              className="border-hairline py-7 md:border-l md:first:border-l-0 md:pl-4"
+              className="border-hairline py-9 md:border-l md:first:border-l-0 md:pl-4"
             >
               <div className="eyebrow">{s.k}</div>
               <div className="mt-2 font-mono text-base text-foreground">{s.v}</div>
@@ -200,7 +203,7 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="hairline-t relative overflow-hidden border-b border-hairline py-4">
+      <div className="hairline-t relative overflow-hidden border-b border-hairline py-5">
         <div className="flex w-max gap-14 whitespace-nowrap font-mono text-[11px] uppercase tracking-[0.25em] text-muted-foreground [animation:digi-ticker_38s_linear_infinite] motion-reduce:animate-none">
           {[...HERO_TICKER, ...HERO_TICKER].map((t, i) => (
             <span key={i} className="flex items-center gap-14">
