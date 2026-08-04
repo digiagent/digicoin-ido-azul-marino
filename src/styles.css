@@ -63,7 +63,8 @@
 
 :root {
   --radius: 0.5rem;
-  --background: oklch(0.145 0.008 150);
+  --page-bg: #0b0d0b;
+  --background: oklch(0.13 0.007 150);
   --foreground: oklch(0.96 0.006 140);
   --card: oklch(0.185 0.009 150);
   --card-foreground: oklch(0.96 0.006 140);
@@ -243,7 +244,7 @@ html.lenis body {
   }
 
   body {
-    background-color: var(--color-background);
+    background-color: var(--page-bg);
     color: var(--color-foreground);
     font-family: var(--font-sans);
   }

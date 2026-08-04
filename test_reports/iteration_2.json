@@ -1,0 +1,54 @@
+{
+  "summary": "Frontend-only re-test (1920x800) of the Digi-Agent-Coin cinematic landing page. Verified the reported blink/overlap bug at the #agentnomics <-> #sale pin boundary (slow + fast, both directions, ~60-150px increments with elementFromPoint + geometry probes and screenshots), the new black->green --page-bg theme tween, the single-line hero info bar, hero pin/ring/coin animations, the Product Stack coin (static coin + rotating textPath ring + 3D tilt hover) and 2x phone mockups, plus regressions (scroll progress bar, sale step dots, SplitText headline, CTA/footer, console errors). Original overlap bug is FIXED, but a NEW/residual visual glitch was found at both #sale pin boundaries caused by stale ScrollTrigger measurements (~390px), which produces a ~415px content snap on entry/exit plus a large blank gap after the horizontal ride.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [
+      {
+        "component": "SaleDetails (#sale ScrollTrigger pin) / Content (#agentnomics burner image)",
+        "issue": "Stale ScrollTrigger offsets: the #sale pin engages/releases at scrollY ~8105 while the section's real document offset (pin-spacer top) is 8495. Result: scrolling down, the Sale heading appears at top:415px and then SNAPS up to top:0 (415px jump); scrolling up, it snaps from top:0 to top:428. After the horizontal ride ends (scrollY 9400-9700) the section drops ~380px leaving a big empty dark band above it with the round cards clipped. Forcing a ScrollTrigger.refresh() (viewport resize) makes the pin engage exactly at 8500 -> confirms the trigger positions were measured before final layout and never refreshed. docH grows 13792 -> 14203 (+411px) once the lazy 2.9MB #agentnomics image (w-full max-w-[680px], auto height, loading=lazy) decodes. Fix: give auto-height/lazy images explicit width/height or aspect-ratio, and call ScrollTrigger.refresh() on window 'load', document.fonts.ready and image load.",
+        "selector": "#sale, #agentnomics img",
+        "priority": "HIGH"
+      },
+      {
+        "component": "SaleDetails round panels (.sale-wipe)",
+        "issue": "While #sale is visible but not yet pinned (the 400px stale window before the pin), all four round cards are fully clip-path hidden, so the section renders as a headline over ~500px of empty space. Reads as the 'blink' the user reported. Consider a fallback so panel 01 is visible before its containerAnimation trigger fires.",
+        "selector": "#sale .sale-panel .sale-wipe",
+        "priority": "MEDIUM"
+      },
+      {
+        "component": "Content / #agentnomics image",
+        "issue": "digi_burner_supply.png is 2.9MB and lazily loaded with auto height -> layout shift + the stale-pin issue above. Should be compressed/resized and given intrinsic dimensions.",
+        "selector": "#agentnomics img",
+        "priority": "MEDIUM"
+      }
+    ],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "verified_working": [
+    "BUG (overlap) FIXED: across ~70 probe frames scrolling up/down over the boundary (slow 60-150px steps and fast 500px steps x3 cycles), elementFromPoint over the incinerator image area always resolved to a #sale element while pinned; #sale computed background-color = rgb(14,32,20) (== --page-bg), z-index 10, background-image none. No frame showed Sale Details text over the Incinerator burner image; screenshots confirm.",
+    "Theme: body background rgb(11,13,11) at scrollY 0, rgb(14,32,20) with --page-bg #0e2014 after the hero, and back to rgb(11,13,11) on return to top.",
+    "Hero info bar: 8 stats, flex-wrap nowrap, white-space nowrap, all items share bounding top 698 (single line, no horizontal overflow: scrollWidth == clientWidth == 1700).",
+    "Hero: both SVG rings rotate (transform matrices change over 2s), agent coin float/wobble animating, hero pins (position fixed) with gradient layer opacity 0 -> 0.75, content opacity -> 0.25 and scale 0.8875 at scrollY 600.",
+    "Product Stack: phone mockups render 840px tall; center coin img transform stays 'none' (no spin) while its textPath ring rotates; stepped hover applies scale ~1.059 + 3D tilt (matrix3d with rotateX/Y) and resets to identity on leave.",
+    "Regression: scroll progress bar scaleX 0.186 -> 0.849 at 80% scroll; sale step dots track the horizontal ride (0,0,1,1,1,2,2,3,3,3) with track x 0 -> -1344; SplitText headline renders 'DIGI' / 'AGENT.' on two lines with no mid-word wrap; CTA + footer render correctly; zero console errors/warnings and zero page errors across all runs; all images load (HTTP 200)."
+  ],
+  "test_report_links": ["/app/tests/sale_pin_boundary_test.py"],
+  "action_items": [
+    "Call ScrollTrigger.refresh() after window 'load', document.fonts.ready and after late-loading images (or use ScrollTrigger.config/ imagesLoaded) so pin start/end match final layout - fixes the ~415px snap and the blank gap around the #sale pin.",
+    "Add explicit width/height (or aspect-ratio) to auto-height lazy images, especially #agentnomics digi_burner_supply.png, and compress that 2.9MB asset.",
+    "Make round panel 01 visible (or start the wipe earlier) so #sale is not a headline over empty space just before the pin engages."
+  ],
+  "critical_code_review_comments": [
+    "SaleDetails/Hero ScrollTriggers use invalidateOnRefresh but nothing triggers a refresh after async layout growth (lazy images / webfonts); this is the root cause of the boundary jank rather than anticipatePin.",
+    "Content.tsx is ~470 lines with several sections in one file; consider splitting per section for maintainability."
+  ],
+  "updated_files": ["/app/tests/sale_pin_boundary_test.py"],
+  "success_rate": {"backend": "N/A (no backend by design)", "frontend": "85%"},
+  "seed_data_creation": "None - static landing page",
+  "should_call_test_agent_after_fix": true,
+  "should_main_agent_self_test": false,
+  "test_credentials": "None required",
+  "context_for_next_testing_agent": "Test at 1920x800. Lenis smooth scroll: window.scrollTo(0,y) works reliably (wait ~300ms); mouse.wheel needs many small steps. Probe helper in /app/tests/sale_pin_boundary_test.py: compare where #sale gets position:fixed vs its pin-spacer document offset - they must match within ~80px. Currently 8105 vs 8495. A viewport resize forces ScrollTrigger.refresh and makes them match, which is the diagnostic for the stale-measurement bug. The original text-over-image overlap bug is confirmed fixed (opaque bg + z-10); no need to re-verify exhaustively, just re-check the snap/gap after the refresh fix.",
+  "rca_of_the_issue": "The #sale ScrollTrigger start/end are computed on mount. The #agentnomics burner image (2.9MB, loading=lazy, w-full max-w-[680px] with intrinsic-auto height) and webfonts settle afterwards, growing document height from 13792 to 14203 (+411px) and pushing #sale down by ~390px. Because no ScrollTrigger.refresh() is ever fired after that growth, the pin engages/releases ~390px above the section's real position, producing a ~415px content snap when entering/leaving the pin and a ~380px blank band after the horizontal ride. Reproduce: load fresh, scroll to y=8080 (heading at 415px, cards clipped) then y=8140 (pinned at 0). Mitigation: ScrollTrigger.refresh() on load/fonts/image load + intrinsic image dimensions."
+}

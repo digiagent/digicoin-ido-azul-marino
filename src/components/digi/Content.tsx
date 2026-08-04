@@ -1,5 +1,7 @@
 import { useRef } from "react";
+import { motion, useReducedMotion, useSpring } from "framer-motion";
 import { Bar, BarChart, Cell, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { CircularText } from "./CircularText";
 import { Reveal, Section } from "./Section";
 import { gsap, ScrollTrigger, useGSAP, MOTION_OK } from "./scroll";
 import {
@@ -81,10 +83,60 @@ export function Summary() {
   );
 }
 
+const COIN_RING =
+  "ONE COIN · TWO PLATFORMS · DIGIPAGA · DIGIMERCADOS · ONE COIN · TWO PLATFORMS · DIGIPAGA · DIGIMERCADOS · ";
+
+function CoinTilt() {
+  const reduced = useReducedMotion();
+  const rx = useSpring(0, { stiffness: 260, damping: 20 });
+  const ry = useSpring(0, { stiffness: 260, damping: 20 });
+
+  return (
+    <motion.div
+      data-testid="platforms-coin"
+      className="group relative aspect-square w-[220px] shrink-0 md:w-[320px]"
+      style={{ rotateX: rx, rotateY: ry, transformPerspective: 1000 }}
+      whileHover={reduced ? undefined : { scale: 1.06 }}
+      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+      onMouseMove={(e) => {
+        if (reduced) return;
+        const r = e.currentTarget.getBoundingClientRect();
+        ry.set(((e.clientX - r.left) / r.width - 0.5) * 14);
+        rx.set((0.5 - (e.clientY - r.top) / r.height) * 12);
+      }}
+      onMouseLeave={() => {
+        rx.set(0);
+        ry.set(0);
+      }}
+    >
+      <div
+        className="absolute -inset-8 rounded-full opacity-70 blur-3xl transition-opacity duration-300 group-hover:opacity-100"
+        style={{ background: "radial-gradient(circle, oklch(0.6 0.16 140 / 40%), transparent 70%)" }}
+        aria-hidden
+      />
+      <div className="absolute inset-0 rounded-full border border-hairline" aria-hidden />
+      <CircularText
+        text={COIN_RING}
+        radius={88}
+        size={6.2}
+        duration={40}
+        reduced={reduced}
+        className="text-primary/60"
+      />
+      <img
+        src={centerCoin.url}
+        alt="DIGI coin"
+        loading="lazy"
+        className="absolute inset-[16%] h-[68%] w-[68%] object-contain transition-[filter] duration-300 group-hover:drop-shadow-[0_0_36px_oklch(0.82_0.21_130_/_45%)]"
+      />
+    </motion.div>
+  );
+}
+
 export function Platforms() {
   return (
     <section id="platforms" className="hairline-t scroll-mt-24 overflow-hidden">
-      <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
+      <div className="mx-auto w-full max-w-6xl px-6 pt-24 md:pt-32">
         <Reveal>
           <span className="eyebrow">§ 02 Product stack</span>
           <h2 className="mt-6 font-display text-[clamp(2.6rem,6vw,4.5rem)] leading-[1.02] tracking-tight">
@@ -93,19 +145,21 @@ export function Platforms() {
             <span className="text-primary">One cryptocurrency.</span>
           </h2>
         </Reveal>
+      </div>
 
-        <div className="mt-20 grid items-center gap-6 lg:grid-cols-[0.62fr_2fr_0.62fr]">
+      <div className="mx-auto mt-16 w-full max-w-[1600px] px-6 pb-24 md:pb-32">
+        <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.4fr_0.9fr]">
           <Reveal className="order-2 flex justify-center lg:order-1">
             <img
               src={phoneMercados.url}
               alt="Digimercados app"
               loading="lazy"
-              className="h-[420px] w-auto object-contain drop-shadow-2xl"
+              className="h-[560px] w-auto object-contain drop-shadow-2xl md:h-[720px] xl:h-[840px]"
             />
           </Reveal>
 
           <Reveal delay={0.1} className="order-1 lg:order-2">
-            <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-6">
+            <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8">
               <ul className="flex flex-col gap-4 text-right text-sm text-foreground md:whitespace-nowrap md:text-[15px]">
                 <li className="font-mono text-[13px] font-semibold uppercase tracking-[0.08em] text-primary">
                   Digimercados
@@ -114,21 +168,7 @@ export function Platforms() {
                   <li key={f}>{f}</li>
                 ))}
               </ul>
-              <div className="relative aspect-square w-[150px] shrink-0 md:w-[230px]">
-                <div
-                  className="absolute -inset-6 rounded-full blur-3xl"
-                  style={{ background: "radial-gradient(circle, oklch(0.6 0.16 140 / 38%), transparent 70%)" }}
-                  aria-hidden
-                />
-                <div className="absolute -inset-4 rounded-full border border-primary/10" aria-hidden />
-                <div className="absolute -inset-9 rounded-full border border-hairline" aria-hidden />
-                <img
-                  src={centerCoin.url}
-                  alt="DIGI coin"
-                  loading="lazy"
-                  className="relative h-full w-full object-contain"
-                />
-              </div>
+              <CoinTilt />
               <ul className="flex flex-col gap-4 text-left text-sm text-foreground md:whitespace-nowrap md:text-[15px]">
                 <li className="font-mono text-[13px] font-semibold uppercase tracking-[0.08em] text-primary">
                   DigiPaga
@@ -145,7 +185,7 @@ export function Platforms() {
               src={phone.url}
               alt="DigiPaga app"
               loading="lazy"
-              className="h-[420px] w-auto object-contain drop-shadow-2xl"
+              className="h-[560px] w-auto object-contain drop-shadow-2xl md:h-[720px] xl:h-[840px]"
             />
           </Reveal>
         </div>

@@ -38,7 +38,7 @@ function Index() {
   useLenis();
 
   return (
-    <main className="min-h-screen bg-background font-sans text-foreground antialiased">
+    <main className="min-h-screen font-sans text-foreground antialiased">
       <ScrollProgress />
       <Hero />
       <Summary />

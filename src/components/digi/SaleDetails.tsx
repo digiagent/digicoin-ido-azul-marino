@@ -40,7 +40,6 @@ export function SaleDetails() {
             pin: true,
             scrub: true,
             invalidateOnRefresh: true,
-            anticipatePin: 1,
             onUpdate: (self) => {
               const i = Math.min(Math.floor(self.progress * STEP_COUNT), STEP_COUNT - 1);
               dots.forEach((d, di) => d.classList.toggle("sale-dot-active", di === i));
@@ -76,7 +75,8 @@ export function SaleDetails() {
     <section
       ref={sectionRef}
       id="sale"
-      className="hairline-t scroll-mt-24 overflow-hidden"
+      className="hairline-t relative z-10 scroll-mt-24 overflow-hidden"
+      style={{ background: "var(--page-bg)" }}
     >
       <div className="flex flex-col justify-center gap-12 py-24 lg:h-screen lg:py-0">
         <div className="mx-auto w-full max-w-6xl px-6">

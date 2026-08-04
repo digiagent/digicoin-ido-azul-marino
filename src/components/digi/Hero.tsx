@@ -3,6 +3,7 @@ import { useRef } from "react";
 import coin from "@/assets/digi_coin_green_center.png.asset.json";
 import agentCoin from "@/assets/digi-agent-coin-2.png.asset.json";
 import { HERO_STATS as STATS, HERO_TICKER } from "./data";
+import { CircularText } from "./CircularText";
 import { Magnetic } from "./Magnetic";
 import { gsap, SplitText, useGSAP, MOTION_OK } from "./scroll";
 
@@ -10,51 +11,6 @@ const RING_INNER =
   "CONFIDENTIAL · REV 01 · INVESTOR · PRIVATE · DIGIM · TGE Q3 2027 · $4.25M RAISE · 36-MONTH RUNWAY · DUAL PLATFORM · ";
 const RING_OUTER =
   "DIGIMERCADOS · DIGIPAGA · 1,000,000,000 SUPPLY · DIGIMERCADOS · DIGIPAGA · 1,000,000,000 SUPPLY · ";
-
-function CircularText({
-  text,
-  radius,
-  size,
-  duration,
-  reverse,
-  className,
-  reduced,
-}: {
-  text: string;
-  radius: number;
-  size: number;
-  duration: number;
-  reverse?: boolean;
-  className?: string;
-  reduced?: boolean | null;
-}) {
-  const id = `ring-${radius}`;
-  return (
-    <motion.svg
-      viewBox="0 0 200 200"
-      className={`pointer-events-none absolute inset-0 h-full w-full ${className ?? ""}`}
-      aria-hidden
-      animate={reduced ? undefined : { rotate: reverse ? -360 : 360 }}
-      transition={{ duration, repeat: Infinity, ease: "linear" }}
-    >
-      <defs>
-        <path
-          id={id}
-          d={`M 100,100 m -${radius},0 a ${radius},${radius} 0 1,1 ${radius * 2},0 a ${radius},${radius} 0 1,1 -${radius * 2},0`}
-          fill="none"
-        />
-      </defs>
-      <text
-        fill="currentColor"
-        fontSize={size}
-        letterSpacing="1.6"
-        style={{ fontFamily: "var(--font-mono, monospace)", textTransform: "uppercase" }}
-      >
-        <textPath href={`#${id}`}>{text}</textPath>
-      </text>
-    </motion.svg>
-  );
-}
 
 export function Hero() {
   const reduced = useReducedMotion();
@@ -91,13 +47,28 @@ export function Hero() {
             anticipatePin: 1,
           },
         });
-        tl.to(bgRef.current, { yPercent: 30, ease: "none" }, 0)
-          .to(coinRef.current, { yPercent: -14, scale: 1.06, ease: "none" }, 0)
+        tl.to(bgRef.current, { opacity: 1, yPercent: 25, scale: 1.12, ease: "none" }, 0)
+          .to(coinRef.current, { yPercent: -35, scale: 1.16, rotate: 5, ease: "none" }, 0)
           .to(
             contentRef.current,
-            { opacity: 0, scale: 0.92, transformOrigin: "50% 30%", ease: "none" },
+            { opacity: 0, scale: 0.85, yPercent: -6, transformOrigin: "50% 30%", ease: "none" },
             0,
           );
+
+        gsap.fromTo(
+          document.documentElement,
+          { "--page-bg": "#0b0d0b" },
+          {
+            "--page-bg": "#0e2014",
+            ease: "none",
+            scrollTrigger: {
+              trigger: ref.current,
+              start: "top top",
+              end: "bottom top",
+              scrub: true,
+            },
+          },
+        );
 
         return () => split?.revert();
       });
@@ -109,7 +80,7 @@ export function Hero() {
     <header ref={ref} className="grain relative flex min-h-screen flex-col overflow-hidden">
       <div
         ref={bgRef}
-        className="pointer-events-none absolute inset-0 will-change-transform"
+        className="pointer-events-none absolute inset-0 opacity-0 will-change-transform"
         style={{ background: "var(--gradient-hero)" }}
         aria-hidden
       />
@@ -215,7 +186,7 @@ export function Hero() {
               text={RING_OUTER}
               radius={92}
               size={5.2}
-              duration={90}
+              duration={36}
               reduced={reduced}
               className="text-muted-foreground/40"
             />
@@ -223,7 +194,7 @@ export function Hero() {
               text={RING_INNER}
               radius={76}
               size={5.6}
-              duration={62}
+              duration={24}
               reverse
               reduced={reduced}
               className="text-primary/50"
@@ -232,25 +203,28 @@ export function Hero() {
               src={agentCoin.url}
               alt="DigiAgent holding the DIGI coin"
               className="absolute inset-[22%] h-[56%] w-[56%] object-contain drop-shadow-2xl"
-              animate={reduced ? undefined : { y: [0, -12, 0] }}
-              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+              animate={reduced ? undefined : { y: [0, -12, 0], rotate: [0, 2.5, 0, -2.5, 0] }}
+              transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
             />
           </div>
         </div>
       </div>
 
       <div className="hairline-t relative mt-auto">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 px-6 sm:grid-cols-4 lg:grid-cols-7">
+        <div
+          data-testid="hero-info-bar"
+          className="mx-auto flex w-full max-w-[1700px] flex-nowrap items-center justify-between gap-10 overflow-x-auto whitespace-nowrap px-6 py-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
           {STATS.map((s, i) => (
             <motion.div
               key={s.k}
-              initial={reduced ? false : { opacity: 0, y: 14 }}
+              initial={reduced ? false : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 + i * 0.07, duration: 0.6 }}
-              className="border-hairline py-9 md:border-l md:first:border-l-0 md:pl-4"
+              transition={{ delay: 0.4 + i * 0.06, duration: 0.5 }}
+              className="flex shrink-0 items-baseline gap-2.5"
             >
-              <div className="eyebrow">{s.k}</div>
-              <div className="mt-2 font-mono text-base text-foreground">{s.v}</div>
+              <span className="eyebrow">{s.k}</span>
+              <span className="font-mono text-sm text-foreground">{s.v}</span>
             </motion.div>
           ))}
         </div>
