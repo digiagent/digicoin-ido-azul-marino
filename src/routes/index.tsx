@@ -7,7 +7,6 @@ import { Tokenomics } from "@/components/digi/Tokenomics";
 import { SaleDetails } from "@/components/digi/SaleDetails";
 import {
   AgentNomics,
-  Distribution,
   DualUtility,
   Footer,
   Platforms,
@@ -45,7 +44,6 @@ function Index() {
       <Platforms />
       <DualUtility />
       <Tokenomics />
-      <Distribution />
       <AgentNomics />
       <SaleDetails />
       <Runway />

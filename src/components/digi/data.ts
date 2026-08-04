@@ -135,7 +135,7 @@ export const HERO_STATS = [
   { k: "TGE", v: "Q3 · 2027" },
   { k: "Mintable", v: "No" },
   { k: "Burnable", v: "Yes" },
-  { k: "Launchpads", v: "Multi" },
+  { k: "Multi-Launchpads", v: "Yes" },
   { k: "Chain", v: "TBA" },
 ];
 

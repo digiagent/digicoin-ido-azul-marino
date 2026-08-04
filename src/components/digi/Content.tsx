@@ -7,7 +7,6 @@ import { gsap, ScrollTrigger, useGSAP, MOTION_OK } from "./scroll";
 import {
   CENTRALIZED,
   DECENTRALIZED,
-  DISTRIBUTION_DETAILS,
   PLATFORM_FEATURES,
   RUNWAY,
   TEAM,
@@ -269,31 +268,6 @@ export function DualUtility() {
   );
 }
 
-export function Distribution() {
-  return (
-    <section id="distribution" className="scroll-mt-24">
-      <div className="mx-auto max-w-6xl px-6 py-16 md:py-24">
-        <Reveal>
-          <div className="rounded-[28px] border border-hairline bg-card/30 px-6 py-12 md:px-14 md:py-16">
-            <h2 className="font-display text-3xl tracking-tight md:text-4xl">Distribution Details</h2>
-            <dl className="mt-10 divide-y divide-hairline">
-              {DISTRIBUTION_DETAILS.map(([k, v]) => (
-                <div
-                  key={k}
-                  className="grid gap-2 py-6 md:grid-cols-[280px_1fr] md:gap-10"
-                >
-                  <dt className="text-[15px] text-primary md:text-base">{k}</dt>
-                  <dd className="text-[15px] leading-relaxed text-foreground md:text-base">{v}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
 export function AgentNomics() {
   return (
     <section id="agentnomics" className="scroll-mt-24">
@@ -310,7 +284,10 @@ export function AgentNomics() {
               src={burner.url}
               alt="Digi Incinerator burning DIGI supply"
               loading="lazy"
+              width={1024}
+              height={1536}
               className="w-full max-w-[680px] object-contain md:-mr-6"
+              style={{ aspectRatio: "1024 / 1536" }}
             />
           </Reveal>
           <div className="flex max-w-[560px] flex-col gap-6">

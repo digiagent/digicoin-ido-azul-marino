@@ -5,7 +5,7 @@ import agentCoin from "@/assets/digi-agent-coin-2.png.asset.json";
 import { HERO_STATS as STATS, HERO_TICKER } from "./data";
 import { CircularText } from "./CircularText";
 import { Magnetic } from "./Magnetic";
-import { gsap, SplitText, useGSAP, MOTION_OK } from "./scroll";
+import { gsap, useGSAP, MOTION_OK } from "./scroll";
 
 const RING_INNER =
   "CONFIDENTIAL · REV 01 · INVESTOR · PRIVATE · DIGIM · TGE Q3 2027 · $4.25M RAISE · 36-MONTH RUNWAY · DUAL PLATFORM · ";
@@ -15,7 +15,6 @@ const RING_OUTER =
 export function Hero() {
   const reduced = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
-  const headlineRef = useRef<HTMLHeadingElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const coinRef = useRef<HTMLDivElement>(null);
@@ -24,18 +23,14 @@ export function Hero() {
     () => {
       const mm = gsap.matchMedia();
       mm.add(MOTION_OK, () => {
-        let split: SplitText | undefined;
-        if (headlineRef.current) {
-          split = new SplitText(headlineRef.current, { type: "chars" });
-          gsap.from(split.chars, {
-            yPercent: 110,
-            opacity: 0,
-            duration: 0.9,
-            ease: "power3.out",
-            stagger: 0.045,
-            delay: 0.1,
-          });
-        }
+        gsap.from(".hero-char", {
+          yPercent: 110,
+          opacity: 0,
+          duration: 0.9,
+          ease: "power3.out",
+          stagger: 0.045,
+          delay: 0.1,
+        });
 
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -69,8 +64,6 @@ export function Hero() {
             },
           },
         );
-
-        return () => split?.revert();
       });
     },
     { scope: ref },
@@ -84,7 +77,7 @@ export function Hero() {
         style={{ background: "var(--gradient-hero)" }}
         aria-hidden
       />
-      <nav className="relative mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-7">
+      <nav className="relative mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-7">
         <div className="flex items-center gap-3">
           <img src={coin.url} alt="" className="h-8 w-8" />
           <span className="font-display text-xl tracking-tight">DigiAgent</span>
@@ -114,7 +107,7 @@ export function Hero() {
 
       <div
         ref={contentRef}
-        className="relative mx-auto flex w-full max-w-6xl flex-1 items-center px-6 pb-14 pt-10 will-change-transform md:pt-16"
+        className="relative mx-auto flex w-full max-w-7xl flex-1 items-center px-6 pb-14 pt-10 will-change-transform md:pt-16"
       >
         <div className="grid items-center gap-16 md:grid-cols-[1.05fr_0.95fr]">
           <div>
@@ -127,12 +120,31 @@ export function Hero() {
               Token sale · Round 04 of 04
             </motion.p>
             <h1
-              ref={headlineRef}
+              data-testid="hero-headline"
               className="mt-6 font-brand text-[clamp(3rem,9.5vw,6.8rem)] font-extrabold uppercase leading-[0.88] tracking-[-0.02em]"
             >
-              <span className="block whitespace-nowrap text-primary">DIGI</span>
-              <span className="block whitespace-nowrap text-foreground">
-                Agent<span className="text-primary">.</span>
+              <span className="block whitespace-nowrap text-primary" aria-label="DIGI">
+                {"DIGI".split("").map((c, i) => (
+                  <Magnetic key={`d-${i}`} strength={0.35}>
+                    <span aria-hidden className="hero-char inline-block will-change-transform">
+                      {c}
+                    </span>
+                  </Magnetic>
+                ))}
+              </span>
+              <span className="block whitespace-nowrap text-foreground" aria-label="Agent.">
+                {"AGENT".split("").map((c, i) => (
+                  <Magnetic key={`a-${i}`} strength={0.35}>
+                    <span aria-hidden className="hero-char inline-block will-change-transform">
+                      {c}
+                    </span>
+                  </Magnetic>
+                ))}
+                <Magnetic strength={0.35}>
+                  <span aria-hidden className="hero-char inline-block text-primary will-change-transform">
+                    .
+                  </span>
+                </Magnetic>
               </span>
             </h1>
             <motion.p
@@ -173,7 +185,7 @@ export function Hero() {
 
           <div
             ref={coinRef}
-            className="relative mx-auto aspect-square w-full max-w-[480px] will-change-transform"
+            className="relative mx-auto aspect-square w-full max-w-[620px] will-change-transform"
           >
             <div
               className="absolute inset-[6%] rounded-full blur-3xl"
@@ -213,7 +225,7 @@ export function Hero() {
       <div className="hairline-t relative mt-auto">
         <div
           data-testid="hero-info-bar"
-          className="mx-auto flex w-full max-w-[1700px] flex-nowrap items-center justify-between gap-10 overflow-x-auto whitespace-nowrap px-6 py-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="mx-auto flex w-full max-w-[1700px] flex-nowrap items-center justify-center overflow-x-auto whitespace-nowrap px-6 py-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {STATS.map((s, i) => (
             <motion.div
@@ -221,10 +233,19 @@ export function Hero() {
               initial={reduced ? false : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 + i * 0.06, duration: 0.5 }}
-              className="flex shrink-0 items-baseline gap-2.5"
+              className="flex shrink-0 items-center"
             >
-              <span className="eyebrow">{s.k}</span>
-              <span className="font-mono text-sm text-foreground">{s.v}</span>
+              {i > 0 && (
+                <span aria-hidden className="mx-6 text-[9px] leading-none text-primary">
+                  ◆
+                </span>
+              )}
+              <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+                {s.k}
+              </span>
+              <span className="ml-2.5 font-mono text-[13px] font-semibold uppercase tracking-[0.06em] text-foreground">
+                {s.v}
+              </span>
             </motion.div>
           ))}
         </div>

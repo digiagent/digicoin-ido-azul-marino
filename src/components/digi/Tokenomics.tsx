@@ -4,7 +4,7 @@ import { motion, useReducedMotion, useSpring } from "framer-motion";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import { Reveal, Section } from "./Section";
 import { gsap, useGSAP, MOTION_OK } from "./scroll";
-import { TOKENOMICS } from "./data";
+import { DISTRIBUTION_DETAILS, TOKENOMICS } from "./data";
 
 const ROW =
   "grid grid-cols-[1.5fr_0.5fr_1fr_0.6fr_0.9fr_0.5fr_0.5fr_0.5fr] items-center gap-4";
@@ -213,6 +213,46 @@ export function Tokenomics() {
                 <span />
               </div>
             </div>
+          </div>
+        </Reveal>
+      </div>
+
+      <div className="mt-10" data-testid="distribution-details">
+        <Reveal>
+          <h3 className="font-display text-3xl tracking-tight md:text-4xl">
+            Distribution details<span className="text-primary">.</span>
+          </h3>
+          <div className="mt-6 overflow-hidden rounded-xl border border-hairline">
+            <div className="grid grid-cols-[240px_1fr] items-center gap-4 px-5 py-3 max-md:grid-cols-1">
+              <span className="eyebrow">Allocation</span>
+              <span className="eyebrow max-md:hidden">Description</span>
+            </div>
+            {DISTRIBUTION_DETAILS.map(([k, v]) => {
+              const slice = TOKENOMICS.find((s) => s.label === k);
+              const isActive = slice != null && active === slice.key;
+              return (
+                <div
+                  key={k}
+                  data-testid={`distribution-row-${slice?.key ?? k}`}
+                  onMouseEnter={() => slice && setActive(slice.key)}
+                  onMouseLeave={() => setActive(null)}
+                  className="grid grid-cols-[240px_1fr] items-center gap-4 border-t border-hairline px-5 py-3.5 transition-colors max-md:grid-cols-1"
+                  style={{ background: isActive ? "var(--surface)" : "transparent" }}
+                >
+                  <span className="flex items-center gap-3">
+                    <span
+                      className="h-2.5 w-2.5 shrink-0 rounded-[2px] transition-transform"
+                      style={{
+                        background: slice?.color ?? "var(--muted-foreground)",
+                        transform: isActive ? "scale(1.5)" : "scale(1)",
+                      }}
+                    />
+                    <span className="text-sm text-foreground">{k}</span>
+                  </span>
+                  <span className="text-sm leading-relaxed text-muted-foreground">{v}</span>
+                </div>
+              );
+            })}
           </div>
         </Reveal>
       </div>

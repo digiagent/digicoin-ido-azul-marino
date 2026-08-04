@@ -13,13 +13,21 @@ export const MOTION_OK = "(prefers-reduced-motion: no-preference)";
 
 export function useLenis() {
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const refresh = () => ScrollTrigger.refresh();
+    if (document.readyState === "complete") requestAnimationFrame(refresh);
+    else window.addEventListener("load", refresh, { once: true });
+    document.fonts?.ready.then(() => refresh()).catch(() => {});
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return () => window.removeEventListener("load", refresh);
+    }
     const lenis = new Lenis({ lerp: 0.12, anchors: { offset: -80 } });
     lenis.on("scroll", ScrollTrigger.update);
     const raf = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
     return () => {
+      window.removeEventListener("load", refresh);
       gsap.ticker.remove(raf);
       lenis.destroy();
     };
