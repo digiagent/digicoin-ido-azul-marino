@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Hero } from "@/components/digi/Hero";
+import { BridgeRound } from "@/components/digi/BridgeRound";
 import { CTA } from "@/components/digi/CTA";
 import { ScrollProgress } from "@/components/digi/ScrollProgress";
 import { useLenis } from "@/components/digi/scroll";
@@ -10,7 +11,6 @@ import {
   DualUtility,
   Footer,
   Platforms,
-  Runway,
   Summary,
   Team,
 } from "@/components/digi/Content";
@@ -46,7 +46,7 @@ function Index() {
       <Tokenomics />
       <AgentNomics />
       <SaleDetails />
-      <Runway />
+      <BridgeRound />
       <Team />
       <CTA />
       <Footer />

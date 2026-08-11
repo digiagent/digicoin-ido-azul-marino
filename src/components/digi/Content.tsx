@@ -1,6 +1,5 @@
 import { useRef } from "react";
 import { motion, useReducedMotion, useSpring } from "framer-motion";
-import { Bar, BarChart, Cell, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import { CircularText } from "./CircularText";
 import { Reveal, Section } from "./Section";
 import { gsap, ScrollTrigger, useGSAP, MOTION_OK } from "./scroll";
@@ -8,7 +7,6 @@ import {
   CENTRALIZED,
   DECENTRALIZED,
   PLATFORM_FEATURES,
-  RUNWAY,
   TEAM,
 } from "./data";
 import phone from "@/assets/digi_mockup_mobile.png.asset.json";
@@ -312,55 +310,6 @@ export function AgentNomics() {
         </div>
       </div>
     </section>
-  );
-}
-
-export function Runway() {
-  return (
-    <Section
-      id="runway"
-      index="09"
-      eyebrow="Runway"
-      title="Runway breakdown"
-      lead="Proceeds fund 36 months of operation with liquidity reserved separately from opex."
-    >
-      <Reveal>
-        <div className="rounded-2xl border border-hairline bg-card/40 p-6 md:p-10">
-          <div className="h-[340px] w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={RUNWAY} layout="vertical" margin={{ left: 8, right: 24 }}>
-                <XAxis type="number" hide domain={[0, 40]} />
-                <YAxis
-                  type="category"
-                  dataKey="name"
-                  axisLine={false}
-                  tickLine={false}
-                  width={130}
-                  tick={{ fill: "var(--muted-foreground)", fontSize: 13 }}
-                />
-                <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={22} isAnimationActive={false}>
-                  {RUNWAY.map((r, i) => (
-                    <Cell key={r.name} fill={`var(--chart-${i + 1})`} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="hairline-t mt-6 grid gap-6 pt-6 sm:grid-cols-3">
-            {[
-              ["Runway", "36 months"],
-              ["Monthly burn", "$385K"],
-              ["Liquidity ring-fenced", "$3.0M"],
-            ].map(([k, v]) => (
-              <div key={k}>
-                <div className="eyebrow">{k}</div>
-                <div className="mt-2 font-mono text-lg">{v}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </Reveal>
-    </Section>
   );
 }
 
