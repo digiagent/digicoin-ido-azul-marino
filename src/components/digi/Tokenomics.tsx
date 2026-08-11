@@ -10,9 +10,9 @@ const ROW =
   "grid grid-cols-[1.5fr_0.5fr_1fr_0.6fr_0.9fr_0.5fr_0.5fr_0.5fr] items-center gap-4";
 
 const BENTO = [
-  { label: "Total supply", count: 1_000_000_000, display: "1,000,000,000", prefix: "", suffix: "", decimals: 0, note: "Fixed — no mint function", span: "sm:col-span-2" },
-  { label: "Total raise", count: 4_250_000, display: "4,250,000", prefix: "$", suffix: "", decimals: 0, note: "Across four rounds", span: "" },
-  { label: "Initial circulating", count: 7.9, display: "7.9", prefix: "", suffix: "%", decimals: 1, note: "At TGE · Q3 2027", span: "" },
+  { label: "Total supply", count: 1_000_000_000, display: "1,000,000,000", prefix: "", suffix: "", decimals: 0, note: "Fixed — no mint function · burnable", span: "sm:col-span-2" },
+  { label: "Bridge target raise", count: 125_000, display: "125,000", prefix: "$", suffix: "", decimals: 0, note: "50,000,000 DIGI at $0.0025", span: "" },
+  { label: "Target TGE FDV", count: null, display: "$15M–$20M", prefix: "", suffix: "", decimals: 0, note: "Public sale at $0.015–$0.02", span: "" },
 ];
 
 function TiltCard({ children, className = "" }: { children: ReactNode; className?: string }) {
@@ -78,7 +78,7 @@ export function Tokenomics() {
   return (
     <Section
       id="tokenomics"
-      index="05"
+      index="14"
       eyebrow="Tokenomics"
       title="One billion DIGI, allocated for durability"
       lead="Supply is fixed at 1,000,000,000 DIGI. Allocations are weighted toward the agent economy and long-dated liquidity rather than short-term distribution."
@@ -92,12 +92,16 @@ export function Tokenomics() {
             <div className="eyebrow">{b.label}</div>
             <div
               className="mt-3 font-display text-4xl tracking-tight text-foreground md:text-5xl"
-              data-count={b.count}
-              data-prefix={b.prefix}
-              data-suffix={b.suffix}
-              data-decimals={b.decimals}
+              {...(b.count != null
+                ? {
+                    "data-count": b.count,
+                    "data-prefix": b.prefix,
+                    "data-suffix": b.suffix,
+                    "data-decimals": b.decimals,
+                  }
+                : {})}
             >
-              {b.prefix + b.display + b.suffix}
+              {b.count != null ? b.prefix + b.display + b.suffix : b.display}
             </div>
             <div className="mt-3 font-mono text-[11px] uppercase tracking-[0.18em] text-primary/80">
               {b.note}
@@ -207,7 +211,7 @@ export function Tokenomics() {
                 <span className="text-right font-mono text-xs text-muted-foreground">100%</span>
                 <span className="text-right font-mono text-xs text-primary">1,000,000,000</span>
                 <span className="text-right font-mono text-xs text-muted-foreground">—</span>
-                <span className="text-right font-mono text-xs text-foreground">$4,250,000</span>
+                <span className="text-right font-mono text-xs text-foreground">$125,000 + TBA</span>
                 <span />
                 <span />
                 <span />

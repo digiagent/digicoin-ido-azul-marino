@@ -12,10 +12,10 @@ export type Slice = {
 };
 
 export const TOKENOMICS: Slice[] = [
-  { key: "bridge", label: "Bridge Round", pct: 5, tokens: "50,000,000", price: "$0.005", raise: "$250,000", tge: "10%", cliff: "6", vesting: "12", color: "var(--chart-1)" },
-  { key: "private", label: "Private Sale", pct: 11, tokens: "110,000,000", price: "$0.009", raise: "$1,000,000", tge: "20%", cliff: "6", vesting: "6", color: "var(--chart-2)" },
-  { key: "presale", label: "Pre-Sale", pct: 2, tokens: "20,000,000", price: "$0.025", raise: "$500,000", tge: "50%", cliff: "2", vesting: "0", color: "var(--chart-3)" },
-  { key: "public", label: "Public Sale", pct: 6, tokens: "60,000,000", price: "$0.033", raise: "$2,000,000", tge: "100%", cliff: "0", vesting: "0", color: "var(--chart-4)" },
+  { key: "bridge", label: "Bridge Round", pct: 5, tokens: "50,000,000", price: "$0.0025", raise: "$125,000", tge: "10%", cliff: "6", vesting: "12", color: "var(--chart-1)" },
+  { key: "private", label: "Private Sale", pct: 11, tokens: "110,000,000", price: "$0.005", raise: "TBA", tge: "20%", cliff: "6", vesting: "6", color: "var(--chart-2)" },
+  { key: "presale", label: "Pre-Sale", pct: 2, tokens: "20,000,000", price: "$0.01", raise: "TBA", tge: "50%", cliff: "2", vesting: "0", color: "var(--chart-3)" },
+  { key: "public", label: "Public Sale", pct: 6, tokens: "60,000,000", price: "$0.015–$0.02", raise: "TBA", tge: "100%", cliff: "0", vesting: "0", color: "var(--chart-4)" },
   { key: "listing", label: "Listing & Market Making", pct: 20, tokens: "200,000,000", price: "—", raise: "—", tge: "10%", cliff: "6", vesting: "0", color: "var(--chart-5)" },
   { key: "incinerator", label: "Incinerator", pct: 10, tokens: "100,000,000", price: "—", raise: "—", tge: "25%", cliff: "0", vesting: "42", color: "var(--chart-6)" },
   { key: "wallet", label: "Wallet Community", pct: 5, tokens: "50,000,000", price: "—", raise: "—", tge: "25%", cliff: "0", vesting: "60", color: "var(--chart-7)" },
@@ -46,14 +46,14 @@ export const ROUNDS: Round[] = [
     id: "bridge",
     label: "Bridge Sale",
     title: "Bridge Round",
-    launchPrice: "$0.008",
-    roundFunding: "$250,000",
-    supplyPct: "3%",
-    supplyAmount: "30,000,000 DIGIM",
+    launchPrice: "$0.0025",
+    roundFunding: "$125,000 target",
+    supplyPct: "5%",
+    supplyAmount: "50,000,000 DIGI",
     currencies: "USDT, DAI, USDC",
     network: "TBA",
-    initMarketCap: "$1,000,000",
-    fdv: "$2,500,000",
+    initMarketCap: "TBA",
+    fdv: "$2.5M target",
     minTicket: "$5K",
     maxTicket: "$50K",
     cliff: "6 months",
@@ -62,15 +62,15 @@ export const ROUNDS: Round[] = [
   {
     id: "private",
     label: "Private Sale",
-    title: "Private Sale",
-    launchPrice: "$0.014",
-    roundFunding: "$1,250,000",
-    supplyPct: "9%",
-    supplyAmount: "90,000,000 DIGIM",
+    title: "Private / Pre-Seed",
+    launchPrice: "$0.005",
+    roundFunding: "TBA",
+    supplyPct: "11%",
+    supplyAmount: "110,000,000 DIGI",
     currencies: "USDT, DAI, USDC",
     network: "TBA",
-    initMarketCap: "$1,777,778",
-    fdv: "$13,000,000",
+    initMarketCap: "TBA",
+    fdv: "$5M target",
     minTicket: "$25K",
     maxTicket: "$250K",
     cliff: "6 months",
@@ -80,14 +80,14 @@ export const ROUNDS: Round[] = [
     id: "presale",
     label: "Pre-Sale",
     title: "Pre-Sale",
-    launchPrice: "$0.025",
-    roundFunding: "$500,000",
+    launchPrice: "$0.01",
+    roundFunding: "TBA",
     supplyPct: "2%",
-    supplyAmount: "20,000,000 DIGIM",
+    supplyAmount: "20,000,000 DIGI",
     currencies: "USDT, DAI, USDC",
     network: "TBA",
-    initMarketCap: "$3,200,000",
-    fdv: "$25,000,000",
+    initMarketCap: "TBA",
+    fdv: "$10M target",
     minTicket: "$50",
     maxTicket: "$10K",
     cliff: "2 months",
@@ -96,15 +96,15 @@ export const ROUNDS: Round[] = [
   {
     id: "public",
     label: "Public Sale",
-    title: "Public Sale",
-    launchPrice: "$0.063",
-    roundFunding: "$500,000",
-    supplyPct: "4%",
-    supplyAmount: "40,000,000 DIGIM",
+    title: "Public Sale / TGE",
+    launchPrice: "$0.015–$0.02",
+    roundFunding: "TBA",
+    supplyPct: "6%",
+    supplyAmount: "60,000,000 DIGI",
     currencies: "USDT, DAI, USDC",
     network: "TBA",
-    initMarketCap: "$8,000,000",
-    fdv: "$62,000,000",
+    initMarketCap: "TBA",
+    fdv: "$15M–$20M target",
     minTicket: "$50",
     maxTicket: "$10K",
     cliff: "0 months",
@@ -159,38 +159,85 @@ export const RUNWAY = [
   { name: "Reserve", value: 6 },
 ];
 
-export const TEAM = [
+export type TeamSocial = { type: "linkedin" | "github" | "x"; url: string };
+
+export type TeamMember = {
+  name: string;
+  role: string;
+  initials: string;
+  desc: string;
+  socials: TeamSocial[];
+};
+
+export const TEAM: TeamMember[] = [
   {
-    name: "John Doe",
-    role: "Founder & CEO",
-    prev: "Former Wall Street quant with 15 years in digital asset markets and exchange infrastructure.",
+    name: "Oscar",
+    role: "CEO & Co-Founder",
+    initials: "OS",
+    desc: "Co-founder leading company strategy and direction as CEO.",
+    socials: [
+      { type: "linkedin", url: "https://www.linkedin.com/in/olahventures" },
+      { type: "github", url: "https://www.github.com/okite" },
+      { type: "x", url: "https://x.com/ozkite" },
+    ],
   },
   {
-    name: "Maria Garcia",
-    role: "Chief Technology Officer",
-    prev: "Ex-Stripe engineer who built payment rails for three fintech unicorns across LATAM.",
+    name: "Otto",
+    role: "CTO & Co-Founder",
+    initials: "OT",
+    desc: "Co-founder leading engineering and technical architecture as CTO.",
+    socials: [
+      { type: "linkedin", url: "https://www.linkedin.com/in/otto-blockchain" },
+      { type: "github", url: "https://www.github.com/ottodevs" },
+      { type: "x", url: "https://x.com/aerovalencia" },
+    ],
   },
   {
-    name: "David Kim",
-    role: "Head of AI",
-    prev: "PhD in Machine Learning from MIT. Published 40+ papers on autonomous financial systems.",
+    name: "Daniel",
+    role: "Solution Architect",
+    initials: "DA",
+    desc: "Designs the solution architecture across the Digi-Agent platform stack.",
+    socials: [],
   },
   {
-    name: "Sarah Chen",
-    role: "Head of Partnerships",
-    prev: "Former Binance BD lead. Built the LATAM expansion strategy from zero to 2M users.",
-  },
-  {
-    name: "James Wilson",
-    role: "Chief Security Officer",
-    prev: "Ex-Coinbase security. Audited and secured over $2B in smart contract value.",
-  },
-  {
-    name: "Aisha Patel",
-    role: "Head of Community",
-    prev: "Built and managed crypto-native communities of 500K+ members across emerging markets.",
+    name: "Azahel",
+    role: "Compliance",
+    initials: "AZ",
+    desc: "Leads compliance across the Digi-Agent ecosystem.",
+    socials: [
+      { type: "linkedin", url: "https://www.linkedin.com/in/azahel-h-a823323a/" },
+    ],
   },
 ];
+
+export const OPEN_ROLES = ["Head of Growth", "Head of Community", "Security Lead"];
+
+// ─── Agent-nomics ───
+export const AI_ACCESS_TIERS = ["$3", "$4", "$5", "$6"];
+
+export const INCINERATOR_EXAMPLE = {
+  accessUsd: "$5 USDC",
+  accessNote: "User's AI access remains: $5/month.",
+  scenarios: [
+    { digiPrice: "$0.0025", digiRequired: "2,000 DIGI" },
+    { digiPrice: "$0.005", digiRequired: "1,000 DIGI" },
+    { digiPrice: "$0.01", digiRequired: "500 DIGI" },
+  ],
+};
+
+// TEMPORARY ILLUSTRATIVE CHART DATA — replace these arrays with real
+// tokenomics series when available. Values are relative (0–100).
+export const ILLUSTRATIVE_BREAK_SERIES = {
+  circulatingSupply: [18, 30, 42, 55, 68, 82, 95],
+  demand: [72, 66, 57, 47, 37, 29, 22],
+  tradingVolume: [62, 58, 50, 41, 32, 25, 19],
+  adoption: [56, 53, 46, 38, 30, 23, 17],
+};
+
+export const ILLUSTRATIVE_DIGI_MODEL_SERIES = {
+  utilityConsumption: [8, 20, 33, 47, 61, 75, 90],
+  tokensRemoved: [4, 14, 26, 39, 53, 67, 81],
+};
 
 export const DISTRIBUTION_DETAILS: [string, string][] = [
   ["Bridge Round", "Early-stage high-risk round for Angel Investors. Q2–Q3 2026. Min $5K · Max $50K"],

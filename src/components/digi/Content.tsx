@@ -3,15 +3,9 @@ import { motion, useReducedMotion, useSpring } from "framer-motion";
 import { CircularText } from "./CircularText";
 import { Reveal, Section } from "./Section";
 import { gsap, ScrollTrigger, useGSAP, MOTION_OK } from "./scroll";
-import {
-  CENTRALIZED,
-  DECENTRALIZED,
-  PLATFORM_FEATURES,
-  TEAM,
-} from "./data";
+import { CENTRALIZED, DECENTRALIZED, PLATFORM_FEATURES } from "./data";
 import phone from "@/assets/digi_mockup_mobile.png.asset.json";
 import phoneMercados from "@/assets/digi_m_temp_mockup.png.asset.json";
-import burner from "@/assets/digi_burner_supply.png.asset.json";
 import centerCoin from "@/assets/digi_coin_green_center.png.asset.json";
 import rocket from "@/assets/digim-rocket.png.asset.json";
 
@@ -266,90 +260,6 @@ export function DualUtility() {
   );
 }
 
-export function AgentNomics() {
-  return (
-    <section id="agentnomics" className="scroll-mt-24">
-      <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
-        <Reveal>
-          <span className="eyebrow">§ 06 AI environments</span>
-          <p className="mt-6 font-brand text-[clamp(2.6rem,6.4vw,5rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.02em] text-primary">
-            Agent-nomics
-          </p>
-        </Reveal>
-        <div className="mt-10 grid items-center gap-10 md:grid-cols-[1.15fr_0.85fr] md:gap-4">
-          <Reveal className="flex justify-center md:justify-end">
-            <img
-              src={burner.url}
-              alt="Digi Incinerator burning DIGI supply"
-              loading="lazy"
-              width={1024}
-              height={1536}
-              className="w-full max-w-[680px] object-contain md:-mr-6"
-              style={{ aspectRatio: "1024 / 1536" }}
-            />
-          </Reveal>
-          <div className="flex max-w-[560px] flex-col gap-6">
-            <Reveal>
-              <p className="mb-3 font-brand text-[clamp(1.6rem,3vw,2.4rem)] font-bold uppercase tracking-[-0.01em] text-primary">
-                Incinerator
-              </p>
-              <h2 className="font-display text-[clamp(2rem,4vw,3rem)] font-semibold leading-[1.1] tracking-tight">
-                Defeating Inflation with Active AI Tokenomics.
-              </h2>
-            </Reveal>
-            {[
-              "Meet the Digi Incinerator, the first autonomous agent designed to help equalize circulating supply as real utility expands across the DIGIM ecosystem.",
-              "Most token projects keep increasing circulating supply long after usability fades. DIGI is designed differently: it acts as a balancer for dynamic token circulation, responding to network activity across both centralized and decentralized environments.",
-              "By programmatically removing supply based on real network usage, we establish a deflationary gravity that protects long-term holders and rewards genuine ecosystem participation.",
-            ].map((p, idx) => (
-              <Reveal key={idx} delay={idx * 0.06}>
-                <p className="text-[15px] leading-[1.75] text-muted-foreground md:text-base">{p}</p>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function Team() {
-  return (
-    <section id="team" className="scroll-mt-24">
-      <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
-        <Reveal>
-          <span className="eyebrow">§ 09 Team</span>
-          <h2 className="mt-5 font-display text-[clamp(2.5rem,5vw,3.5rem)] font-semibold leading-none tracking-tight">
-            Team<span className="text-primary">.</span>
-          </h2>
-        </Reveal>
-        <div className="mt-12 grid gap-px overflow-hidden rounded-xl border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-3">
-          {TEAM.map((m, i) => (
-            <Reveal
-              key={m.name}
-              delay={i * 0.05}
-              className="bg-background p-7 transition-colors hover:bg-card/60"
-            >
-              <div className="flex items-center gap-4">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-secondary text-base font-medium text-primary">
-                  {m.name[0]}
-                </div>
-                <div>
-                  <h3 className="text-[15px] font-semibold">{m.name}</h3>
-                  <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.16em] text-primary/80">
-                    {m.role}
-                  </div>
-                </div>
-              </div>
-              <p className="mt-5 text-sm leading-relaxed text-muted-foreground">{m.prev}</p>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export function Footer() {
   return (
     <footer className="hairline-t grain relative">
@@ -358,7 +268,8 @@ export function Footer() {
           <div>
             <div className="font-display text-3xl tracking-tight">DigiAgent</div>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              The settlement asset for human and machine commerce. Bridge Sale open until listing.
+              The settlement asset for human and machine commerce. Bridge Round opening soon —
+              register interest.
             </p>
           </div>
           {[

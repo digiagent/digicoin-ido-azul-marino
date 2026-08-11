@@ -5,16 +5,21 @@ import confetti from "canvas-confetti";
 import coin from "@/assets/digi_coin_green_center.png.asset.json";
 import { ScrollTrigger } from "./scroll";
 
-const DIGI_PER_USD = 1 / 0.003;
-const MIN_USD = 100;
-const MAX_USD = 15000;
-const HARD_CAP_USD = 150000;
-const RAISED_USD = 27000; // mocked for UI demo
-const RAISED_PCT = Math.round((RAISED_USD / HARD_CAP_USD) * 100);
+const DIGI_PER_USD = 1 / 0.0025;
+const MIN_USD = 5000;
+const MAX_USD = 50000;
 const CHIME_URL = "https://assets.mixkit.co/active_storage/sfx/1992/1992-preview.mp3";
 const FAKE_ADDRESS = "0x1234ab56cd78ef90ab12cd34ef56ab78cd905678";
 const CHAINS = ["Base", "BNB", "Hyper", "Optimism", "Arbitrum", "Polygon", "Ethereum"];
-const STEPS = ["Identity", "Wallet", "Amount", "Confirm", "Done"];
+const STEPS = ["Identity", "Wallet", "Allocation", "Confirmation", "Complete"];
+
+const ROUND_FACTS: [string, string][] = [
+  ["Status", "Opening soon"],
+  ["Price", "$0.0025"],
+  ["Allocation", "50,000,000 DIGI"],
+  ["TGE", "TBA"],
+  ["Token contract", "TBA"],
+];
 
 const truncate = (a: string) => `${a.slice(0, 6)}...${a.slice(-4)}`;
 const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
@@ -59,49 +64,6 @@ function Row({ k, v }: { k: string; v: string }) {
   );
 }
 
-let buyId = 0;
-const hex2 = () => Math.floor(Math.random() * 256).toString(16).padStart(2, "0");
-const BUY_AMOUNTS = [250, 500, 750, 1000, 1500, 2500, 5000];
-const fakeBuy = () => ({
-  id: buyId++,
-  addr: `0x${hex2()}…${hex2()}`,
-  amount: BUY_AMOUNTS[Math.floor(Math.random() * BUY_AMOUNTS.length)],
-});
-
-function RecentBuys() {
-  const [buys, setBuys] = useState<ReturnType<typeof fakeBuy>[]>([]);
-  useEffect(() => {
-    setBuys(Array.from({ length: 3 }, fakeBuy));
-    const id = window.setInterval(() => setBuys((p) => [fakeBuy(), ...p].slice(0, 3)), 4000);
-    return () => window.clearInterval(id);
-  }, []);
-  return (
-    <div className="relative w-full" data-testid="bridge-recent-buys">
-      <div className="text-xs font-bold uppercase tracking-widest text-zinc-400">Recent buys</div>
-      <div className="mt-2 flex flex-col gap-1.5">
-        <AnimatePresence initial={false} mode="popLayout">
-          {buys.map((b) => (
-            <motion.div
-              key={b.id}
-              layout
-              initial={{ opacity: 0, y: -12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.35 }}
-              className="flex items-center gap-2 text-sm"
-            >
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-              <span className="font-mono text-zinc-300">{b.addr}</span>
-              <span className="text-zinc-400">bought</span>
-              <span className="font-bold text-primary">${b.amount.toLocaleString()}</span>
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
-    </div>
-  );
-}
-
 async function makeShareCard(digi: number): Promise<string> {
   const img = new Image();
   img.src = coin.url;
@@ -129,16 +91,16 @@ async function makeShareCard(digi: number): Promise<string> {
   x.fillText("DIGI BRIDGE ROUND", 80, 130);
   x.fillStyle = "#ffffff";
   x.font = "900 64px sans-serif";
-  x.fillText("I just secured", 80, 250);
+  x.fillText("I registered interest in", 80, 250);
   x.fillStyle = "#34d399";
   x.font = "900 88px sans-serif";
   x.fillText(`${digi.toLocaleString(undefined, { maximumFractionDigits: 0 })} DIGI`, 80, 360);
   x.fillStyle = "#d4d4d8";
   x.font = "700 38px sans-serif";
-  x.fillText("at $0.003 per DIGI", 80, 430);
+  x.fillText("at $0.0025 per DIGI", 80, 430);
   x.fillStyle = "#71717a";
   x.font = "700 28px sans-serif";
-  x.fillText("DigiAgent · Bridge Round Live", 80, 545);
+  x.fillText("DigiAgent · Bridge Round — Opening Soon", 80, 545);
   return c.toDataURL("image/png");
 }
 
@@ -188,7 +150,6 @@ export function BridgeRound() {
   const [stable, setStable] = useState("USDC");
   const [chain, setChain] = useState("Base");
   const [processing, setProcessing] = useState(false);
-  const [txHash, setTxHash] = useState("");
   const [muted, setMuted] = useState(false);
   const [cardUrl, setCardUrl] = useState("");
 
@@ -207,10 +168,6 @@ export function BridgeRound() {
 
   useEffect(() => {
     if (step !== 5) return;
-    setTxHash(
-      "0x" +
-        Array.from({ length: 64 }, () => "0123456789abcdef"[Math.floor(Math.random() * 16)]).join(""),
-    );
     if (chimeRef.current) {
       chimeRef.current.currentTime = 0;
       chimeRef.current.volume = 0.6;
@@ -287,15 +244,50 @@ export function BridgeRound() {
       />
       <div className="relative mx-auto w-full max-w-5xl px-6 py-24 md:py-32">
         <div className="text-center">
-          <span className="eyebrow">§ 09 Token sale</span>
+          <span className="eyebrow">17 · Bridge round</span>
           <h2
-            className="mt-5 bg-clip-text text-4xl font-black tracking-tight text-transparent md:text-5xl"
+            className="mt-5 bg-clip-text text-4xl font-black uppercase tracking-tight text-transparent md:text-5xl"
             style={{ backgroundImage: "var(--gradient-accent)" }}
+            data-testid="bridge-round-title"
           >
-            Purchase DIGI
+            DIGI Bridge Round
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-zinc-300">
-            Bridge round pricing at $0.003 per DIGI. Allocation is confirmed on signature.
+          <div
+            className="mx-auto mt-8 grid max-w-3xl grid-cols-2 gap-px overflow-hidden rounded-xl border border-zinc-700 bg-zinc-700 sm:grid-cols-5"
+            data-testid="bridge-round-stats"
+          >
+            {[
+              ["50,000,000", "DIGI"],
+              ["$0.0025", "/ DIGI"],
+              ["$125,000", "Target raise"],
+              ["$2.5M", "Target FDV"],
+              ["5%", "Of total supply"],
+            ].map(([v, k]) => (
+              <div key={k} className="bg-zinc-900/90 px-3 py-4">
+                <div className="font-display text-xl tracking-tight text-primary md:text-2xl">{v}</div>
+                <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-zinc-400">
+                  {k}
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-300">
+            An early bridge round intended to accelerate product development, product launches,
+            ecosystem growth, user adoption, and pre-registration.
+          </p>
+          <div className="mx-auto mt-5 flex max-w-2xl flex-wrap justify-center gap-2" data-testid="bridge-round-terms">
+            {["10% at TGE", "6-month cliff", "12-month vesting", "USDT / DAI / USDC", "Min $5K · Max $50K", "Chain: TBA"].map((t) => (
+              <span
+                key={t}
+                className="rounded-full border border-zinc-700 px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-300"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+          <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-zinc-400">
+            The token is not deployed yet. This form registers interest — it is not an on-chain
+            purchase.
           </p>
         </div>
 
@@ -477,12 +469,12 @@ export function BridgeRound() {
                   {step === 3 && (
                     <div className="flex flex-col gap-6">
                       <div>
-                        <span className={label}>Amount in USD</span>
+                        <span className={label}>Requested amount in USD</span>
                         <input
                           inputMode="decimal"
                           value={amount}
                           onChange={(e) => setAmount(e.target.value.replace(/[^0-9.]/g, ""))}
-                          placeholder="1000"
+                          placeholder="5000"
                           className={field}
                           data-testid="bridge-amount-input"
                         />
@@ -499,10 +491,11 @@ export function BridgeRound() {
                           <select value={stable} onChange={(e) => setStable(e.target.value)} className={field}>
                             <option value="USDC">USDC</option>
                             <option value="USDT">USDT</option>
+                            <option value="DAI">DAI</option>
                           </select>
                         </div>
                         <div>
-                          <span className={label}>Chain</span>
+                          <span className={label}>Preferred chain (network TBA)</span>
                           <select value={chain} onChange={(e) => setChain(e.target.value)} className={field}>
                             {CHAINS.map((c) => (
                               <option key={c} value={c}>
@@ -513,7 +506,7 @@ export function BridgeRound() {
                         </div>
                       </div>
                       <div className="rounded-xl border border-zinc-600 bg-zinc-800/70 px-5 py-4">
-                        <div className={label}>You will receive</div>
+                        <div className={label}>Indicative allocation</div>
                         <div
                           className="text-3xl font-black text-primary drop-shadow-[0_0_12px_oklch(0.82_0.21_130_/_45%)]"
                           data-testid="bridge-digi-amount"
@@ -521,7 +514,7 @@ export function BridgeRound() {
                           {digi.toLocaleString(undefined, { maximumFractionDigits: 0 })} DIGI
                         </div>
                         <div className="mt-1 text-xs font-bold uppercase tracking-widest text-zinc-400">
-                          $0.003 per DIGI
+                          At $0.0025 per DIGI · subject to final terms
                         </div>
                       </div>
                       <div className="flex gap-3">
@@ -535,7 +528,7 @@ export function BridgeRound() {
                           onClick={() => setStep(4)}
                           data-testid="bridge-review-order-btn"
                         >
-                          Review order
+                          Review request
                         </button>
                       </div>
                     </div>
@@ -546,11 +539,11 @@ export function BridgeRound() {
                       <div className="rounded-xl border border-zinc-600 bg-zinc-800/70 px-5 py-2">
                         <Row k="Email" v={email} />
                         <Row k="Receiving wallet" v={truncate(receiving)} />
-                        <Row k="Amount" v={`$${usd.toLocaleString()}`} />
+                        <Row k="Requested amount" v={`$${usd.toLocaleString()}`} />
                         <Row k="Stablecoin" v={stable} />
-                        <Row k="Chain" v={chain} />
+                        <Row k="Preferred chain" v={chain} />
                         <Row
-                          k="You receive"
+                          k="Indicative DIGI"
                           v={`${digi.toLocaleString(undefined, { maximumFractionDigits: 0 })} DIGI`}
                         />
                       </div>
@@ -573,10 +566,10 @@ export function BridgeRound() {
                           {processing ? (
                             <span className="flex items-center justify-center gap-2">
                               <span className="h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                              Processing…
+                              Submitting…
                             </span>
                           ) : (
-                            "Confirm & Sign Transaction"
+                            "Register Interest"
                           )}
                         </button>
                       </div>
@@ -608,7 +601,7 @@ export function BridgeRound() {
                         }}
                       />
                       <StaggerText
-                        text="Welcome to the Digi-Agent holder community!"
+                        text="Your interest is registered!"
                         className="font-display text-[clamp(1.7rem,3.4vw,2.5rem)] leading-tight tracking-tight text-white"
                       />
                       <motion.div
@@ -618,20 +611,16 @@ export function BridgeRound() {
                         transition={{ delay: 1.4, duration: 0.6 }}
                       >
                         <p className="text-xl text-zinc-300">
+                          Request recorded for{" "}
                           <span className="font-black text-primary">
                             {digi.toLocaleString(undefined, { maximumFractionDigits: 0 })} DIGI
                           </span>{" "}
-                          reserved on <span className="font-bold text-white">{chain}</span>.
+                          · preferred chain <span className="font-bold text-white">{chain}</span>.
                         </p>
-                        <div className="w-full rounded-xl border border-zinc-600 bg-zinc-800/70 px-5 py-4 text-left">
-                          <div className={label}>Transaction hash</div>
-                          <div className="break-all font-mono text-base text-zinc-300" data-testid="bridge-tx-hash">
-                            {txHash}
-                          </div>
-                        </div>
                         <p className="text-lg text-zinc-300">
-                          A confirmation email has been sent to{" "}
-                          <span className="font-bold text-white">{email}</span>.
+                          No payment has been taken and nothing is on-chain yet. We&apos;ll contact
+                          you at <span className="font-bold text-white">{email}</span> when the
+                          Bridge Round opens.
                         </p>
                         {cardUrl && (
                           <div className="w-full">
@@ -650,7 +639,7 @@ export function BridgeRound() {
                             className="rounded-xl bg-primary px-6 py-4 text-lg font-bold text-primary-foreground transition-all hover:brightness-110 hover:shadow-[0_0_28px_oklch(0.82_0.21_130_/_45%)]"
                             onClick={() => {
                               const text = encodeURIComponent(
-                                "I just secured my $DIGI allocation at $0.003 in the Bridge Round! Welcome to the Digi-Agent holder community 🚀",
+                                "I just registered interest in the $DIGI Bridge Round at $0.0025 per DIGI. Opening soon!",
                               );
                               const url = encodeURIComponent(`${window.location.origin}/digi-share-card.png`);
                               window.open(
@@ -721,38 +710,34 @@ export function BridgeRound() {
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-70" />
                     <span className="relative inline-flex h-3 w-3 rounded-full bg-primary" />
                   </span>
-                  <span className="text-2xl font-black tracking-tight text-white md:text-3xl">
-                    Bridge Round Live
+                  <span className="text-2xl font-black tracking-tight text-white md:text-3xl" data-testid="bridge-status">
+                    Opening Soon
                   </span>
                 </div>
                 <div className="mt-3 text-3xl font-black text-primary drop-shadow-[0_0_12px_oklch(0.82_0.21_130_/_45%)]">
-                  $0.003
+                  $0.0025
                   <span className="ml-2 text-xs font-bold uppercase tracking-widest text-zinc-400">
                     per DIGI
                   </span>
                 </div>
               </div>
-              <div className="relative w-full" data-testid="bridge-raise-progress">
-                <div className="flex items-end justify-between">
-                  <span className="text-xs font-bold uppercase tracking-widest text-zinc-400">Raised</span>
-                  <span className="text-xl font-black text-primary">{RAISED_PCT}% Sold</span>
-                </div>
-                <div className="mt-2 h-3 w-full overflow-hidden rounded-full bg-zinc-800">
-                  <motion.div
-                    className="h-full rounded-full shadow-[0_0_14px_oklch(0.82_0.21_130_/_80%)]"
-                    style={{ backgroundImage: "var(--gradient-accent)" }}
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${RAISED_PCT}%` }}
-                    viewport={{ once: true, amount: 0.6 }}
-                    transition={{ duration: reduced ? 0 : 1.5, ease: "easeOut", delay: 0.25 }}
-                  />
-                </div>
-                <div className="mt-2 text-right text-sm font-bold text-white">
-                  ${RAISED_USD.toLocaleString()}{" "}
-                  <span className="font-semibold text-zinc-400">/ ${HARD_CAP_USD.toLocaleString()}</span>
-                </div>
+              <div className="relative w-full rounded-xl border border-zinc-800 bg-zinc-900/60 px-5 py-1" data-testid="bridge-round-facts">
+                {ROUND_FACTS.map(([k, v]) => (
+                  <div
+                    key={k}
+                    className="flex items-center justify-between gap-6 border-t border-zinc-800 py-3 first:border-t-0"
+                  >
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">
+                      {k}
+                    </span>
+                    <span
+                      className={`font-mono text-sm font-bold ${v === "TBA" ? "text-zinc-400" : "text-white"}`}
+                    >
+                      {v}
+                    </span>
+                  </div>
+                ))}
               </div>
-              <RecentBuys />
             </div>
           </div>
         </div>

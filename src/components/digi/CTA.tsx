@@ -51,25 +51,27 @@ export function CTA() {
       />
       <div className="cta-inner relative mx-auto flex max-w-3xl flex-col items-center px-6 py-24 text-center">
         <img src={agentCoin.url} alt="" className="h-24 w-24 object-contain drop-shadow-2xl" aria-hidden />
-        <span className="eyebrow mt-10">Final call · Bridge round closes at allocation</span>
+        <span className="eyebrow mt-10">Bridge Round · Opening soon</span>
         <h2 className="mt-6 font-brand text-[clamp(2.6rem,7vw,5.4rem)] font-extrabold uppercase leading-[0.92] tracking-[-0.02em]">
-          Own the <span className="text-primary">settlement layer</span> of the agent economy.
+          Own the <span className="text-primary">intelligence</span> powering the digital economy.
         </h2>
         <p className="mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground">
-          50,000,000 DIGI at $0.005 — 6-month cliff, 12-month vest. When the machines start
-          paying each other, you&apos;ll want to have been early.
+          50,000,000 DIGI · $0.0025 Bridge Round allocation
+        </p>
+        <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
+          Bridge Round allocation with the applicable vesting and participation terms shown above.
         </p>
         <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
           <Magnetic>
             <motion.a
-              href="#sale"
+              href="#bridge-round"
               data-testid="cta-secure-allocation-btn"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
               className="cta-pulse block rounded-full px-9 py-4 text-sm font-semibold text-primary-foreground"
               style={{ background: "var(--gradient-accent)" }}
             >
-              Secure allocation now
+              View Bridge Round
             </motion.a>
           </Magnetic>
           <Magnetic strength={0.2}>

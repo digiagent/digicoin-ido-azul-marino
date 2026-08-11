@@ -6,14 +6,21 @@ import { ScrollProgress } from "@/components/digi/ScrollProgress";
 import { useLenis } from "@/components/digi/scroll";
 import { Tokenomics } from "@/components/digi/Tokenomics";
 import { SaleDetails } from "@/components/digi/SaleDetails";
+import { TokenUtility } from "@/components/digi/TokenUtility";
+import { Vesting } from "@/components/digi/Vesting";
+import { Runway } from "@/components/digi/Runway";
+import { Roadmap } from "@/components/digi/Roadmap";
+import { Transparency } from "@/components/digi/Transparency";
+import { Faq } from "@/components/digi/Faq";
 import {
-  AgentNomics,
   DualUtility,
   Footer,
   Platforms,
   Summary,
-  Team,
 } from "@/components/digi/Content";
+import { AgentNomics } from "@/components/digi/AgentNomics";
+import { Team } from "@/components/digi/Team";
+import { WhyDigi } from "@/components/digi/WhyDigi";
 import {
   EarlyValidation,
   Problem,
@@ -24,7 +31,7 @@ import {
 
 const title = "DigiAgent — DIGI Token Sale";
 const description =
-  "DIGI is the settlement asset for human and machine commerce across DigiPaga and DigiMercados. Bridge Sale open at $0.0420.";
+  "DIGI is the settlement asset for human and machine commerce across DigiPaga and DigiMercados. Bridge Round opening soon at $0.0025 per DIGI.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -55,11 +62,18 @@ function Index() {
       <Product />
       <Transformation />
       <EarlyValidation />
-      <Tokenomics />
+      <Team />
+      <WhyDigi />
       <AgentNomics />
+      <TokenUtility />
+      <Tokenomics />
+      <Vesting />
       <SaleDetails />
       <BridgeRound />
-      <Team />
+      <Runway />
+      <Roadmap />
+      <Transparency />
+      <Faq />
       <CTA />
       <Footer />
     </main>

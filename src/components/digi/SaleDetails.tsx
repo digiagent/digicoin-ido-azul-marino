@@ -81,14 +81,15 @@ export function SaleDetails() {
       <div className="flex flex-col justify-center gap-12 py-24 lg:h-screen lg:py-0">
         <div className="mx-auto w-full max-w-6xl px-6">
           <div className="flex items-baseline gap-4">
-            <span className="eyebrow text-primary/70">08</span>
+            <span className="eyebrow text-primary/70">16</span>
             <span className="eyebrow">Sale details</span>
           </div>
           <h2 className="mt-6 max-w-3xl font-display text-4xl leading-[1.05] tracking-tight md:text-6xl">
             Four rounds, one price ladder
           </h2>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-            Every round is on-chain, vested and independently attested.
+            Prices step from $0.0025 in the Bridge Round toward the $15M–$20M target FDV range
+            at TGE. All figures are targets until the token is deployed — chain and contract TBA.
             <span className="mt-2 hidden font-mono text-[11px] uppercase tracking-[0.22em] text-primary/70 lg:block">
               Keep scrolling — the rounds slide sideways →
             </span>

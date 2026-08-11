@@ -1,0 +1,36 @@
+{
+  "summary": "Frontend-only test of Pass 2 additions on Digi-Agent landing page (viewport 1920x800). Verified new section order (Team now between EarlyValidation and WhyDigi, followed by AgentNomics), Team strip with 4 members + correct social counts (Oscar 3 / Otto 3 / Daniel 0 / Azahel 1) and correct real URLs opening in new tabs, info panel open/close, 3 Open Roles with POSITION OPEN badges, WhyDigi 3 boxes with correct copy and no return-promising language, AgentNomics single-component with 3 boxes and tab switching, incinerator flow chips, $3/$4/$5/$6 tiers, price toggle showing 2,000 / 1,000 / 500 DIGI required, Break box chart + exact caption + common-failure-pattern phrasing + Illustrative badge, Digi Model box chart + alignment tagline + Illustrative badge, no fake team names, all regression sections still render, zero console errors/warnings.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "verified_working": [
+    "Section order (top-to-bottom): summary, platforms, dual-utility, why-now, problem, product, transformation, early-validation, team, why-digi, agentnomics, tokenomics, sale, bridge-round, cta — matches spec (Team is right after Early Validation).",
+    "Team strip has exactly 4 members oscar/otto/daniel/azahel; social counts 3/3/0/1; Oscar links: linkedin.com/in/olahventures, github.com/okite, x.com/ozkite — all target=_blank.",
+    "team-info-btn-oscar opens team-info-panel-oscar; team-info-close-oscar closes it.",
+    "team-open-roles shows exactly 3 roles: Head of Growth, Head of Community, Security Lead, each with 'POSITION OPEN' badge, no names attached.",
+    "why-digi-boxes: 3 boxes (Intelligence layer, Consumption-linked, Utility by design). No forbidden return/price-appreciation language found.",
+    "agentnomics-boxes: single component with 3 child boxes; box 0 active by default. incinerator-flow chips: User → AI Access → Stablecoin Payment → DIGI Required → Incinerator → DIGI Removed. AI tiers $3/$4/$5/$6 shown.",
+    "incinerator-price-btn-0/1/2 correctly toggle incinerator-digi-required to 2,000 / 1,000 / 500 DIGI.",
+    "agentnomics-tab-1 expands Why Tokenomics Break box: break-chart visible; exact caption 'Continuously increasing circulating supply while ecosystem demand and utility weaken can create economic pressure.' present; 'common failure pattern' phrasing present; Illustrative badge present (rendered uppercase via CSS).",
+    "agentnomics-tab-2 expands The Digi Model box: digi-model-flow chips (AI Usage → DIGI Required → DIGI Burned → DIGI Removed From Circulation); digi-model-chart visible; 'Designed to align token consumption with ecosystem utility' present (uppercase via CSS); Illustrative badge present.",
+    "Regression sections still render (Summary, Platforms 'Two platforms. One cryptocurrency.' — uppercase-rendered, Dual Utility, WhyNow/Problem/Product/Transformation/EarlyValidation, Tokenomics, SaleDetails, BridgeRound, CTA, Footer). No fake names (John Doe, Maria Garcia, etc.) anywhere.",
+    "0 console errors and 0 warnings on load and through interactions."
+  ],
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Team.tsx / WhyDigi.tsx hover-to-expand relies solely on md:/lg: hover; mobile falls back to always-visible which is fine — verified in code.",
+    "AgentNomics.tsx: box container div has onClick={()=>setActive(i)} but the child button (agentnomics-tab-{i}) also calls setActive — event bubbles up but idempotent, so no bug. Consider stopPropagation to be explicit."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (no backend by design)", "frontend": "100% of Pass 2 acceptance criteria"},
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "test_credentials": "None required",
+  "context_for_next_testing_agent": "Pass 2 additions (Team / WhyDigi / AgentNomics) all pass at 1920x800. When asserting text content, remember CSS text-transform: uppercase is applied to labels like the Illustrative badge, 'Designed to align...' tagline, flow chips, and 'Two platforms. One cryptocurrency.' — use case-insensitive checks. Previous iteration_2 identified a ScrollTrigger stale-measurement bug around #sale — not re-verified in this pass and not in scope.",
+  "rca_of_the_issue": "N/A — no defects found in Pass 2 scope."
+}
