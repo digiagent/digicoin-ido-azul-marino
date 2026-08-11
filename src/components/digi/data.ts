@@ -129,21 +129,20 @@ export const DECENTRALIZED = [
 ];
 
 export const HERO_STATS = [
-  { k: "Total raise", v: "$4.25M" },
-  { k: "Total supply", v: "1,000,000,000" },
-  { k: "ICS", v: "7.9%" },
-  { k: "TGE", v: "Q3 · 2027" },
-  { k: "Mintable", v: "No" },
+  { k: "Total supply", v: "1,000,000,000 DIGI" },
+  { k: "Bridge FDV", v: "$2.5M target" },
+  { k: "Bridge price", v: "$0.0025" },
+  { k: "Target TGE FDV", v: "$15M–$20M" },
+  { k: "Minting", v: "No" },
   { k: "Burnable", v: "Yes" },
-  { k: "Multi-Launchpads", v: "Yes" },
   { k: "Chain", v: "TBA" },
 ];
 
 export const HERO_TICKER = [
-  "DIGIM",
-  "IDO · Q3 2027",
+  "DIGI",
+  "BRIDGE ROUND",
   "1,000,000,000 SUPPLY",
-  "$4.25M TOTAL RAISE",
+  "$125,000 TARGET RAISE",
   "DUAL PLATFORM",
   "DIGIPAGA × DIGIMERCADOS",
   "CONFIDENTIAL — DO NOT DISTRIBUTE",

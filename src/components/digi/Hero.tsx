@@ -8,7 +8,7 @@ import { Magnetic } from "./Magnetic";
 import { gsap, useGSAP, MOTION_OK } from "./scroll";
 
 const RING_INNER =
-  "CONFIDENTIAL · REV 01 · INVESTOR · PRIVATE · DIGIM · TGE Q3 2027 · $4.25M RAISE · 36-MONTH RUNWAY · DUAL PLATFORM · ";
+  "CONFIDENTIAL · REV 01 · INVESTOR · PRIVATE · DIGI · BRIDGE ROUND · $125K TARGET RAISE · $2.5M TARGET FDV · DUAL PLATFORM · ";
 const RING_OUTER =
   "DIGIMERCADOS · DIGIPAGA · 1,000,000,000 SUPPLY · DIGIMERCADOS · DIGIPAGA · 1,000,000,000 SUPPLY · ";
 
@@ -117,7 +117,7 @@ export function Hero() {
               transition={{ duration: 0.6 }}
               className="eyebrow"
             >
-              Token sale · Round 04 of 04
+              DIGI Token · Bridge Round
             </motion.p>
             <h1
               data-testid="hero-headline"
@@ -147,15 +147,24 @@ export function Hero() {
                 </Magnetic>
               </span>
             </h1>
-            <motion.p
+            <motion.div
               initial={reduced ? false : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground"
+              className="mt-8"
+              data-testid="hero-positioning"
             >
-              DIGI settles payments for humans on DigiPaga and for machines on DigiMercados —
-              one asset, two economies, a single liquidity base.
-            </motion.p>
+              <p className="font-brand text-[clamp(1.05rem,2.1vw,1.55rem)] font-bold uppercase leading-snug tracking-[0.02em]">
+                Own the intelligence
+                <br />
+                <span className="text-primary">powering the digital economy.</span>
+              </p>
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground md:text-[17px]">
+                Digi-Agent is building the intelligence layer that lets people, businesses, and
+                autonomous agents discover, decide, and execute economic activity across the
+                DigiPaga and Digimercados ecosystem.
+              </p>
+            </motion.div>
             <motion.div
               initial={reduced ? false : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -164,20 +173,20 @@ export function Hero() {
             >
               <Magnetic>
                 <a
-                  href="#sale"
+                  href="#bridge-round"
                   data-testid="hero-secure-allocation-btn"
                   className="cta-pulse block rounded-full px-7 py-3.5 text-sm font-semibold text-primary-foreground"
                   style={{ background: "var(--gradient-accent)" }}
                 >
-                  Secure allocation
+                  View Bridge Round
                 </a>
               </Magnetic>
               <Magnetic strength={0.2}>
                 <a
-                  href="#tokenomics"
+                  href="#platforms"
                   className="block rounded-full border border-hairline px-7 py-3.5 text-sm font-medium text-foreground/80 transition-colors hover:border-primary/40 hover:text-foreground"
                 >
-                  Read tokenomics
+                  Explore the Economy
                 </a>
               </Magnetic>
             </motion.div>
@@ -225,29 +234,63 @@ export function Hero() {
       <div className="hairline-t relative mt-auto">
         <div
           data-testid="hero-info-bar"
-          className="mx-auto flex w-full max-w-[1700px] flex-nowrap items-center justify-center overflow-x-auto whitespace-nowrap px-6 py-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="mx-auto flex w-full max-w-[1700px] flex-nowrap items-center justify-center overflow-x-auto whitespace-nowrap px-6 py-5 [scrollbar-width:none] xl:overflow-visible [&::-webkit-scrollbar]:hidden"
         >
-          {STATS.map((s, i) => (
-            <motion.div
-              key={s.k}
-              initial={reduced ? false : { opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 + i * 0.06, duration: 0.5 }}
-              className="flex shrink-0 items-center"
-            >
-              {i > 0 && (
-                <span aria-hidden className="mx-6 text-[9px] leading-none text-primary">
-                  ◆
+          {STATS.map((s, i) => {
+            const isTge = s.k === "Target TGE FDV";
+            return (
+              <motion.div
+                key={s.k}
+                initial={reduced ? false : { opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 + i * 0.06, duration: 0.5 }}
+                className="group relative flex shrink-0 items-center"
+              >
+                {i > 0 && (
+                  <span aria-hidden className="mx-6 text-[9px] leading-none text-primary">
+                    ◆
+                  </span>
+                )}
+                <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+                  {isTge ? (
+                    <>
+                      Target{" "}
+                      <span
+                        className="cursor-help text-foreground/80 underline decoration-primary/60 decoration-dotted underline-offset-4"
+                        data-testid="tge-hover-target"
+                      >
+                        TGE
+                      </span>{" "}
+                      FDV
+                    </>
+                  ) : (
+                    s.k
+                  )}
                 </span>
-              )}
-              <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
-                {s.k}
-              </span>
-              <span className="ml-2.5 font-mono text-[13px] font-semibold uppercase tracking-[0.06em] text-foreground">
-                {s.v}
-              </span>
-            </motion.div>
-          ))}
+                <span className="ml-2.5 font-mono text-[13px] font-semibold uppercase tracking-[0.06em] text-foreground">
+                  {s.v}
+                </span>
+                {isTge && (
+                  <div
+                    className="pointer-events-none absolute bottom-full left-1/2 z-30 mb-4 w-60 -translate-x-1/2 rounded-xl border border-hairline bg-card p-5 opacity-0 shadow-[var(--shadow-deep)] backdrop-blur-md transition-opacity duration-200 group-hover:opacity-100"
+                    data-testid="tge-networks-tooltip"
+                  >
+                    <div className="eyebrow">Networks under consideration</div>
+                    <ul className="mt-3 space-y-1.5 font-mono text-xs uppercase tracking-[0.14em] text-foreground">
+                      {["Base", "BNB Chain", "Hyper"].map((n) => (
+                        <li key={n} className="flex items-center gap-2.5">
+                          <span aria-hidden className="text-[8px] text-primary">
+                            ◆
+                          </span>
+                          {n}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
 

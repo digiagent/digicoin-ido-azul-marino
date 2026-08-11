@@ -14,6 +14,13 @@ import {
   Summary,
   Team,
 } from "@/components/digi/Content";
+import {
+  EarlyValidation,
+  Problem,
+  Product,
+  Transformation,
+  WhyNow,
+} from "@/components/digi/Story";
 
 const title = "DigiAgent — DIGI Token Sale";
 const description =
@@ -43,6 +50,11 @@ function Index() {
       <Summary />
       <Platforms />
       <DualUtility />
+      <WhyNow />
+      <Problem />
+      <Product />
+      <Transformation />
+      <EarlyValidation />
       <Tokenomics />
       <AgentNomics />
       <SaleDetails />
