@@ -149,7 +149,9 @@ export function Platforms() {
           <h2 className="mt-6 font-ubuntu font-bold text-[clamp(2.6rem,6vw,4.5rem)] leading-[1.02] tracking-tight">
             Two platforms.
             <br />
-            <span className="text-primary">One cryptocurrency.</span>
+            <span className="text-primary">
+              One cryptocurrency<span className="text-foreground">.</span>
+            </span>
           </h2>
         </Reveal>
       </div>
@@ -210,7 +212,7 @@ export function DualUtility() {
           <h2 className="font-ubuntu font-bold text-[clamp(2.4rem,5vw,4rem)] leading-[0.95] tracking-tight">
             <span className="text-primary">Dual utility</span>
             <br />
-            across environments.
+            across environments<span className="text-primary">.</span>
           </h2>
         </div>
         <div className="col-span-12 max-w-[440px] text-[15px] leading-[1.7] text-muted-foreground lg:col-span-5 lg:col-start-8">
