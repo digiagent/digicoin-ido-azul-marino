@@ -1,10 +1,26 @@
 import { Reveal, Section } from "./Section";
 
 const PHASES: { q: string; title: string; d: string }[] = [
-  { q: "Q2–Q3 2026", title: "Bridge Round", d: "Early-stage round for angel investors. Registration of interest open." },
-  { q: "Q1–Q2 2027", title: "Private / Pre-Seed Sale", d: "Pre-Seed round at $0.005 per DIGI · $5M target FDV." },
-  { q: "Q2 2027", title: "Pre-Sale", d: "Pre-TGE sale at partner launchpads and communities · $0.01 per DIGI." },
-  { q: "Q3 2027", title: "Public Sale · Listing", d: "Multi-launchpad public sale and listing & market making. TGE date: TBA." },
+  {
+    q: "Q2–Q3 2026",
+    title: "Bridge Round",
+    d: "Early-stage round for angel investors. Registration of interest open.",
+  },
+  {
+    q: "Q1–Q2 2027",
+    title: "Private / Pre-Seed Sale",
+    d: "Pre-Seed round at $0.005 per DIGI · $5M target FDV.",
+  },
+  {
+    q: "Q2 2027",
+    title: "Pre-Sale",
+    d: "Pre-TGE sale at partner launchpads and communities · $0.01 per DIGI.",
+  },
+  {
+    q: "Q3 2027",
+    title: "Public Sale · Listing",
+    d: "Multi-launchpad public sale and listing & market making. TGE date: TBA.",
+  },
 ];
 
 export function Roadmap() {
@@ -15,12 +31,17 @@ export function Roadmap() {
       eyebrow="Roadmap"
       title={
         <>
-          <span className="font-ubuntu font-bold">The path to <span className="text-primary">TGE.</span></span>
+          <span className="font-ubuntu font-bold">
+            The path to <span className="text-foreground">TGE.</span>
+          </span>
         </>
       }
       lead="Target schedule — subject to change. TGE date, chain, and contract are TBA."
     >
-      <div className="grid gap-px overflow-hidden rounded-xl border border-hairline bg-hairline md:grid-cols-4" data-testid="roadmap-grid">
+      <div
+        className="grid gap-px overflow-hidden rounded-xl border border-hairline bg-hairline md:grid-cols-4"
+        data-testid="roadmap-grid"
+      >
         {PHASES.map((p, i) => (
           <Reveal
             key={p.q}
