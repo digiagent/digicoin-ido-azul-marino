@@ -38,7 +38,9 @@ export function Team() {
       eyebrow="Team"
       title={
         <>
-          <span className="font-ubuntu font-bold">TEAM</span>
+          <span className="font-ubuntu font-bold">
+            TEAM<span className="text-primary">.</span>
+          </span>
         </>
       }
     >
