@@ -6,13 +6,39 @@ import { Reveal, Section } from "./Section";
 import { gsap, useGSAP, MOTION_OK } from "./scroll";
 import { DISTRIBUTION_DETAILS, TOKENOMICS } from "./data";
 
-const ROW =
-  "grid grid-cols-[1.5fr_0.5fr_1fr_0.6fr_0.9fr_0.5fr_0.5fr_0.5fr] items-center gap-4";
+const ROW = "grid grid-cols-[1.5fr_0.5fr_1fr_0.6fr_0.9fr_0.5fr_0.5fr_0.5fr] items-center gap-4";
 
 const BENTO = [
-  { label: "Total supply", count: 1_000_000_000, display: "1,000,000,000", prefix: "", suffix: "", decimals: 0, note: "Fixed — no mint function · burnable", span: "sm:col-span-2" },
-  { label: "Bridge target raise", count: 125_000, display: "125,000", prefix: "$", suffix: "", decimals: 0, note: "50,000,000 DIGI at $0.0025", span: "" },
-  { label: "Target TGE FDV", count: null, display: "$15M–$20M", prefix: "", suffix: "", decimals: 0, note: "Public sale at $0.015–$0.02", span: "" },
+  {
+    label: "Total supply",
+    count: 1_000_000_000,
+    display: "1,000,000,000",
+    prefix: "",
+    suffix: "",
+    decimals: 0,
+    note: "Fixed — no mint function · burnable",
+    span: "sm:col-span-2",
+  },
+  {
+    label: "Bridge target raise",
+    count: 125_000,
+    display: "125,000",
+    prefix: "$",
+    suffix: "",
+    decimals: 0,
+    note: "50,000,000 DIGI at $0.0025",
+    span: "",
+  },
+  {
+    label: "Target TGE FDV",
+    count: null,
+    display: "$15M–$20M",
+    prefix: "",
+    suffix: "",
+    decimals: 0,
+    note: "Public sale at $0.015–$0.02",
+    span: "",
+  },
 ];
 
 function TiltCard({ children, className = "" }: { children: ReactNode; className?: string }) {
@@ -23,7 +49,12 @@ function TiltCard({ children, className = "" }: { children: ReactNode; className
   return (
     <motion.div
       className={`rounded-2xl border border-hairline bg-card/40 p-7 transition-shadow duration-300 hover:shadow-[var(--shadow-lift)] ${className}`}
-      style={{ rotateX: rx, rotateY: ry, transformPerspective: 1000, transformStyle: "preserve-3d" }}
+      style={{
+        rotateX: rx,
+        rotateY: ry,
+        transformPerspective: 1000,
+        transformStyle: "preserve-3d",
+      }}
       onMouseMove={(e) => {
         if (reduced) return;
         const r = e.currentTarget.getBoundingClientRect();
@@ -80,7 +111,12 @@ export function Tokenomics() {
       id="tokenomics"
       index="13"
       eyebrow="Tokenomics"
-      title={<span className="font-ubuntu font-bold">One billion DIGI, allocated for durability</span>}
+      title={
+        <span className="font-ubuntu font-bold">
+          One billion <span className="text-primary">DIGI</span>, allocated for scalability
+          <span className="text-primary">.</span>
+        </span>
+      }
       lead="Supply is fixed at 1,000,000,000 DIGI. Allocations are weighted toward the agent economy and long-dated liquidity rather than short-term distribution."
     >
       <div
@@ -183,27 +219,44 @@ export function Tokenomics() {
                   onMouseLeave={() => setActive(null)}
                   onFocus={() => setActive(s.key)}
                   onBlur={() => setActive(null)}
-                  className={ROW + " w-full border-t border-hairline px-5 py-3.5 text-left transition-colors"}
+                  className={
+                    ROW + " w-full border-t border-hairline px-5 py-3.5 text-left transition-colors"
+                  }
                   style={{ background: active === s.key ? "var(--surface)" : "transparent" }}
                 >
                   <span className="flex items-center gap-3">
                     <span
                       className="h-2.5 w-2.5 shrink-0 rounded-[2px] transition-transform"
-                      style={{ background: s.color, transform: active === s.key ? "scale(1.5)" : "scale(1)" }}
+                      style={{
+                        background: s.color,
+                        transform: active === s.key ? "scale(1.5)" : "scale(1)",
+                      }}
                     />
                     <span className="text-sm text-foreground">{s.label}</span>
                   </span>
-                  <span className="text-right font-mono text-xs text-muted-foreground">{s.pct}%</span>
-                  <span className="text-right font-mono text-xs text-foreground/80">{s.tokens}</span>
-                  <span className="text-right font-mono text-xs text-muted-foreground">{s.price}</span>
+                  <span className="text-right font-mono text-xs text-muted-foreground">
+                    {s.pct}%
+                  </span>
+                  <span className="text-right font-mono text-xs text-foreground/80">
+                    {s.tokens}
+                  </span>
+                  <span className="text-right font-mono text-xs text-muted-foreground">
+                    {s.price}
+                  </span>
                   <span
                     className={`text-right font-mono text-xs ${s.raise === "—" ? "text-muted-foreground" : "text-primary"}`}
                   >
                     {s.raise}
                   </span>
-                  <span className="text-right font-mono text-xs text-muted-foreground">{s.tge}</span>
-                  <span className="text-right font-mono text-xs text-muted-foreground">{s.cliff}</span>
-                  <span className="text-right font-mono text-xs text-muted-foreground">{s.vesting}</span>
+                  <span className="text-right font-mono text-xs text-muted-foreground">
+                    {s.tge}
+                  </span>
+                  <span className="text-right font-mono text-xs text-muted-foreground">
+                    {s.cliff}
+                  </span>
+                  <span className="text-right font-mono text-xs text-muted-foreground">
+                    {s.vesting}
+                  </span>
                 </button>
               ))}
               <div className={ROW + " border-t border-hairline px-5 py-4"}>
@@ -211,7 +264,7 @@ export function Tokenomics() {
                 <span className="text-right font-mono text-xs text-muted-foreground">100%</span>
                 <span className="text-right font-mono text-xs text-primary">1,000,000,000</span>
                 <span className="text-right font-mono text-xs text-muted-foreground">—</span>
-                <span className="text-right font-mono text-xs text-foreground">$125,000 + TBA</span>
+                <span className="text-right font-mono text-xs text-foreground">$3,100,000</span>
                 <span />
                 <span />
                 <span />
