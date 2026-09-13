@@ -6,11 +6,9 @@ import { ScrollProgress } from "@/components/digi/ScrollProgress";
 import { useLenis } from "@/components/digi/scroll";
 import { Tokenomics } from "@/components/digi/Tokenomics";
 import { SaleDetails } from "@/components/digi/SaleDetails";
-import { TokenUtility } from "@/components/digi/TokenUtility";
 import { Vesting } from "@/components/digi/Vesting";
 import { Runway } from "@/components/digi/Runway";
 import { Roadmap } from "@/components/digi/Roadmap";
-import { Transparency } from "@/components/digi/Transparency";
 import { Faq } from "@/components/digi/Faq";
 import {
   DualUtility,
@@ -23,7 +21,6 @@ import { Team } from "@/components/digi/Team";
 import { WhyDigi } from "@/components/digi/WhyDigi";
 import {
   EarlyValidation,
-  Problem,
   Product,
   Transformation,
   WhyNow,
@@ -58,21 +55,18 @@ function Index() {
       <Platforms />
       <DualUtility />
       <WhyNow />
-      <Problem />
       <Product />
       <Transformation />
       <EarlyValidation />
       <Team />
       <WhyDigi />
       <AgentNomics />
-      <TokenUtility />
       <Tokenomics />
       <Vesting />
       <SaleDetails />
       <BridgeRound />
       <Runway />
       <Roadmap />
-      <Transparency />
       <Faq />
       <CTA />
       <Footer />

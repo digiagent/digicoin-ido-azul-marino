@@ -30,10 +30,13 @@ export function Runway() {
       eyebrow="Runway / Use of proceeds"
       title={
         <>
-          Where the capital <span className="text-primary">goes.</span>
+          <span className="font-ubuntu font-bold">
+            Where working <span className="text-primary">capital</span>{" "}
+            <span className="text-primary">goes.</span>
+          </span>
         </>
       }
-      lead="The Bridge Round targets a $125,000 raise. Proceeds fund the path from capital to milestones — runway length depends on the final amount raised (TBA)."
+      lead="Total DigiAgent Token Sale targets a $3,100,000 raise. Proceeds fund the path from capital to milestones — runway length depends on the final amount raised (TBA)."
     >
       <Reveal>
         <div className="flex flex-wrap items-center gap-3" data-testid="runway-flow">
@@ -84,9 +87,15 @@ export function Runway() {
         <Reveal delay={0.1}>
           <div className="rounded-xl border border-hairline bg-card/40 p-7">
             <div className="eyebrow">Next milestones</div>
-            <ul className="mt-6 flex flex-col divide-y divide-hairline" data-testid="runway-milestones">
+            <ul
+              className="mt-6 flex flex-col divide-y divide-hairline"
+              data-testid="runway-milestones"
+            >
               {MILESTONES.map((m) => (
-                <li key={m} className="group flex items-center gap-4 py-3.5 text-[15px] text-foreground/85">
+                <li
+                  key={m}
+                  className="group flex items-center gap-4 py-3.5 text-[15px] text-foreground/85"
+                >
                   <span className="select-none text-xs leading-none text-primary">◆</span>
                   {m}
                 </li>

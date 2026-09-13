@@ -31,12 +31,18 @@ export function TokenUtility() {
       eyebrow="Token utility"
       title={
         <>
-          What DIGI is <span className="text-primary">designed to do.</span>
+          What DIGI is{" "}
+          <span className="text-primary">
+            designed to do<span className="text-foreground">.</span>
+          </span>
         </>
       }
       lead="DIGI is the utility token of the DigiPaga / Digimercados ecosystem. It is not deployed yet — utility activates with the token at TGE. Chain: TBA · Token contract: TBA."
     >
-      <div className="grid gap-px overflow-hidden rounded-xl border border-hairline bg-hairline lg:grid-cols-2" data-testid="token-utility-grid">
+      <div
+        className="grid gap-px overflow-hidden rounded-xl border border-hairline bg-hairline lg:grid-cols-2"
+        data-testid="token-utility-grid"
+      >
         <Reveal className="bg-background p-8 md:p-10">
           <div className="eyebrow text-primary">Core utility — from TGE</div>
           <ul className="mt-8 flex flex-col divide-y divide-hairline">

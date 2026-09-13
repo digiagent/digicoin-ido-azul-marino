@@ -6,7 +6,10 @@ const FACTS: [string, string, boolean?][] = [
   ["Vesting", "Per-allocation TGE unlocks, cliffs and vesting · see Vesting & Unlocks"],
   ["Minting", "No — supply cannot increase"],
   ["Burnable", "Yes"],
-  ["Bridge Round terms", "50,000,000 DIGI · $0.0025/DIGI · $125,000 target raise · $2.5M target FDV · 10% TGE · 6-month cliff · 12-month vesting"],
+  [
+    "Bridge Round terms",
+    "50,000,000 DIGI · $0.0025/DIGI · $100,000 target raise · $2.5M target FDV · 10% TGE · 6-month cliff · 12-month vesting",
+  ],
   ["TGE", "TBA", true],
   ["Network", "Under consideration — not yet selected", true],
   ["Token contract", "TBA", true],
@@ -28,7 +31,10 @@ export function Transparency() {
       lead="DIGI is not deployed yet. Everything below is stated as-is — nothing is implied to be live on-chain."
     >
       <Reveal>
-        <div className="overflow-hidden rounded-xl border border-hairline" data-testid="transparency-table">
+        <div
+          className="overflow-hidden rounded-xl border border-hairline"
+          data-testid="transparency-table"
+        >
           {FACTS.map(([k, v, pending]) => (
             <div
               key={k}

@@ -52,13 +52,18 @@ export function Vesting() {
       eyebrow="Vesting & unlocks"
       title={
         <>
-          Unlocks, on a <span className="text-primary">timeline.</span>
+          <span className="font-ubuntu font-bold">
+            Unlocks, on a <span className="text-primary">timeline.</span>
+          </span>
         </>
       }
       lead="Hover or tap an allocation to see its TGE unlock, cliff, vesting period, and when it is fully unlocked. TGE date: TBA — all timings are relative to TGE."
     >
       <Reveal>
-        <div className="overflow-x-auto rounded-xl border border-hairline" data-testid="vesting-timeline">
+        <div
+          className="overflow-x-auto rounded-xl border border-hairline"
+          data-testid="vesting-timeline"
+        >
           <div className="min-w-[760px] p-6 md:p-8">
             <div className="relative ml-[220px]">
               <div className="relative h-6">
@@ -88,7 +93,10 @@ export function Vesting() {
                 const active = selected === r.key;
                 const start = (Math.min(r.cliffM, MAX_MONTH) / MAX_MONTH) * 100;
                 const end = Math.min(r.cliffM + r.vestM, MAX_MONTH);
-                const width = Math.max(((end - Math.min(r.cliffM, MAX_MONTH)) / MAX_MONTH) * 100, 0);
+                const width = Math.max(
+                  ((end - Math.min(r.cliffM, MAX_MONTH)) / MAX_MONTH) * 100,
+                  0,
+                );
                 const overflows = r.cliffM + r.vestM > MAX_MONTH;
                 return (
                   <button
@@ -104,7 +112,10 @@ export function Vesting() {
                     <span className="flex items-center gap-3 pr-4">
                       <span
                         className="h-2.5 w-2.5 shrink-0 rounded-[2px] transition-transform"
-                        style={{ background: r.color, transform: active ? "scale(1.5)" : "scale(1)" }}
+                        style={{
+                          background: r.color,
+                          transform: active ? "scale(1.5)" : "scale(1)",
+                        }}
                       />
                       <span className="truncate text-sm text-foreground">{r.label}</span>
                     </span>
