@@ -85,11 +85,12 @@ export function SaleDetails() {
             <span className="eyebrow">Sale details</span>
           </div>
           <h2 className="mt-6 max-w-3xl font-ubuntu font-bold text-4xl leading-[1.05] tracking-tight md:text-6xl">
-            Four rounds, one price ladder
+            Four rounds, <span className="text-primary">one</span> price ladder
+            <span className="text-primary">.</span>
           </h2>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-            Prices step from $0.0025 in the Bridge Round toward the $15M–$20M target FDV range
-            at TGE. All figures are targets until the token is deployed — chain and contract TBA.
+            Prices step from $0.0033 in the Bridge Round toward the $15M–$20M target FDV range at
+            TGE. All figures are targets until the token is deployed — chain and contract TBA.
             <span className="mt-2 hidden font-mono text-[11px] uppercase tracking-[0.22em] text-primary/70 lg:block">
               Keep scrolling — the rounds slide sideways →
             </span>
@@ -110,12 +111,15 @@ export function SaleDetails() {
             ref={trackRef}
             className="flex w-max items-stretch gap-6 px-6 will-change-transform lg:gap-8 lg:px-[max(1.5rem,calc((100vw-72rem)/2))]"
           >
-            {ROUNDS.map((round, idx) => (
-              <article
-                key={round.id}
-                className="sale-panel w-[85vw] max-w-[540px] shrink-0 lg:w-[600px] lg:max-w-none"
-              >
-                <div className="sale-wipe h-full rounded-[28px] border border-hairline bg-card/40 p-7 shadow-[var(--shadow-deep)] backdrop-blur-md transition-[border-color] duration-300 hover:border-primary/30 md:p-10">
+            {ROUNDS.map((round, idx) => {
+              const card = (
+                <div
+                  className={`sale-wipe h-full rounded-[28px] bg-card/40 p-7 backdrop-blur-md transition-[border-width,border-color,box-shadow] duration-300 md:p-10 ${
+                    idx === 0
+                      ? "cursor-pointer border border-hairline shadow-[var(--shadow-deep)] hover:border-2 hover:border-[#84cc16] hover:shadow-[0_0_20px_rgba(132,204,22,0.4)]"
+                      : "border border-hairline shadow-[var(--shadow-deep)] hover:border-primary/30"
+                  }`}
+                >
                   <div className="flex items-start justify-between">
                     <span className="font-mono text-xs uppercase tracking-[0.22em] text-primary/70">
                       Step 0{idx + 1} / 04
@@ -150,8 +154,23 @@ export function SaleDetails() {
                     ))}
                   </div>
                 </div>
-              </article>
-            ))}
+              );
+
+              return (
+                <article
+                  key={round.id}
+                  className="sale-panel w-[85vw] max-w-[540px] shrink-0 lg:w-[600px] lg:max-w-none"
+                >
+                  {idx === 0 ? (
+                    <a href="#bridge-round" className="block w-full">
+                      {card}
+                    </a>
+                  ) : (
+                    card
+                  )}
+                </article>
+              );
+            })}
           </div>
         </div>
       </div>
