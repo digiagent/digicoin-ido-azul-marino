@@ -36,7 +36,10 @@ export function WhyDigi() {
       eyebrow="Why DIGI"
       title={
         <>
-          <span className="font-ubuntu font-bold">What DIGI is designed to <span className="text-primary">do.</span></span>
+          <span className="font-ubuntu font-bold">
+            What <span className="text-primary">DIGI</span> is designed to{" "}
+            <span className="text-primary">do.</span>
+          </span>
         </>
       }
       lead="DIGI connects ecosystem activity to AI utility — creating a flow where consumption requires DIGI, which drives acquisition, with planned removal mechanisms ensuring long-term value."
@@ -56,9 +59,7 @@ export function WhyDigi() {
                 <h3 className="font-display text-2xl leading-snug tracking-tight text-foreground transition-colors duration-300 group-hover:text-primary">
                   {b.t}
                 </h3>
-                <p className="mt-4 max-w-md text-sm leading-relaxed text-foreground/90">
-                  {b.d}
-                </p>
+                <p className="mt-4 max-w-md text-sm leading-relaxed text-foreground/90">{b.d}</p>
               </div>
               <span className="mt-6 block h-px w-8 bg-primary transition-all duration-500 group-hover:w-16" />
             </div>
