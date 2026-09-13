@@ -129,13 +129,15 @@ export const DECENTRALIZED = [
 ];
 
 export const HERO_STATS = [
-  { k: "Total supply", v: "1,000,000,000 DIGI" },
-  { k: "Bridge FDV", v: "$2.5M target" },
-  { k: "Bridge price", v: "$0.0025" },
-  { k: "Target TGE FDV", v: "$15M–$20M" },
-  { k: "Minting", v: "No" },
-  { k: "Burnable", v: "Yes" },
-  { k: "Chain", v: "TBA" },
+  { k: "TOTAL RAISE", v: "$3.0M" },
+  { k: "TOTAL SUPPLY", v: "1,000,000,000" },
+  { k: "DEFLATIONARY", v: "YES" },
+  { k: "ICS", v: "19%" },
+  { k: "TGE", v: "Q3 2027" },
+  { k: "MINTABLE", v: "NO" },
+  { k: "BURNABLE", v: "YES" },
+  { k: "MULTI-LAUNCHPADS", v: "YES" },
+  { k: "CHAIN", v: "TBA" },
 ];
 
 export const HERO_TICKER = [
@@ -167,6 +169,7 @@ export type TeamMember = {
   initials: string;
   desc: string;
   socials: TeamSocial[];
+  isAI?: boolean;
 };
 
 export const TEAM: TeamMember[] = [
@@ -208,9 +211,25 @@ export const TEAM: TeamMember[] = [
       { type: "linkedin", url: "https://www.linkedin.com/in/azahel-h-a823323a/" },
     ],
   },
+  {
+    name: "Digi Coder",
+    role: "Internal Platform Model",
+    initials: "DC",
+    desc: "System Iteration Assistant — helps with platform development and code optimization.",
+    socials: [],
+    isAI: true,
+  },
+  {
+    name: "Digi Marketer & Content",
+    role: "Social Media Growth",
+    initials: "DM",
+    desc: "Social Media Growth Assistant — handles content creation and community engagement.",
+    socials: [],
+    isAI: true,
+  },
 ];
 
-export const OPEN_ROLES = ["Head of Growth", "Head of Community", "Security Lead"];
+export const OPEN_ROLES = ["Operations", "Marketing & BizDev", "Security Lead"];
 
 // ─── Agent-nomics ───
 export const AI_ACCESS_TIERS = ["$3", "$4", "$5", "$6"];
