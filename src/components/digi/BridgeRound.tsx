@@ -1,22 +1,23 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Volume2, VolumeX } from "lucide-react";
+import { Copy, Volume2, VolumeX } from "lucide-react";
 import confetti from "canvas-confetti";
 import coin from "@/assets/digi_coin_green_center.png.asset.json";
 import { ScrollTrigger } from "./scroll";
 
-const DIGI_PER_USD = 1 / 0.0025;
+const DIGI_PER_USD = 1 / 0.0033;
 const MIN_USD = 5000;
 const MAX_USD = 50000;
 const CHIME_URL = "https://assets.mixkit.co/active_storage/sfx/1992/1992-preview.mp3";
 const FAKE_ADDRESS = "0x1234ab56cd78ef90ab12cd34ef56ab78cd905678";
+const SAFE_WALLET_ADDRESS = "0x6De84ff2B533fcD822cd37913167bcc9cb8dDbfA";
 const CHAINS = ["Base", "BNB", "Hyper", "Optimism", "Arbitrum", "Polygon", "Ethereum"];
 const STEPS = ["Identity", "Wallet", "Allocation", "Confirmation", "Complete"];
 
 const ROUND_FACTS: [string, string][] = [
   ["Status", "Opening soon"],
-  ["Price", "$0.0025"],
-  ["Allocation", "50,000,000 DIGI"],
+  ["Price", "$0.0033"],
+  ["Allocation", "30,000,000 DIGI"],
   ["TGE", "TBA"],
   ["Token contract", "TBA"],
 ];
@@ -97,7 +98,7 @@ async function makeShareCard(digi: number): Promise<string> {
   x.fillText(`${digi.toLocaleString(undefined, { maximumFractionDigits: 0 })} DIGI`, 80, 360);
   x.fillStyle = "#d4d4d8";
   x.font = "700 38px sans-serif";
-  x.fillText("at $0.0025 per DIGI", 80, 430);
+  x.fillText("at $0.0033 per DIGI", 80, 430);
   x.fillStyle = "#71717a";
   x.font = "700 28px sans-serif";
   x.fillText("DigiAgent · Bridge Round — Opening Soon", 80, 545);
@@ -121,7 +122,11 @@ function StaggerText({ text, className }: { text: string; className?: string }) 
               className="inline-block"
               variants={{
                 hidden: { opacity: 0, y: "0.6em" },
-                visible: { opacity: 1, y: 0, transition: { type: "spring", damping: 14, stiffness: 220 } },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { type: "spring", damping: 14, stiffness: 220 },
+                },
               }}
             >
               {c}
@@ -152,13 +157,11 @@ export function BridgeRound() {
   const [processing, setProcessing] = useState(false);
   const [muted, setMuted] = useState(false);
   const [cardUrl, setCardUrl] = useState("");
+  const [copied, setCopied] = useState(false);
 
   const usd = Number(amount);
   const amountValid = amount !== "" && !Number.isNaN(usd) && usd >= MIN_USD && usd <= MAX_USD;
-  const digi = useMemo(
-    () => (Number.isNaN(usd) ? 0 : Math.max(0, usd) * DIGI_PER_USD),
-    [usd],
-  );
+  const digi = useMemo(() => (Number.isNaN(usd) ? 0 : Math.max(0, usd) * DIGI_PER_USD), [usd]);
 
   // Page height changes with each step — keep downstream pins in sync.
   useEffect(() => {
@@ -176,8 +179,21 @@ export function BridgeRound() {
     if (reduced) return;
     const colors = ["#7dfa5a", "#ffffff", "#3f8f2e", "#b7ffa0"];
     // Opening cannon blast
-    confetti({ particleCount: 180, spread: 100, startVelocity: 55, origin: { x: 0.5, y: 0.6 }, colors });
-    confetti({ particleCount: 90, spread: 140, startVelocity: 35, scalar: 1.3, origin: { x: 0.5, y: 0.5 }, colors });
+    confetti({
+      particleCount: 180,
+      spread: 100,
+      startVelocity: 55,
+      origin: { x: 0.5, y: 0.6 },
+      colors,
+    });
+    confetti({
+      particleCount: 90,
+      spread: 140,
+      startVelocity: 35,
+      scalar: 1.3,
+      origin: { x: 0.5, y: 0.5 },
+      colors,
+    });
     // Sustained side streams
     const end = Date.now() + 3200;
     const frame = () => {
@@ -204,7 +220,9 @@ export function BridgeRound() {
 
   useEffect(() => {
     if (step !== 5) return;
-    makeShareCard(digi).then(setCardUrl).catch(() => {});
+    makeShareCard(digi)
+      .then(setCardUrl)
+      .catch(() => {});
   }, [step, digi]);
 
   const connectWallet = () => {
@@ -240,7 +258,10 @@ export function BridgeRound() {
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-[420px]"
-        style={{ background: "radial-gradient(60% 100% at 50% 0%, oklch(0.6 0.16 140 / 12%), transparent 70%)" }}
+        style={{
+          background:
+            "radial-gradient(60% 100% at 50% 0%, oklch(0.6 0.16 140 / 12%), transparent 70%)",
+        }}
       />
       <div className="relative mx-auto w-full max-w-5xl px-6 py-24 md:py-32">
         <div className="text-center">
@@ -257,14 +278,16 @@ export function BridgeRound() {
             data-testid="bridge-round-stats"
           >
             {[
-              ["50,000,000", "DIGI"],
-              ["$0.0025", "/ DIGI"],
-              ["$125,000", "Target raise"],
-              ["$2.5M", "Target FDV"],
-              ["5%", "Of total supply"],
+              ["30,000,000", "DIGI"],
+              ["$0.0033", "/ DIGI"],
+              ["$100,000", "Target raise"],
+              ["$2.9M", "Target FDV"],
+              ["3%", "Of total supply"],
             ].map(([v, k]) => (
               <div key={k} className="bg-zinc-900/90 px-3 py-4">
-                <div className="font-display text-xl tracking-tight text-primary md:text-2xl">{v}</div>
+                <div className="font-display text-xl tracking-tight text-primary md:text-2xl">
+                  {v}
+                </div>
                 <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-zinc-400">
                   {k}
                 </div>
@@ -366,7 +389,9 @@ export function BridgeRound() {
                           data-testid="bridge-email-input"
                         />
                         {email !== "" && !isEmail(email) && (
-                          <p className="mt-2 text-lg text-destructive">Enter a valid email address.</p>
+                          <p className="mt-2 text-lg text-destructive">
+                            Enter a valid email address.
+                          </p>
                         )}
                       </div>
                       <div className="flex flex-col gap-4">
@@ -426,7 +451,9 @@ export function BridgeRound() {
                           data-testid="bridge-receiving-input"
                         />
                         {receiving !== "" && !isEvm(receiving) && (
-                          <p className="mt-2 text-lg text-destructive">Enter a valid EVM address.</p>
+                          <p className="mt-2 text-lg text-destructive">
+                            Enter a valid EVM address.
+                          </p>
                         )}
                       </div>
                       <Check
@@ -474,7 +501,11 @@ export function BridgeRound() {
                       <div className="grid gap-4 sm:grid-cols-2">
                         <div>
                           <span className={label}>Stablecoin</span>
-                          <select value={stable} onChange={(e) => setStable(e.target.value)} className={field}>
+                          <select
+                            value={stable}
+                            onChange={(e) => setStable(e.target.value)}
+                            className={field}
+                          >
                             <option value="USDC">USDC</option>
                             <option value="USDT">USDT</option>
                             <option value="DAI">DAI</option>
@@ -482,7 +513,11 @@ export function BridgeRound() {
                         </div>
                         <div>
                           <span className={label}>Preferred chain (network TBA)</span>
-                          <select value={chain} onChange={(e) => setChain(e.target.value)} className={field}>
+                          <select
+                            value={chain}
+                            onChange={(e) => setChain(e.target.value)}
+                            className={field}
+                          >
                             {CHAINS.map((c) => (
                               <option key={c} value={c}>
                                 {c}
@@ -500,7 +535,7 @@ export function BridgeRound() {
                           {digi.toLocaleString(undefined, { maximumFractionDigits: 0 })} DIGI
                         </div>
                         <div className="mt-1 text-xs font-bold uppercase tracking-widest text-zinc-400">
-                          At $0.0025 per DIGI · subject to final terms
+                          At $0.0033 per DIGI · subject to final terms
                         </div>
                       </div>
                       <div className="flex gap-3">
@@ -563,7 +598,10 @@ export function BridgeRound() {
                   )}
 
                   {step === 5 && (
-                    <div className="flex flex-col items-center gap-6 py-4 text-center" data-testid="bridge-success-state">
+                    <div
+                      className="flex flex-col items-center gap-6 py-4 text-center"
+                      data-testid="bridge-success-state"
+                    >
                       <motion.img
                         src={coin.url}
                         alt="DIGI coin"
@@ -625,9 +663,11 @@ export function BridgeRound() {
                             className="rounded-xl bg-primary px-6 py-4 text-lg font-bold text-primary-foreground transition-all hover:brightness-110 hover:shadow-[0_0_28px_oklch(0.82_0.21_130_/_45%)]"
                             onClick={() => {
                               const text = encodeURIComponent(
-                                "I just registered interest in the $DIGI Bridge Round at $0.0025 per DIGI. Opening soon!",
+                                "I just registered interest in the $DIGI Bridge Round at $0.0033 per DIGI. Opening soon!",
                               );
-                              const url = encodeURIComponent(`${window.location.origin}/digi-share-card.png`);
+                              const url = encodeURIComponent(
+                                `${window.location.origin}/digi-share-card.png`,
+                              );
                               window.open(
                                 `https://twitter.com/intent/tweet?text=${text}&url=${url}`,
                                 "_blank",
@@ -696,18 +736,60 @@ export function BridgeRound() {
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-70" />
                     <span className="relative inline-flex h-3 w-3 rounded-full bg-primary" />
                   </span>
-                  <span className="text-2xl font-black tracking-tight text-white md:text-3xl" data-testid="bridge-status">
+                  <span
+                    className="text-2xl font-black tracking-tight text-white md:text-3xl"
+                    data-testid="bridge-status"
+                  >
                     Opening Soon
                   </span>
                 </div>
                 <div className="mt-3 text-3xl font-black text-primary drop-shadow-[0_0_12px_oklch(0.82_0.21_130_/_45%)]">
-                  $0.0025
+                  $0.0033
                   <span className="ml-2 text-xs font-bold uppercase tracking-widest text-zinc-400">
                     per DIGI
                   </span>
                 </div>
               </div>
-              <div className="relative w-full rounded-xl border border-zinc-800 bg-zinc-900/60 px-5 py-1" data-testid="bridge-round-facts">
+              <div className="relative w-full max-w-sm rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-3 text-left">
+                <div className="flex items-center gap-3">
+                  <img src="/assets/safe-white.svg" alt="Safe" className="h-6 w-auto" />
+                  <div>
+                    <div className="text-xs font-bold uppercase tracking-widest text-zinc-300">
+                      Contribution Wallet
+                    </div>
+                    <div className="mt-1 text-[11px] text-zinc-500">
+                      Verified Safe multisig wallet for Bridge Round contributions.
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-3 flex items-center justify-between gap-3">
+                  <span className="select-none font-mono text-xs text-zinc-300">
+                    0x6De8...bDbfA
+                  </span>
+                  <button
+                    type="button"
+                    className="inline-flex shrink-0 items-center gap-1.5 rounded-md border border-zinc-700 px-2.5 py-1.5 text-xs font-semibold text-zinc-300 transition-colors hover:border-primary/60 hover:text-white"
+                    onClick={async () => {
+                      await navigator.clipboard.writeText(SAFE_WALLET_ADDRESS);
+                      setCopied(true);
+                      window.setTimeout(() => setCopied(false), 2000);
+                    }}
+                    data-wallet-address={SAFE_WALLET_ADDRESS}
+                    aria-label="Copy Safe wallet address"
+                  >
+                    <Copy size={13} aria-hidden="true" />
+                    {copied ? "Copied!" : "Copy Address"}
+                  </button>
+                </div>
+                <p className="mt-3 text-[10px] leading-relaxed text-zinc-500">
+                  Always verify the wallet address before sending funds. We are not responsible for
+                  funds sent to incorrect addresses.
+                </p>
+              </div>
+              <div
+                className="relative w-full rounded-xl border border-zinc-800 bg-zinc-900/60 px-5 py-1"
+                data-testid="bridge-round-facts"
+              >
                 {ROUND_FACTS.map(([k, v]) => (
                   <div
                     key={k}
