@@ -27,7 +27,7 @@ export function TokenUtility() {
   return (
     <Section
       id="token-utility"
-      index="13"
+      index="12"
       eyebrow="Token utility"
       title={
         <>

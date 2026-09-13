@@ -3,18 +3,28 @@ import { Reveal, Section } from "./Section";
 const BOXES: { n: string; t: string; d: string }[] = [
   {
     n: "01",
-    t: "Intelligence layer",
-    d: "Digi-Agent coordinates payments, wallets, and markets across DigiPaga and Digimercados — one layer of intelligence over the digital economy.",
+    t: "Ecosystem Activity",
+    d: "Users engage with DigiPaga payments, Digimercados trading, and AI-powered services across the platform ecosystem.",
   },
   {
     n: "02",
-    t: "Consumption-linked",
-    d: "Using the ecosystem's AI capabilities is designed to require DIGI — so token consumption tracks actual usage across the platforms.",
+    t: "AI Utility",
+    d: "Using Digi-Agent's intelligence capabilities requires DIGI — connecting token consumption to actual ecosystem utility.",
   },
   {
     n: "03",
-    t: "Utility by design",
-    d: "DIGI's role is functional: access, execution, and participation across centralized and decentralized environments.",
+    t: "DIGI Required",
+    d: "As users consume AI services and platform features, they must acquire DIGI to access advanced functionality.",
+  },
+  {
+    n: "04",
+    t: "DIGI Acquired",
+    d: "Demand for DIGI increases as ecosystem activity grows, with tokens acquired through participation and utility.",
+  },
+  {
+    n: "05",
+    t: "Planned Removal",
+    d: "A systematic burn mechanism (Incinerator) is designed to remove DIGI from circulation as the ecosystem scales.",
   },
 ];
 
@@ -22,32 +32,31 @@ export function WhyDigi() {
   return (
     <Section
       id="why-digi"
-      index="11"
+      index="10"
       eyebrow="Why DIGI"
       title={
         <>
-          Designed to connect consumption with{" "}
-          <span className="text-primary">actual utility.</span>
+          <span className="font-ubuntu font-bold">What DIGI is designed to <span className="text-primary">do.</span></span>
         </>
       }
-      lead="Digi-Agent is building an intelligence layer for the digital economy. DIGI is designed to connect token consumption with actual ecosystem utility."
+      lead="DIGI connects ecosystem activity to AI utility — creating a flow where consumption requires DIGI, which drives acquisition, with planned removal mechanisms ensuring long-term value."
     >
       <Reveal>
         <div
           data-testid="why-digi-boxes"
-          className="flex flex-col gap-px overflow-hidden rounded-xl border border-hairline bg-hairline lg:h-[320px] lg:flex-row"
+          className="grid gap-px overflow-hidden rounded-xl border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-3 lg:h-[400px]"
         >
           {BOXES.map((b) => (
             <div
               key={b.n}
-              className="group relative flex flex-1 flex-col justify-between overflow-hidden bg-background p-8 transition-[flex-grow,background-color] duration-500 ease-out hover:bg-card/60 lg:hover:flex-[2.2]"
+              className="group relative flex flex-1 flex-col justify-between overflow-hidden bg-background p-8 transition-colors duration-500 ease-out hover:bg-card/60"
             >
               <span className="font-mono text-xs text-primary/70">{b.n}</span>
               <div>
-                <h3 className="font-display text-2xl leading-snug tracking-tight transition-colors duration-300 group-hover:text-primary">
+                <h3 className="font-display text-2xl leading-snug tracking-tight text-foreground transition-colors duration-300 group-hover:text-primary">
                   {b.t}
                 </h3>
-                <p className="mt-4 max-w-md text-sm leading-relaxed text-muted-foreground opacity-100 transition-all delay-100 duration-500 lg:max-w-sm lg:translate-y-3 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100">
+                <p className="mt-4 max-w-md text-sm leading-relaxed text-foreground/90">
                   {b.d}
                 </p>
               </div>

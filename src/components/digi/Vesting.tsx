@@ -48,7 +48,7 @@ export function Vesting() {
   return (
     <Section
       id="vesting"
-      index="15"
+      index="14"
       eyebrow="Vesting & unlocks"
       title={
         <>

@@ -52,9 +52,9 @@ export function Hero() {
 
         gsap.fromTo(
           document.documentElement,
-          { "--page-bg": "#0b0d0b" },
+          { "--page-bg": "#171B25" },
           {
-            "--page-bg": "#0e2014",
+            "--page-bg": "#171B25",
             ease: "none",
             scrollTrigger: {
               trigger: ref.current,
@@ -89,7 +89,11 @@ export function Hero() {
             ["Sale", "sale"],
             ["Team", "team"],
           ].map(([label, href]) => (
-            <a key={href} href={`#${href}`} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+            <a
+              key={href}
+              href={`#${href}`}
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
               {label}
             </a>
           ))}
@@ -141,7 +145,10 @@ export function Hero() {
                   </Magnetic>
                 ))}
                 <Magnetic strength={0.35}>
-                  <span aria-hidden className="hero-char inline-block text-primary will-change-transform">
+                  <span
+                    aria-hidden
+                    className="hero-char inline-block text-primary will-change-transform"
+                  >
                     .
                   </span>
                 </Magnetic>
@@ -190,6 +197,53 @@ export function Hero() {
                 </a>
               </Magnetic>
             </motion.div>
+
+            <div className="mt-16">
+              <div
+                data-testid="hero-info-bar"
+                className="mx-auto flex w-full max-w-[1700px] flex-nowrap items-center justify-center overflow-x-auto whitespace-nowrap px-6 py-5 [scrollbar-width:none] xl:overflow-visible [&::-webkit-scrollbar]:hidden"
+              >
+                {STATS.map((s, i) => {
+                  const isChain = s.k === "CHAIN";
+                  return (
+                    <motion.div
+                      key={s.k}
+                      initial={reduced ? false : { opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 + i * 0.06, duration: 0.5 }}
+                      className="group relative flex shrink-0 items-center"
+                    >
+                      {i > 0 && (
+                        <span aria-hidden className="mx-6 text-[9px] leading-none text-primary">
+                          ◆
+                        </span>
+                      )}
+                      <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+                        {s.k}
+                      </span>
+                      {isChain ? (
+                        <div className="relative ml-2.5">
+                          <span className="font-mono text-[13px] font-semibold uppercase tracking-[0.06em] text-foreground border-b-2 border-lime-500">
+                            {s.v}
+                          </span>
+                          <div className="absolute left-0 top-full mt-2 hidden flex-col gap-1 rounded bg-zinc-900 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.06em] text-foreground shadow-lg group-hover:flex">
+                            <span>ARC</span>
+                            <span>BASE</span>
+                            <span>BNB</span>
+                            <span>ROBIN</span>
+                            <span>HYPE</span>
+                          </div>
+                        </div>
+                      ) : (
+                        <span className="ml-2.5 font-mono text-[13px] font-semibold uppercase tracking-[0.06em] text-foreground">
+                          {s.v}
+                        </span>
+                      )}
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
           <div
@@ -198,11 +252,11 @@ export function Hero() {
           >
             <div
               className="absolute inset-[6%] rounded-full blur-3xl"
-              style={{ background: "radial-gradient(circle, oklch(0.6 0.16 140 / 22%), transparent 70%)" }}
+              style={{
+                background: "radial-gradient(circle, oklch(0.6 0.16 140 / 22%), transparent 70%)",
+              }}
               aria-hidden
             />
-            <div className="absolute inset-[4%] rounded-full border border-hairline" aria-hidden />
-            <div className="absolute inset-[18%] rounded-full border border-primary/10" aria-hidden />
             <CircularText
               text={RING_OUTER}
               radius={92}
@@ -223,74 +277,11 @@ export function Hero() {
             <motion.img
               src={agentCoin.url}
               alt="DigiAgent holding the DIGI coin"
-              className="absolute inset-[22%] h-[56%] w-[56%] object-contain drop-shadow-2xl"
+              className="absolute inset-[10%] h-[80%] w-[80%] object-contain drop-shadow-2xl"
               animate={reduced ? undefined : { y: [0, -12, 0], rotate: [0, 2.5, 0, -2.5, 0] }}
               transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
             />
           </div>
-        </div>
-      </div>
-
-      <div className="hairline-t relative mt-auto">
-        <div
-          data-testid="hero-info-bar"
-          className="mx-auto flex w-full max-w-[1700px] flex-nowrap items-center justify-center overflow-x-auto whitespace-nowrap px-6 py-5 [scrollbar-width:none] xl:overflow-visible [&::-webkit-scrollbar]:hidden"
-        >
-          {STATS.map((s, i) => {
-            const isTge = s.k === "Target TGE FDV";
-            return (
-              <motion.div
-                key={s.k}
-                initial={reduced ? false : { opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 + i * 0.06, duration: 0.5 }}
-                className="group relative flex shrink-0 items-center"
-              >
-                {i > 0 && (
-                  <span aria-hidden className="mx-6 text-[9px] leading-none text-primary">
-                    ◆
-                  </span>
-                )}
-                <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
-                  {isTge ? (
-                    <>
-                      Target{" "}
-                      <span
-                        className="cursor-help text-foreground/80 underline decoration-primary/60 decoration-dotted underline-offset-4"
-                        data-testid="tge-hover-target"
-                      >
-                        TGE
-                      </span>{" "}
-                      FDV
-                    </>
-                  ) : (
-                    s.k
-                  )}
-                </span>
-                <span className="ml-2.5 font-mono text-[13px] font-semibold uppercase tracking-[0.06em] text-foreground">
-                  {s.v}
-                </span>
-                {isTge && (
-                  <div
-                    className="pointer-events-none absolute bottom-full left-1/2 z-30 mb-4 w-60 -translate-x-1/2 rounded-xl border border-hairline bg-card p-5 opacity-0 shadow-[var(--shadow-deep)] backdrop-blur-md transition-opacity duration-200 group-hover:opacity-100"
-                    data-testid="tge-networks-tooltip"
-                  >
-                    <div className="eyebrow">Networks under consideration</div>
-                    <ul className="mt-3 space-y-1.5 font-mono text-xs uppercase tracking-[0.14em] text-foreground">
-                      {["Base", "BNB Chain", "Hyper"].map((n) => (
-                        <li key={n} className="flex items-center gap-2.5">
-                          <span aria-hidden className="text-[8px] text-primary">
-                            ◆
-                          </span>
-                          {n}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </motion.div>
-            );
-          })}
         </div>
       </div>
 

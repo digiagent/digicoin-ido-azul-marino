@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Info, X } from "lucide-react";
+import { Bot, Info, X } from "lucide-react";
 import { Reveal, Section } from "./Section";
 import { OPEN_ROLES, TEAM, type TeamSocial } from "./data";
 
@@ -34,18 +34,18 @@ export function Team() {
   return (
     <Section
       id="team"
-      index="10"
+      index="09"
       eyebrow="Team"
       title={
         <>
-          The people behind <span className="text-primary">Digi-Agent.</span>
+          <span className="font-ubuntu font-bold">TEAM</span>
         </>
       }
     >
       <Reveal>
         <div
           data-testid="team-strip"
-          className="flex flex-col gap-px overflow-hidden rounded-xl border border-hairline bg-hairline md:h-[380px] md:flex-row"
+          className="flex flex-col gap-px overflow-hidden rounded-xl border border-hairline bg-hairline md:h-[300px] md:flex-row"
         >
           {TEAM.map((m, i) => {
             const slug = m.name.toLowerCase();
@@ -64,6 +64,12 @@ export function Team() {
                 >
                   <Info className="h-4 w-4" />
                 </button>
+
+                {m.isAI && (
+                  <div className="absolute left-4 top-4 z-20 flex h-8 w-8 items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-primary">
+                    <Bot className="h-4 w-4" />
+                  </div>
+                )}
 
                 <span className="pointer-events-none select-none font-brand text-[clamp(3.5rem,7vw,6rem)] font-extrabold uppercase leading-none tracking-tight text-primary/15 transition-colors duration-500 group-hover:text-primary/35">
                   {m.initials}

@@ -16,7 +16,7 @@ export function WhyNow() {
       eyebrow="Why now"
       title={
         <>
-          The economy is learning to <span className="text-primary">act on its own.</span>
+          <span className="font-ubuntu font-bold">The economy is learning to <span className="text-primary">act on its own.</span></span>
         </>
       }
     >
@@ -31,8 +31,8 @@ export function WhyNow() {
             className="bg-background p-8 transition-colors duration-300 hover:bg-card/60"
           >
             <span className="font-mono text-xs text-primary/70">{b.n}</span>
-            <h3 className="mt-4 font-display text-2xl leading-snug tracking-tight">{b.t}</h3>
-            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{b.d}</p>
+            <h3 className="mt-4 font-display text-2xl leading-snug tracking-tight text-foreground">{b.t}</h3>
+            <p className="mt-4 text-sm leading-relaxed text-foreground/90">{b.d}</p>
           </Reveal>
         ))}
       </div>
@@ -40,51 +40,14 @@ export function WhyNow() {
   );
 }
 
-const CHAIN_STEPS = ["Discover", "Decide", "Pay", "Convert", "Send", "Settle", "Manage"];
-
 export function Problem() {
-  return (
-    <Section
-      id="problem"
-      index="06"
-      eyebrow="The problem"
-      title={
-        <>
-          Seven tasks. <span className="text-primary">Seven different apps.</span>
-        </>
-      }
-      lead="Completing a single economic task today means moving between multiple systems and applications — each with its own account, interface, and settlement logic."
-    >
-      <Reveal>
-        <div className="flex flex-wrap items-center gap-3" data-testid="problem-chain">
-          {CHAIN_STEPS.map((s, i) => (
-            <span key={s} className="flex items-center gap-3">
-              <span className="cursor-default rounded-full border border-hairline px-5 py-2.5 font-mono text-xs uppercase tracking-[0.18em] text-foreground/80 transition-colors duration-300 hover:border-primary hover:text-primary">
-                {s}
-              </span>
-              {i < CHAIN_STEPS.length - 1 && (
-                <span aria-hidden className="text-primary/60">
-                  →
-                </span>
-              )}
-            </span>
-          ))}
-        </div>
-      </Reveal>
-      <Reveal delay={0.15}>
-        <p className="hairline-t mt-12 max-w-2xl pt-8 font-display text-2xl leading-snug tracking-tight md:text-3xl">
-          Digi-Agent connects these activities into{" "}
-          <span className="text-primary">intelligent workflows.</span>
-        </p>
-      </Reveal>
-    </Section>
-  );
+  return null;
 }
 
 const PRODUCT_COLS: [string, string][] = [
   [
     "What it does",
-    "Coordinates discovery, decisions, and execution across payments, wallets, and markets — one intelligence layer instead of disconnected tools.",
+    "DigiAgent connects economic activities into intelligent workflows — helping users and future autonomous agents discover, decide, and execute.",
   ],
   [
     "Who it serves",
@@ -92,7 +55,7 @@ const PRODUCT_COLS: [string, string][] = [
   ],
   [
     "What is being built",
-    "The agent layer for the DigiPaga and Digimercados ecosystem — guided today, increasingly autonomous over time.",
+    "The intelligence SDK for the DigiPaga and Digimercados ecosystem — guided today, increasingly autonomous over time.",
   ],
 ];
 
@@ -100,14 +63,14 @@ export function Product() {
   return (
     <Section
       id="product"
-      index="07"
+      index="06"
       eyebrow="Digi-Agent"
       title={
         <>
-          The intelligence layer of the <span className="text-primary">Digi economy.</span>
+          <span className="font-ubuntu font-bold">The Intelligence SDK of the <span className="text-primary">Digital Economy.</span></span>
         </>
       }
-      lead="Digi-Agent is the intelligence layer connecting financial and commercial activity across the DigiPaga / Digimercados ecosystem."
+      lead="Digi-Agent is the intelligence SDK connecting financial and commercial activity across the DigiPaga / Digimercados ecosystem."
     >
       <div className="grid items-center gap-12 lg:grid-cols-[0.8fr_1.2fr]">
         <Reveal className="flex justify-center">
@@ -141,15 +104,14 @@ export function Transformation() {
       <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
         <Reveal>
           <div className="flex items-baseline gap-4">
-            <span className="eyebrow text-primary/70">08</span>
+            <span className="eyebrow text-primary/70">07</span>
             <span className="eyebrow">Transformation</span>
           </div>
-          <p className="mt-6 max-w-4xl font-brand text-[clamp(1.9rem,4.6vw,3.4rem)] font-extrabold uppercase leading-[1.02] tracking-[-0.01em]">
-            From digital payments to{" "}
-            <span className="text-primary">autonomous economic activity.</span>
+          <p className="mt-6 max-w-4xl font-ubuntu font-bold text-[clamp(1.9rem,4.6vw,3.4rem)] uppercase leading-[1.02] tracking-[-0.01em]">
+            FROM DIGITAL PAYMENTS TO <span className="text-primary">AUTONOMOUS ECONOMIC ACTIVITY.</span>
           </p>
         </Reveal>
-        <div className="mt-16 grid items-center gap-12 lg:grid-cols-[0.7fr_1.3fr]">
+        <div className="mt-16 flex justify-center">
           <Reveal className="flex justify-center">
             <img
               src={phone.url}
@@ -157,33 +119,6 @@ export function Transformation() {
               loading="lazy"
               className="h-[440px] w-auto object-contain drop-shadow-2xl"
             />
-          </Reveal>
-          <Reveal delay={0.1}>
-            <div className="flex flex-wrap items-center gap-3" data-testid="transformation-flow">
-              {FLOW.map((s, i) => (
-                <span key={s} className="flex items-center gap-3">
-                  <span
-                    className={`rounded-full border px-5 py-2.5 font-mono text-xs uppercase tracking-[0.18em] transition-colors duration-300 hover:border-primary ${
-                      i === 1 || i === FLOW.length - 1
-                        ? "border-primary/50 bg-primary/10 text-primary"
-                        : "border-hairline text-foreground/80"
-                    }`}
-                  >
-                    {s}
-                  </span>
-                  {i < FLOW.length - 1 && (
-                    <span aria-hidden className="text-primary/60">
-                      →
-                    </span>
-                  )}
-                </span>
-              ))}
-            </div>
-            <p className="mt-8 max-w-xl text-base leading-relaxed text-muted-foreground">
-              Today, Digi-Agent guides people through payments and markets. Over time, the same
-              intelligence executes on their behalf — with every action settled inside the Digi
-              economy.
-            </p>
           </Reveal>
         </div>
       </div>
@@ -202,26 +137,21 @@ export function EarlyValidation() {
   return (
     <Section
       id="early-validation"
-      index="09"
+      index="08"
       eyebrow="Early validation"
       title={
         <>
-          Signal, not <span className="text-primary">noise.</span>
+          <span className="font-ubuntu font-bold">Building with real <span className="text-primary">traction.</span></span>
         </>
       }
     >
-      <div
-        className="grid gap-px overflow-hidden rounded-xl border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-4"
-        data-testid="early-validation-grid"
-      >
+      <div className="flex flex-col gap-4 text-base leading-relaxed text-foreground/90">
         {VALIDATION.map(([k, v], i) => (
-          <Reveal
-            key={k}
-            delay={i * 0.06}
-            className="bg-background p-7 transition-colors duration-300 hover:bg-card/60"
-          >
-            <div className="font-display text-2xl tracking-tight text-primary">{k}</div>
-            <p className="mt-3 text-sm leading-relaxed text-foreground/85">{v}</p>
+          <Reveal key={k} delay={i * 0.06}>
+            <div className="flex items-baseline gap-3">
+              <span className="font-semibold text-primary">{k}</span>
+              <span className="text-muted-foreground">{v}</span>
+            </div>
           </Reveal>
         ))}
       </div>

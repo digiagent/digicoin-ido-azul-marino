@@ -34,7 +34,7 @@ export function Summary() {
       <div className="mx-auto grid max-w-6xl gap-12 px-6 py-24 md:grid-cols-[0.85fr_1.15fr] md:items-start md:py-32">
         <div className="md:sticky md:top-28">
           <span className="eyebrow">§ 01 Project details</span>
-          <h2 className="mt-6 font-display text-[clamp(3rem,7vw,5rem)] leading-[0.95] tracking-tight">
+          <h2 className="mt-6 font-ubuntu font-bold text-[clamp(3rem,7vw,5rem)] leading-[0.95] tracking-tight">
             Summary<span className="text-primary">.</span>
           </h2>
           <p className="mt-8 hidden max-w-[260px] text-sm leading-relaxed text-muted-foreground md:block">
@@ -43,10 +43,22 @@ export function Summary() {
         </div>
         <div className="flex flex-col gap-5 text-[17px] leading-[1.65] text-muted-foreground md:text-lg">
           {[
-            ["DigiPaga", " is an Agentic Stablecoin Orchestration Engine designed to power payments across Latin America and the Global South."],
-            ["Digimercados", " is a Hybrid Smart Wallet and Exchange that brings advanced trading tools, structured access, and digital market participation to the same regions."],
-            ["Digi Agent", " serves as the AI-guided avatar layer across both platforms, helping users navigate payments, stablecoins, wallets, and market tools with greater clarity."],
-            ["DIGIM", " unlocks premium functionality across the ecosystem and operates in both centralized and decentralized environments, making advanced financial infrastructure more accessible to users regardless of technical background."],
+            [
+              "DigiPaga",
+              " is an Agentic Stablecoin Orchestration Engine designed to power payments across Latin America and the Global South.",
+            ],
+            [
+              "Digimercados",
+              " is a Hybrid Smart Wallet and Exchange that brings advanced trading tools, structured access, and digital market participation to the same regions.",
+            ],
+            [
+              "Digi Agent",
+              " serves as the AI-guided avatar layer across both platforms, helping users navigate payments, stablecoins, wallets, and market tools with greater clarity.",
+            ],
+            [
+              "DIGI ROBOTICS",
+              " is an open marketplace for robotics education and training. Companies and builders can publish vetted video and voice tutorials, customized knowledge modules, and training content. A platform where anyone can educate robots to earn — democratizing access to robotics expertise.",
+            ],
           ].map(([b, rest]) => (
             <div
               key={b}
@@ -59,14 +71,16 @@ export function Summary() {
             </div>
           ))}
           <div className="summary-card hairline-t mt-2 flex gap-3 overflow-x-auto whitespace-nowrap pt-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {["Payments", "Smart Exchange", "Stablecoins", "AI Agent", "Global South", "Hybrid Finance"].map((t) => (
-              <span
-                key={t}
-                className="shrink-0 cursor-default rounded-full border border-primary/25 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-foreground/70 transition-colors duration-300 hover:border-primary hover:text-foreground"
-              >
-                {t}
-              </span>
-            ))}
+            {["PAYMENTS", "EXCHANGE", "STABLECOINS", "AI AGENT", "ROBOTICS", "HYBRID FINANCE"].map(
+              (t) => (
+                <span
+                  key={t}
+                  className="shrink-0 cursor-default rounded-full border border-primary/25 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-foreground/70 transition-colors duration-300 hover:border-primary hover:text-foreground"
+                >
+                  {t}
+                </span>
+              ),
+            )}
           </div>
         </div>
       </div>
@@ -102,7 +116,9 @@ function CoinTilt() {
     >
       <div
         className="absolute -inset-8 rounded-full opacity-70 blur-3xl transition-opacity duration-300 group-hover:opacity-100"
-        style={{ background: "radial-gradient(circle, oklch(0.6 0.16 140 / 40%), transparent 70%)" }}
+        style={{
+          background: "radial-gradient(circle, oklch(0.6 0.16 140 / 40%), transparent 70%)",
+        }}
         aria-hidden
       />
       <div className="absolute inset-0 rounded-full border border-hairline" aria-hidden />
@@ -130,7 +146,7 @@ export function Platforms() {
       <div className="mx-auto w-full max-w-6xl px-6 pt-24 md:pt-32">
         <Reveal>
           <span className="eyebrow">§ 02 Product stack</span>
-          <h2 className="mt-6 font-display text-[clamp(2.6rem,6vw,4.5rem)] leading-[1.02] tracking-tight">
+          <h2 className="mt-6 font-ubuntu font-bold text-[clamp(2.6rem,6vw,4.5rem)] leading-[1.02] tracking-tight">
             Two platforms.
             <br />
             <span className="text-primary">One cryptocurrency.</span>
@@ -191,15 +207,15 @@ export function DualUtility() {
       <div className="mx-auto grid max-w-6xl grid-cols-12 items-end gap-8 px-6 pb-16 pt-28 lg:pb-24">
         <div className="col-span-12 flex flex-col gap-4 lg:col-span-6">
           <span className="eyebrow">§ 04 · Utility design</span>
-          <h2 className="font-display text-[clamp(2.4rem,5vw,4rem)] leading-[0.95] tracking-tight">
+          <h2 className="font-ubuntu font-bold text-[clamp(2.4rem,5vw,4rem)] leading-[0.95] tracking-tight">
             <span className="text-primary">Dual utility</span>
             <br />
             across environments.
           </h2>
         </div>
         <div className="col-span-12 max-w-[440px] text-[15px] leading-[1.7] text-muted-foreground lg:col-span-5 lg:col-start-8">
-          <strong className="font-semibold text-foreground">Nowadays</strong>, it&apos;s not enough for a
-          cryptocurrency to rely on a single platform.{" "}
+          <strong className="font-semibold text-foreground">Nowadays</strong>, it&apos;s not enough
+          for a cryptocurrency to rely on a single platform.{" "}
           <strong className="font-semibold text-foreground">DIGI</strong> unlocks value across
           centralized and decentralized environments, powering two mobile apps with one shared token
           supply — network effects compounding with every user, every platform.
@@ -214,9 +230,7 @@ export function DualUtility() {
           <Reveal
             key={panel.title}
             className={`relative overflow-hidden border-hairline px-6 py-16 md:px-14 lg:py-24 ${
-              panel.side === "left"
-                ? "border-b bg-card/40 lg:border-b-0 lg:border-r"
-                : "bg-surface"
+              panel.side === "left" ? "border-b bg-card/40 lg:border-b-0 lg:border-r" : "bg-surface"
             }`}
           >
             {panel.side === "left" && (
@@ -233,7 +247,9 @@ export function DualUtility() {
                 panel.side === "left" ? "ml-auto lg:pr-10" : "mr-auto lg:pl-14"
               }`}
             >
-              <span className="mb-10 block font-display text-3xl tracking-tight">{panel.title}</span>
+              <span className="mb-10 block font-display text-3xl tracking-tight">
+                {panel.title}
+              </span>
               <ul className="flex flex-col divide-y divide-hairline">
                 {panel.items.map((c) => (
                   <li
@@ -281,7 +297,10 @@ export function Footer() {
               <ul className="mt-4 space-y-2.5">
                 {(links as string[]).map((l) => (
                   <li key={l}>
-                    <a href="#" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+                    <a
+                      href="#"
+                      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    >
                       {l}
                     </a>
                   </li>

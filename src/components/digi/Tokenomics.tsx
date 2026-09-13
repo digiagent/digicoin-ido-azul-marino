@@ -78,9 +78,9 @@ export function Tokenomics() {
   return (
     <Section
       id="tokenomics"
-      index="14"
+      index="13"
       eyebrow="Tokenomics"
-      title="One billion DIGI, allocated for durability"
+      title={<span className="font-ubuntu font-bold">One billion DIGI, allocated for durability</span>}
       lead="Supply is fixed at 1,000,000,000 DIGI. Allocations are weighted toward the agent economy and long-dated liquidity rather than short-term distribution."
     >
       <div
@@ -223,7 +223,7 @@ export function Tokenomics() {
 
       <div className="mt-10" data-testid="distribution-details">
         <Reveal>
-          <h3 className="font-display text-3xl tracking-tight md:text-4xl">
+          <h3 className="font-ubuntu font-medium text-3xl tracking-tight md:text-4xl">
             Distribution details<span className="text-primary">.</span>
           </h3>
           <div className="mt-6 overflow-hidden rounded-xl border border-hairline">

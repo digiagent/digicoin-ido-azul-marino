@@ -244,13 +244,13 @@ export function BridgeRound() {
       />
       <div className="relative mx-auto w-full max-w-5xl px-6 py-24 md:py-32">
         <div className="text-center">
-          <span className="eyebrow">17 · Bridge round</span>
+          <span className="eyebrow">16 · Bridge round</span>
           <h2
-            className="mt-5 bg-clip-text text-4xl font-black uppercase tracking-tight text-transparent md:text-5xl"
+            className="mt-5 font-ubuntu font-bold bg-clip-text text-4xl uppercase tracking-tight text-transparent md:text-5xl"
             style={{ backgroundImage: "var(--gradient-accent)" }}
             data-testid="bridge-round-title"
           >
-            DIGI Bridge Round
+            DIGI BRIDGE ROUND
           </h2>
           <div
             className="mx-auto mt-8 grid max-w-3xl grid-cols-2 gap-px overflow-hidden rounded-xl border border-zinc-700 bg-zinc-700 sm:grid-cols-5"
@@ -274,20 +274,6 @@ export function BridgeRound() {
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-300">
             An early bridge round intended to accelerate product development, product launches,
             ecosystem growth, user adoption, and pre-registration.
-          </p>
-          <div className="mx-auto mt-5 flex max-w-2xl flex-wrap justify-center gap-2" data-testid="bridge-round-terms">
-            {["10% at TGE", "6-month cliff", "12-month vesting", "USDT / DAI / USDC", "Min $5K · Max $50K", "Chain: TBA"].map((t) => (
-              <span
-                key={t}
-                className="rounded-full border border-zinc-700 px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-300"
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-          <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-zinc-400">
-            The token is not deployed yet. This form registers interest — it is not an on-chain
-            purchase.
           </p>
         </div>
 

@@ -11,11 +11,11 @@ export function Roadmap() {
   return (
     <Section
       id="roadmap"
-      index="19"
+      index="18"
       eyebrow="Roadmap"
       title={
         <>
-          The path to <span className="text-primary">TGE.</span>
+          <span className="font-ubuntu font-bold">The path to <span className="text-primary">TGE.</span></span>
         </>
       }
       lead="Target schedule — subject to change. TGE date, chain, and contract are TBA."

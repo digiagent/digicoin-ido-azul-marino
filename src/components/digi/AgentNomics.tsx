@@ -208,11 +208,11 @@ export function AgentNomics() {
       <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
         <Reveal>
           <div className="flex items-baseline gap-4">
-            <span className="eyebrow text-primary/70">12</span>
+            <span className="eyebrow text-primary/70">11</span>
             <span className="eyebrow">Token mechanics</span>
           </div>
-          <p className="mt-6 font-brand text-[clamp(2.6rem,6.4vw,5rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.02em] text-primary">
-            Agent-nomics
+          <p className="mt-6 font-ubuntu font-bold text-[clamp(2.6rem,6.4vw,5rem)] uppercase leading-[0.95] tracking-[-0.02em] text-primary">
+            AGENT-NOMICS
           </p>
         </Reveal>
 

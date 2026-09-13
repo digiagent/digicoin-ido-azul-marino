@@ -26,7 +26,7 @@ export function Runway() {
   return (
     <Section
       id="runway"
-      index="18"
+      index="17"
       eyebrow="Runway / Use of proceeds"
       title={
         <>

@@ -54,11 +54,11 @@ export function Faq() {
   return (
     <Section
       id="faq"
-      index="21"
+      index="19"
       eyebrow="FAQ"
       title={
         <>
-          Asked, <span className="text-primary">answered.</span>
+          <span className="font-ubuntu font-bold">FAQ</span>
         </>
       }
     >

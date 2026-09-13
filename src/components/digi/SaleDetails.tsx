@@ -81,10 +81,10 @@ export function SaleDetails() {
       <div className="flex flex-col justify-center gap-12 py-24 lg:h-screen lg:py-0">
         <div className="mx-auto w-full max-w-6xl px-6">
           <div className="flex items-baseline gap-4">
-            <span className="eyebrow text-primary/70">16</span>
+            <span className="eyebrow text-primary/70">15</span>
             <span className="eyebrow">Sale details</span>
           </div>
-          <h2 className="mt-6 max-w-3xl font-display text-4xl leading-[1.05] tracking-tight md:text-6xl">
+          <h2 className="mt-6 max-w-3xl font-ubuntu font-bold text-4xl leading-[1.05] tracking-tight md:text-6xl">
             Four rounds, one price ladder
           </h2>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
