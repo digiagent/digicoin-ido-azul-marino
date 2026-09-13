@@ -63,25 +63,25 @@
 
 :root {
   --radius: 0.5rem;
-  --page-bg: #0b0d0b;
-  --background: oklch(0.13 0.007 150);
-  --foreground: oklch(0.96 0.006 140);
-  --card: oklch(0.185 0.009 150);
+  --page-bg: #171b25;
+  --background: #1a1f2e;
+  --foreground: oklch(0.98 0.005 140);
+  --card: #161c29;
   --card-foreground: oklch(0.96 0.006 140);
-  --popover: oklch(0.185 0.009 150);
+  --popover: #161c29;
   --popover-foreground: oklch(0.96 0.006 140);
   --primary: oklch(0.82 0.21 130);
   --primary-foreground: oklch(0.16 0.03 150);
-  --secondary: oklch(0.24 0.012 150);
+  --secondary: #161c29;
   --secondary-foreground: oklch(0.94 0.006 140);
-  --muted: oklch(0.24 0.012 150);
-  --muted-foreground: oklch(0.68 0.014 150);
+  --muted: #161c29;
+  --muted-foreground: oklch(0.75 0.02 260);
   --accent: oklch(0.5 0.13 148);
   --accent-foreground: oklch(0.97 0.01 140);
   --destructive: oklch(0.62 0.2 25);
   --destructive-foreground: oklch(0.98 0.003 250);
-  --border: oklch(0.98 0.01 150 / 10%);
-  --input: oklch(0.98 0.01 150 / 14%);
+  --border: oklch(0.98 0.01 260 / 10%);
+  --input: oklch(0.98 0.01 260 / 14%);
   --ring: oklch(0.82 0.21 130 / 45%);
   --chart-1: oklch(0.85 0.21 128);
   --chart-2: oklch(0.72 0.17 142);
@@ -92,12 +92,12 @@
   --chart-7: oklch(0.66 0.13 120);
   --chart-8: oklch(0.5 0.09 134);
   --chart-9: oklch(0.38 0.05 148);
-  --surface: oklch(0.2 0.01 150 / 60%);
-  --hairline: oklch(0.98 0.01 150 / 8%);
+  --surface: #161c29;
+  --hairline: oklch(0.98 0.01 260 / 8%);
   --gradient-hero: radial-gradient(
     120% 80% at 50% 0%,
-    oklch(0.32 0.09 148 / 45%) 0%,
-    oklch(0.145 0.008 150 / 0%) 60%
+    oklch(0.35 0.05 260 / 45%) 0%,
+    oklch(0.18 0.015 260 / 0%) 60%
   );
   --gradient-accent: linear-gradient(135deg, oklch(0.85 0.21 128), oklch(0.62 0.15 148));
   --shadow-lift: 0 24px 70px -30px oklch(0.85 0.21 128 / 25%);
@@ -106,6 +106,7 @@
   --font-brand: "Syne", "Instrument Serif", Georgia, serif;
   --font-sans: "Inter Tight", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-ubuntu: "Ubuntu", system-ui, sans-serif;
 }
 
 @theme inline {
@@ -119,6 +120,7 @@
   --font-brand: var(--font-brand);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
+  --font-ubuntu: var(--font-ubuntu);
 }
 
 @utility grain {
@@ -177,17 +179,17 @@
 }
 
 .dark {
-  --background: oklch(0.129 0.042 264.695);
+  --background: #1a1f2e;
   --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
+  --card: #161c29;
   --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
+  --popover: #161c29;
   --popover-foreground: oklch(0.984 0.003 247.858);
   --primary: oklch(0.929 0.013 255.508);
   --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
+  --secondary: #161c29;
   --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
+  --muted: #161c29;
   --muted-foreground: oklch(0.704 0.04 256.788);
   --accent: oklch(0.279 0.041 260.031);
   --accent-foreground: oklch(0.984 0.003 247.858);
@@ -213,7 +215,9 @@
 
 .sale-dot {
   background: var(--hairline);
-  transition: background-color 250ms ease, transform 250ms ease;
+  transition:
+    background-color 250ms ease,
+    transform 250ms ease;
 }
 
 .sale-dot-active {
