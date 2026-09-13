@@ -3,9 +3,21 @@ import agentCoin from "@/assets/digi-agent-coin-2.png.asset.json";
 import phone from "@/assets/digi_mockup_mobile.png.asset.json";
 
 const BEATS = [
-  { n: "01", t: "AI is moving from generating information to executing actions.", d: "The next generation of software doesn't just answer — it acts." },
-  { n: "02", t: "Digital commerce is becoming software-driven.", d: "Discovery, payment, and settlement are increasingly handled by code, not clicks." },
-  { n: "03", t: "People and businesses need intelligent systems.", d: "Systems capable of discovering, deciding, and executing economic activity." },
+  {
+    n: "01",
+    t: "AI is moving from generating information to executing actions.",
+    d: "The next generation of software doesn't just answer — it acts.",
+  },
+  {
+    n: "02",
+    t: "Digital commerce is becoming software-driven.",
+    d: "Discovery, payment, and settlement are increasingly handled by code, not clicks.",
+  },
+  {
+    n: "03",
+    t: "People and businesses need intelligent systems.",
+    d: "Systems capable of discovering, deciding, and executing economic activity.",
+  },
 ];
 
 export function WhyNow() {
@@ -16,7 +28,12 @@ export function WhyNow() {
       eyebrow="Why now"
       title={
         <>
-          <span className="font-ubuntu font-bold">The economy is learning to <span className="text-primary">act on its own.</span></span>
+          <span className="font-ubuntu font-bold">
+            The economy is learning to{" "}
+            <span className="text-primary">
+              act on its own<span className="text-foreground">.</span>
+            </span>
+          </span>
         </>
       }
     >
@@ -31,7 +48,9 @@ export function WhyNow() {
             className="bg-background p-8 transition-colors duration-300 hover:bg-card/60"
           >
             <span className="font-mono text-xs text-primary/70">{b.n}</span>
-            <h3 className="mt-4 font-display text-2xl leading-snug tracking-tight text-foreground">{b.t}</h3>
+            <h3 className="mt-4 font-display text-2xl leading-snug tracking-tight text-foreground">
+              {b.t}
+            </h3>
             <p className="mt-4 text-sm leading-relaxed text-foreground/90">{b.d}</p>
           </Reveal>
         ))}
@@ -55,7 +74,7 @@ const PRODUCT_COLS: [string, string][] = [
   ],
   [
     "What is being built",
-    "The intelligence SDK for the DigiPaga and Digimercados ecosystem — guided today, increasingly autonomous over time.",
+    "The intelligence MCP for the DigiPaga and Digimercados ecosystem — guided today, increasingly autonomous over time.",
   ],
 ];
 
@@ -67,10 +86,15 @@ export function Product() {
       eyebrow="Digi-Agent"
       title={
         <>
-          <span className="font-ubuntu font-bold">The Intelligence SDK of the <span className="text-primary">Digital Economy.</span></span>
+          <span className="font-ubuntu font-bold">
+            The Intelligence MCP of the{" "}
+            <span className="text-primary">
+              Digital Economy<span className="text-foreground">.</span>
+            </span>
+          </span>
         </>
       }
-      lead="Digi-Agent is the intelligence SDK connecting financial and commercial activity across the DigiPaga / Digimercados ecosystem."
+      lead="Digi-Agent is the intelligence MCP connecting financial and commercial activity across the DigiPaga / Digimercados ecosystem."
     >
       <div className="grid items-center gap-12 lg:grid-cols-[0.8fr_1.2fr]">
         <Reveal className="flex justify-center">
@@ -108,7 +132,10 @@ export function Transformation() {
             <span className="eyebrow">Transformation</span>
           </div>
           <p className="mt-6 max-w-4xl font-ubuntu font-bold text-[clamp(1.9rem,4.6vw,3.4rem)] uppercase leading-[1.02] tracking-[-0.01em]">
-            FROM DIGITAL PAYMENTS TO <span className="text-primary">AUTONOMOUS ECONOMIC ACTIVITY.</span>
+            FROM DIGITAL PAYMENTS TO{" "}
+            <span className="text-primary">
+              AUTONOMOUS ECONOMIC ACTIVITY<span className="text-foreground">.</span>
+            </span>
           </p>
         </Reveal>
         <div className="mt-16 flex justify-center">
@@ -141,7 +168,12 @@ export function EarlyValidation() {
       eyebrow="Early validation"
       title={
         <>
-          <span className="font-ubuntu font-bold">Building with real <span className="text-primary">traction.</span></span>
+          <span className="font-ubuntu font-bold">
+            Building with real{" "}
+            <span className="text-primary">
+              traction<span className="text-foreground">.</span>
+            </span>
+          </span>
         </>
       }
     >
