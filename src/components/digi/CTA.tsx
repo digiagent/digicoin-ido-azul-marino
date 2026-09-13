@@ -50,10 +50,16 @@ export function CTA() {
         aria-hidden
       />
       <div className="cta-inner relative mx-auto flex max-w-3xl flex-col items-center px-6 py-24 text-center">
-        <img src={agentCoin.url} alt="" className="h-24 w-24 object-contain drop-shadow-2xl" aria-hidden />
+        <img
+          src={agentCoin.url}
+          alt=""
+          className="h-24 w-24 object-contain drop-shadow-2xl"
+          aria-hidden
+        />
         <span className="eyebrow mt-10">Bridge Round · Opening soon</span>
         <h2 className="mt-6 font-brand text-[clamp(2.6rem,7vw,5.4rem)] font-extrabold uppercase leading-[0.92] tracking-[-0.02em]">
-          Own the <span className="text-primary">intelligence</span> powering the digital economy.
+          Own the <span className="text-primary">intelligence</span> powering the digital economy
+          <span className="text-primary">.</span>
         </h2>
         <p className="mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground">
           50,000,000 DIGI · $0.0025 Bridge Round allocation
