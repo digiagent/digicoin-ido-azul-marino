@@ -112,7 +112,7 @@ export function Hero() {
 
       <div
         ref={contentRef}
-        className="relative mx-auto flex w-full max-w-7xl flex-1 items-center px-6 pb-14 pt-10 will-change-transform md:pt-16"
+        className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col items-stretch px-6 pb-14 pt-10 will-change-transform md:pt-16"
       >
         <div className="flex w-full items-start justify-between gap-4 md:gap-8 xl:gap-12">
           <div className="min-w-0 flex-1">
@@ -243,7 +243,7 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="mt-32 flex w-full justify-center">
+        <div className="mt-20 flex w-full items-center justify-center">
           <div
             data-testid="hero-info-bar"
             className="mx-auto flex w-full max-w-[1700px] flex-nowrap items-center justify-center overflow-x-auto whitespace-nowrap px-6 py-5 [scrollbar-width:none] xl:overflow-visible [&::-webkit-scrollbar]:hidden"
