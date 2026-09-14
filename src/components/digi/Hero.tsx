@@ -257,6 +257,11 @@ export function Hero() {
               }}
               aria-hidden
             />
+            <div className="absolute inset-[4%] rounded-full border border-hairline" aria-hidden />
+            <div
+              className="absolute inset-[18%] rounded-full border border-primary/10"
+              aria-hidden
+            />
             <CircularText
               text={RING_OUTER}
               radius={92}
@@ -277,7 +282,7 @@ export function Hero() {
             <motion.img
               src={agentCoin.url}
               alt="DigiAgent holding the DIGI coin"
-              className="absolute inset-[10%] h-[80%] w-[80%] object-contain drop-shadow-2xl"
+              className="absolute inset-[22%] h-[56%] w-[56%] object-contain drop-shadow-2xl"
               animate={reduced ? undefined : { y: [0, -12, 0], rotate: [0, 2.5, 0, -2.5, 0] }}
               transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
             />

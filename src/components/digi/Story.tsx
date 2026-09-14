@@ -154,10 +154,19 @@ export function Transformation() {
 }
 
 const VALIDATION: [string, string][] = [
-  ["1st Place", "Hackathon Winner"],
-  ["Ecosystem Synergy", "Web3 Wallet Technology Collaboration"],
-  ["Early Pilots", "Product Testing"],
-  ["Building", "Multiple Products in Development"],
+  ["1st Place", "Hackathon Winner in cross-border and remittances stablecoin hackathon."],
+  [
+    "Ecosystem Synergy",
+    "Multiple implementations that are moving money efficiently across continents.",
+  ],
+  [
+    "Early Pilots",
+    "Product Testing with real use cases in logistics, payment settlement and over the counter transactions",
+  ],
+  [
+    "Building",
+    "Multiple Products in Development Publicly (Celo Hackathon, Arc Hackathon, Arbitrum Hackathon, ETH Global Hackathon)",
+  ],
 ];
 
 export function EarlyValidation() {

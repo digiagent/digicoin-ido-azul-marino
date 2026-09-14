@@ -147,11 +147,9 @@ export function Platforms() {
         <Reveal>
           <span className="eyebrow">§ 02 Product stack</span>
           <h2 className="mt-6 font-ubuntu font-bold text-[clamp(2.6rem,6vw,4.5rem)] leading-[1.02] tracking-tight">
-            Two platforms.
+            One cryptocurrency.
             <br />
-            <span className="text-primary">
-              One cryptocurrency<span className="text-foreground">.</span>
-            </span>
+            <span className="text-primary">Multiple platforms.</span>
           </h2>
         </Reveal>
       </div>

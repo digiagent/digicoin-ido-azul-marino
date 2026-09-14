@@ -143,6 +143,7 @@ export function BridgeRound() {
   const reduced = useReducedMotion();
   const chimeRef = useRef<HTMLAudioElement>(null);
   const [step, setStep] = useState(1);
+  const [directDeposit, setDirectDeposit] = useState(false);
   const [email, setEmail] = useState("");
   const [notUsa, setNotUsa] = useState(false);
   const [notOfac, setNotOfac] = useState(false);
@@ -158,10 +159,13 @@ export function BridgeRound() {
   const [muted, setMuted] = useState(false);
   const [cardUrl, setCardUrl] = useState("");
   const [copied, setCopied] = useState(false);
+  const [transactionHash, setTransactionHash] = useState("");
 
   const usd = Number(amount);
   const amountValid = amount !== "" && !Number.isNaN(usd) && usd >= MIN_USD && usd <= MAX_USD;
   const digi = useMemo(() => (Number.isNaN(usd) ? 0 : Math.max(0, usd) * DIGI_PER_USD), [usd]);
+  const directAmountValid = amount !== "" && Number.isFinite(usd) && usd > 0;
+  const transactionValid = transactionHash.trim().length > 0;
 
   // Page height changes with each step — keep downstream pins in sync.
   useEffect(() => {
@@ -244,6 +248,17 @@ export function BridgeRound() {
       setProcessing(false);
       setStep(5);
     }, 2000);
+  };
+
+  const enterDirectDeposit = () => {
+    setDirectDeposit(true);
+    setStep(1);
+  };
+
+  const copySafeWallet = async () => {
+    await navigator.clipboard.writeText(SAFE_WALLET_ADDRESS);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 2000);
   };
 
   const variants = {
@@ -377,49 +392,144 @@ export function BridgeRound() {
                 >
                   {step === 1 && (
                     <div className="flex flex-col gap-6">
-                      <div>
-                        <span className={label}>Email address</span>
-                        <input
-                          type="email"
-                          value={email}
-                          maxLength={255}
-                          onChange={(e) => setEmail(e.target.value)}
-                          placeholder="you@domain.com"
-                          className={field}
-                          data-testid="bridge-email-input"
-                        />
-                        {email !== "" && !isEmail(email) && (
-                          <p className="mt-2 text-lg text-destructive">
-                            Enter a valid email address.
+                      {directDeposit ? (
+                        <>
+                          <div>
+                            <h3 className="font-display text-3xl tracking-tight text-white">
+                              Enter your email
+                            </h3>
+                            <p className="mt-2 text-base leading-relaxed text-zinc-400">
+                              We&apos;ll use this email to confirm your allocation and send your
+                              purchase updates.
+                            </p>
+                          </div>
+                          <div>
+                            <span className={label}>Email address</span>
+                            <input
+                              type="email"
+                              value={email}
+                              maxLength={255}
+                              onChange={(e) => setEmail(e.target.value)}
+                              placeholder="you@domain.com"
+                              className={field}
+                              data-testid="direct-deposit-email-input"
+                            />
+                          </div>
+                          <button
+                            type="button"
+                            className={primaryBtn}
+                            disabled={!isEmail(email)}
+                            onClick={() => setStep(2)}
+                            data-testid="direct-deposit-email-continue-btn"
+                          >
+                            Continue
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <div>
+                            <span className={label}>Email address</span>
+                            <input
+                              type="email"
+                              value={email}
+                              maxLength={255}
+                              onChange={(e) => setEmail(e.target.value)}
+                              placeholder="you@domain.com"
+                              className={field}
+                              data-testid="bridge-email-input"
+                            />
+                            {email !== "" && !isEmail(email) && (
+                              <p className="mt-2 text-lg text-destructive">
+                                Enter a valid email address.
+                              </p>
+                            )}
+                          </div>
+                          <div className="flex flex-col gap-4">
+                            <Check checked={notUsa} onChange={setNotUsa}>
+                              I am not a USA citizen or resident.
+                            </Check>
+                            <Check checked={notOfac} onChange={setNotOfac}>
+                              I am not from an OFAC sanctioned country.
+                            </Check>
+                            <Check checked={terms} onChange={setTerms}>
+                              I accept the terms and acknowledge the risks of this token sale.
+                            </Check>
+                          </div>
+                          <button
+                            type="button"
+                            className={primaryBtn}
+                            disabled={!isEmail(email) || !notUsa || !notOfac || !terms}
+                            onClick={() => setStep(2)}
+                            data-testid="bridge-step1-continue-btn"
+                          >
+                            Continue
+                          </button>
+                          <button
+                            type="button"
+                            className="self-start text-sm font-semibold text-zinc-400 underline decoration-zinc-600 underline-offset-4 transition-colors hover:text-primary hover:decoration-primary"
+                            onClick={enterDirectDeposit}
+                            data-testid="direct-deposit-link"
+                          >
+                            Prefer to deposit directly?
+                          </button>
+                          <p className="-mt-3 text-sm leading-relaxed text-zinc-500 transition-colors hover:text-white">
+                            Don&apos;t want to connect a wallet? You can deposit directly from your
+                            wallet and provide the EVM address where you want to receive DIGI.
                           </p>
-                        )}
-                      </div>
-                      <div className="flex flex-col gap-4">
-                        <Check checked={notUsa} onChange={setNotUsa}>
-                          I am not a USA citizen or resident.
-                        </Check>
-                        <Check checked={notOfac} onChange={setNotOfac}>
-                          I am not from an OFAC sanctioned country.
-                        </Check>
-                        <Check checked={terms} onChange={setTerms}>
-                          I accept the terms and acknowledge the risks of this token sale.
-                        </Check>
-                      </div>
-                      <button
-                        type="button"
-                        className={primaryBtn}
-                        disabled={!isEmail(email) || !notUsa || !notOfac || !terms}
-                        onClick={() => setStep(2)}
-                        data-testid="bridge-step1-continue-btn"
-                      >
-                        Continue
-                      </button>
+                        </>
+                      )}
                     </div>
                   )}
 
                   {step === 2 && (
                     <div className="flex flex-col gap-6">
-                      {walletConnected ? (
+                      {directDeposit ? (
+                        <>
+                          <div>
+                            <h3 className="font-display text-3xl tracking-tight text-white">
+                              Where should we send your DIGI?
+                            </h3>
+                            <p className="mt-2 text-base leading-relaxed text-zinc-400">
+                              Enter the EVM-compatible wallet address where you want to receive your
+                              DIGI.
+                            </p>
+                          </div>
+                          <div>
+                            <span className={label}>EVM wallet address</span>
+                            <input
+                              value={receiving}
+                              onChange={(e) => setReceiving(e.target.value)}
+                              maxLength={42}
+                              placeholder="0x..."
+                              className={`${field} font-mono text-lg`}
+                              data-testid="direct-deposit-wallet-input"
+                            />
+                            {receiving !== "" && !isEvm(receiving) && (
+                              <p className="mt-2 text-lg text-destructive">
+                                Enter a valid EVM address.
+                              </p>
+                            )}
+                          </div>
+                          <p className="rounded-lg border border-amber-400/30 bg-amber-400/5 px-4 py-3 text-sm leading-relaxed text-amber-100/80">
+                            Please verify this address carefully. DIGI sent to an incorrect address
+                            may not be recoverable.
+                          </p>
+                          <div className="flex gap-3">
+                            <button type="button" className={ghostBtn} onClick={() => setStep(1)}>
+                              Back
+                            </button>
+                            <button
+                              type="button"
+                              className={primaryBtn}
+                              disabled={!isEvm(receiving)}
+                              onClick={() => setStep(3)}
+                              data-testid="direct-deposit-wallet-continue-btn"
+                            >
+                              Continue
+                            </button>
+                          </div>
+                        </>
+                      ) : walletConnected ? (
                         <div className="flex items-center justify-between rounded-xl border border-primary/40 bg-primary/10 px-5 py-4">
                           <span className="text-xs font-bold uppercase tracking-widest text-primary">
                             Privy connected
@@ -481,119 +591,298 @@ export function BridgeRound() {
 
                   {step === 3 && (
                     <div className="flex flex-col gap-6">
-                      <div>
-                        <span className={label}>Requested amount in USD</span>
-                        <input
-                          inputMode="decimal"
-                          value={amount}
-                          onChange={(e) => setAmount(e.target.value.replace(/[^0-9.]/g, ""))}
-                          placeholder="5000"
-                          className={field}
-                          data-testid="bridge-amount-input"
-                        />
-                        {amount !== "" && !amountValid && (
-                          <p className="mt-2 text-lg text-destructive">
-                            Amount must be between ${MIN_USD.toLocaleString()} and $
-                            {MAX_USD.toLocaleString()}.
+                      {directDeposit ? (
+                        <>
+                          <div>
+                            <h3 className="font-display text-3xl tracking-tight text-white">
+                              Choose your allocation
+                            </h3>
+                          </div>
+                          <div>
+                            <span className={label}>Contribution amount</span>
+                            <input
+                              inputMode="decimal"
+                              value={amount}
+                              onChange={(e) => setAmount(e.target.value.replace(/[^0-9.]/g, ""))}
+                              placeholder="5000"
+                              className={field}
+                              data-testid="direct-deposit-amount-input"
+                            />
+                          </div>
+                          <div className="grid gap-4 sm:grid-cols-2">
+                            <div>
+                              <span className={label}>You send</span>
+                              <div className="flex gap-2">
+                                <input
+                                  value={amount}
+                                  readOnly
+                                  className={`${field} min-w-0`}
+                                  aria-label="Amount to send"
+                                />
+                                <select
+                                  value={stable}
+                                  onChange={(e) => setStable(e.target.value)}
+                                  className={`${field} w-36 px-3`}
+                                >
+                                  <option value="USDC">USDC</option>
+                                  <option value="USDT">USDT</option>
+                                  <option value="SKY">SKY</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div>
+                              <span className={label}>Network</span>
+                              <select
+                                value={chain}
+                                onChange={(e) => setChain(e.target.value)}
+                                className={field}
+                              >
+                                {CHAINS.map((c) => (
+                                  <option key={c} value={c}>
+                                    {c}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                          <div className="rounded-xl border border-zinc-600 bg-zinc-800/70 px-5 py-4">
+                            <div className="grid gap-4 sm:grid-cols-2">
+                              <div>
+                                <div className={label}>You receive</div>
+                                <div className="text-2xl font-black text-primary">
+                                  {digi.toLocaleString(undefined, { maximumFractionDigits: 2 })}{" "}
+                                  DIGI
+                                </div>
+                              </div>
+                              <div>
+                                <div className={label}>Rate</div>
+                                <div className="font-mono text-sm text-white">
+                                  1 USDT = 303.03 DIGI
+                                </div>
+                              </div>
+                            </div>
+                            <div className="mt-4 border-t border-zinc-700 pt-4 text-sm text-zinc-300">
+                              <div>
+                                Send exactly:{" "}
+                                <span className="font-bold text-white">
+                                  {amount || "XX"} {stable}
+                                </span>
+                              </div>
+                              <div className="mt-1">
+                                Receive:{" "}
+                                <span className="font-bold text-primary">
+                                  {digi
+                                    ? digi.toLocaleString(undefined, { maximumFractionDigits: 2 })
+                                    : "XX"}{" "}
+                                  DIGI
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 px-4 py-3">
+                            <div className={label}>Destination wallet</div>
+                            <div className="mt-2 flex items-center justify-between gap-3">
+                              <span className="select-none font-mono text-xs text-zinc-300">
+                                0x6De8...bDbfA
+                              </span>
+                              <button
+                                type="button"
+                                className={ghostBtn + " px-3 py-2 text-xs"}
+                                onClick={copySafeWallet}
+                              >
+                                <Copy size={13} className="mr-1 inline" aria-hidden="true" />
+                                {copied ? "Copied!" : "Copy"}
+                              </button>
+                            </div>
+                          </div>
+                          <p className="text-sm leading-relaxed text-zinc-500">
+                            After sending your contribution, continue to submit the transaction
+                            hash.
                           </p>
-                        )}
-                      </div>
-                      <div className="grid gap-4 sm:grid-cols-2">
-                        <div>
-                          <span className={label}>Stablecoin</span>
-                          <select
-                            value={stable}
-                            onChange={(e) => setStable(e.target.value)}
-                            className={field}
-                          >
-                            <option value="USDC">USDC</option>
-                            <option value="USDT">USDT</option>
-                            <option value="DAI">DAI</option>
-                          </select>
-                        </div>
-                        <div>
-                          <span className={label}>Preferred chain (network TBA)</span>
-                          <select
-                            value={chain}
-                            onChange={(e) => setChain(e.target.value)}
-                            className={field}
-                          >
-                            {CHAINS.map((c) => (
-                              <option key={c} value={c}>
-                                {c}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      </div>
-                      <div className="rounded-xl border border-zinc-600 bg-zinc-800/70 px-5 py-4">
-                        <div className={label}>Indicative allocation</div>
-                        <div
-                          className="text-3xl font-black text-primary drop-shadow-[0_0_12px_oklch(0.82_0.21_130_/_45%)]"
-                          data-testid="bridge-digi-amount"
-                        >
-                          {digi.toLocaleString(undefined, { maximumFractionDigits: 0 })} DIGI
-                        </div>
-                        <div className="mt-1 text-xs font-bold uppercase tracking-widest text-zinc-400">
-                          At $0.0033 per DIGI · subject to final terms
-                        </div>
-                      </div>
-                      <div className="flex gap-3">
-                        <button type="button" className={ghostBtn} onClick={() => setStep(2)}>
-                          Back
-                        </button>
-                        <button
-                          type="button"
-                          className={primaryBtn}
-                          disabled={!amountValid}
-                          onClick={() => setStep(4)}
-                          data-testid="bridge-review-order-btn"
-                        >
-                          Review request
-                        </button>
-                      </div>
+                          <div className="flex gap-3">
+                            <button type="button" className={ghostBtn} onClick={() => setStep(2)}>
+                              Back
+                            </button>
+                            <button
+                              type="button"
+                              className={primaryBtn}
+                              disabled={!directAmountValid}
+                              onClick={() => setStep(4)}
+                              data-testid="direct-deposit-allocation-continue-btn"
+                            >
+                              Continue
+                            </button>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div>
+                            <span className={label}>Requested amount in USD</span>
+                            <input
+                              inputMode="decimal"
+                              value={amount}
+                              onChange={(e) => setAmount(e.target.value.replace(/[^0-9.]/g, ""))}
+                              placeholder="5000"
+                              className={field}
+                              data-testid="bridge-amount-input"
+                            />
+                            {amount !== "" && !amountValid && (
+                              <p className="mt-2 text-lg text-destructive">
+                                Amount must be between ${MIN_USD.toLocaleString()} and $
+                                {MAX_USD.toLocaleString()}.
+                              </p>
+                            )}
+                          </div>
+                          <div className="grid gap-4 sm:grid-cols-2">
+                            <div>
+                              <span className={label}>Stablecoin</span>
+                              <select
+                                value={stable}
+                                onChange={(e) => setStable(e.target.value)}
+                                className={field}
+                              >
+                                <option value="USDC">USDC</option>
+                                <option value="USDT">USDT</option>
+                                <option value="DAI">DAI</option>
+                              </select>
+                            </div>
+                            <div>
+                              <span className={label}>Preferred chain (network TBA)</span>
+                              <select
+                                value={chain}
+                                onChange={(e) => setChain(e.target.value)}
+                                className={field}
+                              >
+                                {CHAINS.map((c) => (
+                                  <option key={c} value={c}>
+                                    {c}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                          <div className="rounded-xl border border-zinc-600 bg-zinc-800/70 px-5 py-4">
+                            <div className={label}>Indicative allocation</div>
+                            <div
+                              className="text-3xl font-black text-primary drop-shadow-[0_0_12px_oklch(0.82_0.21_130_/_45%)]"
+                              data-testid="bridge-digi-amount"
+                            >
+                              {digi.toLocaleString(undefined, { maximumFractionDigits: 0 })} DIGI
+                            </div>
+                            <div className="mt-1 text-xs font-bold uppercase tracking-widest text-zinc-400">
+                              At $0.0033 per DIGI · subject to final terms
+                            </div>
+                          </div>
+                          <div className="flex gap-3">
+                            <button type="button" className={ghostBtn} onClick={() => setStep(2)}>
+                              Back
+                            </button>
+                            <button
+                              type="button"
+                              className={primaryBtn}
+                              disabled={!amountValid}
+                              onClick={() => setStep(4)}
+                              data-testid="bridge-review-order-btn"
+                            >
+                              Review request
+                            </button>
+                          </div>
+                        </>
+                      )}
                     </div>
                   )}
 
                   {step === 4 && (
                     <div className="flex flex-col gap-6">
-                      <div className="rounded-xl border border-zinc-600 bg-zinc-800/70 px-5 py-2">
-                        <Row k="Email" v={email} />
-                        <Row k="Receiving wallet" v={truncate(receiving)} />
-                        <Row k="Requested amount" v={`$${usd.toLocaleString()}`} />
-                        <Row k="Stablecoin" v={stable} />
-                        <Row k="Preferred chain" v={chain} />
-                        <Row
-                          k="Indicative DIGI"
-                          v={`${digi.toLocaleString(undefined, { maximumFractionDigits: 0 })} DIGI`}
-                        />
-                      </div>
-                      <div className="flex gap-3">
-                        <button
-                          type="button"
-                          className={ghostBtn}
-                          onClick={() => setStep(3)}
-                          disabled={processing}
-                        >
-                          Back
-                        </button>
-                        <button
-                          type="button"
-                          className={primaryBtn}
-                          disabled={processing}
-                          onClick={sign}
-                          data-testid="bridge-confirm-sign-btn"
-                        >
-                          {processing ? (
-                            <span className="flex items-center justify-center gap-2">
-                              <span className="h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                              Submitting…
-                            </span>
-                          ) : (
-                            "Register Interest"
+                      {directDeposit ? (
+                        <>
+                          <div>
+                            <h3 className="font-display text-3xl tracking-tight text-white">
+                              Confirm your deposit
+                            </h3>
+                            <p className="mt-2 text-base leading-relaxed text-zinc-400">
+                              Paste your transaction hash or explorer URL to submit your deposit for
+                              review.
+                            </p>
+                          </div>
+                          <div>
+                            <span className={label}>Transaction hash or explorer URL</span>
+                            <input
+                              value={transactionHash}
+                              onChange={(e) => setTransactionHash(e.target.value)}
+                              placeholder="Transaction hash or explorer URL"
+                              className={`${field} font-mono text-lg`}
+                              data-testid="direct-deposit-transaction-input"
+                            />
+                          </div>
+                          {processing && (
+                            <div className="rounded-xl border border-primary/30 bg-primary/10 px-4 py-3 text-sm text-primary">
+                              Transaction submitted
+                              <br />
+                              Your deposit is being reviewed.
+                            </div>
                           )}
-                        </button>
-                      </div>
+                          <div className="flex gap-3">
+                            <button
+                              type="button"
+                              className={ghostBtn}
+                              onClick={() => setStep(3)}
+                              disabled={processing}
+                            >
+                              Back
+                            </button>
+                            <button
+                              type="button"
+                              className={primaryBtn}
+                              disabled={!transactionValid || processing}
+                              onClick={sign}
+                              data-testid="direct-deposit-submit-btn"
+                            >
+                              {processing ? "Submitted" : "Submit transaction"}
+                            </button>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="rounded-xl border border-zinc-600 bg-zinc-800/70 px-5 py-2">
+                            <Row k="Email" v={email} />
+                            <Row k="Receiving wallet" v={truncate(receiving)} />
+                            <Row k="Requested amount" v={`$${usd.toLocaleString()}`} />
+                            <Row k="Stablecoin" v={stable} />
+                            <Row k="Preferred chain" v={chain} />
+                            <Row
+                              k="Indicative DIGI"
+                              v={`${digi.toLocaleString(undefined, { maximumFractionDigits: 0 })} DIGI`}
+                            />
+                          </div>
+                          <div className="flex gap-3">
+                            <button
+                              type="button"
+                              className={ghostBtn}
+                              onClick={() => setStep(3)}
+                              disabled={processing}
+                            >
+                              Back
+                            </button>
+                            <button
+                              type="button"
+                              className={primaryBtn}
+                              disabled={processing}
+                              onClick={sign}
+                              data-testid="bridge-confirm-sign-btn"
+                            >
+                              {processing ? (
+                                <span className="flex items-center justify-center gap-2">
+                                  <span className="h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                                  Submitting…
+                                </span>
+                              ) : (
+                                "Register Interest"
+                              )}
+                            </button>
+                          </div>
+                        </>
+                      )}
                     </div>
                   )}
 
@@ -625,7 +914,7 @@ export function BridgeRound() {
                         }}
                       />
                       <StaggerText
-                        text="Your interest is registered!"
+                        text={directDeposit ? "Congratulations!" : "Your interest is registered!"}
                         className="font-display text-[clamp(1.7rem,3.4vw,2.5rem)] leading-tight tracking-tight text-white"
                       />
                       <motion.div
@@ -634,18 +923,53 @@ export function BridgeRound() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 1.4, duration: 0.6 }}
                       >
-                        <p className="text-xl text-zinc-300">
-                          Request recorded for{" "}
-                          <span className="font-black text-primary">
-                            {digi.toLocaleString(undefined, { maximumFractionDigits: 0 })} DIGI
-                          </span>{" "}
-                          · preferred chain <span className="font-bold text-white">{chain}</span>.
-                        </p>
-                        <p className="text-lg text-zinc-300">
-                          No payment has been taken and nothing is on-chain yet. We&apos;ll contact
-                          you at <span className="font-bold text-white">{email}</span> when the
-                          Bridge Round opens.
-                        </p>
+                        {directDeposit ? (
+                          <>
+                            <p className="text-xl text-zinc-300">
+                              You submitted{" "}
+                              <span className="font-black text-white">
+                                {amount} {stable}
+                              </span>{" "}
+                              on <span className="font-bold text-white">{chain}</span> and secured
+                              approximately{" "}
+                              <span className="font-black text-primary">
+                                {digi.toLocaleString(undefined, { maximumFractionDigits: 2 })} DIGI
+                              </span>
+                              .
+                            </p>
+                            <p className="text-lg text-zinc-300">
+                              Allocation price:{" "}
+                              <span className="font-bold text-white">$0.0033 per DIGI</span>
+                            </p>
+                            <p className="text-lg text-zinc-300">
+                              Confirmation sent to:{" "}
+                              <span className="font-bold text-white">{email}</span>
+                            </p>
+                            <p className="text-sm leading-relaxed text-zinc-400">
+                              We&apos;ll send an email with your deposit status, allocation details,
+                              and DIGI delivery update.
+                            </p>
+                            <p className="font-mono text-sm font-bold text-primary">
+                              Deposit submitted — awaiting confirmation
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <p className="text-xl text-zinc-300">
+                              Request recorded for{" "}
+                              <span className="font-black text-primary">
+                                {digi.toLocaleString(undefined, { maximumFractionDigits: 0 })} DIGI
+                              </span>{" "}
+                              · preferred chain{" "}
+                              <span className="font-bold text-white">{chain}</span>.
+                            </p>
+                            <p className="text-lg text-zinc-300">
+                              No payment has been taken and nothing is on-chain yet. We&apos;ll
+                              contact you at <span className="font-bold text-white">{email}</span>{" "}
+                              when the Bridge Round opens.
+                            </p>
+                          </>
+                        )}
                         {cardUrl && (
                           <div className="w-full">
                             <div className={label}>Your share card</div>
