@@ -1,11 +1,12 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 import coin from "@/assets/digi_coin_green_center.png.asset.json";
-import agentCoin from "@/assets/digi-agent-coin-2.png.asset.json";
 import { HERO_STATS as STATS, HERO_TICKER } from "./data";
 import { CircularText } from "./CircularText";
 import { Magnetic } from "./Magnetic";
 import { gsap, useGSAP, MOTION_OK } from "./scroll";
+
+const agentCoin = { url: "/digi-agent-coin.png" };
 
 const RING_INNER =
   "CONFIDENTIAL · REV 01 · INVESTOR · PRIVATE · DIGI · BRIDGE ROUND · $125K TARGET RAISE · $2.5M TARGET FDV · DUAL PLATFORM · ";
@@ -113,8 +114,8 @@ export function Hero() {
         ref={contentRef}
         className="relative mx-auto flex w-full max-w-7xl flex-1 items-center px-6 pb-14 pt-10 will-change-transform md:pt-16"
       >
-        <div className="grid items-center gap-16 md:grid-cols-[1.05fr_0.95fr]">
-          <div>
+        <div className="flex w-full items-start justify-between gap-4 md:gap-8 xl:gap-12">
+          <div className="min-w-0 flex-1">
             <motion.p
               initial={reduced ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -197,58 +198,11 @@ export function Hero() {
                 </a>
               </Magnetic>
             </motion.div>
-
-            <div className="mt-16">
-              <div
-                data-testid="hero-info-bar"
-                className="mx-auto flex w-full max-w-[1700px] flex-nowrap items-center justify-center overflow-x-auto whitespace-nowrap px-6 py-5 [scrollbar-width:none] xl:overflow-visible [&::-webkit-scrollbar]:hidden"
-              >
-                {STATS.map((s, i) => {
-                  const isChain = s.k === "CHAIN";
-                  return (
-                    <motion.div
-                      key={s.k}
-                      initial={reduced ? false : { opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.4 + i * 0.06, duration: 0.5 }}
-                      className="group relative flex shrink-0 items-center"
-                    >
-                      {i > 0 && (
-                        <span aria-hidden className="mx-6 text-[9px] leading-none text-primary">
-                          ◆
-                        </span>
-                      )}
-                      <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
-                        {s.k}
-                      </span>
-                      {isChain ? (
-                        <div className="relative ml-2.5">
-                          <span className="font-mono text-[13px] font-semibold uppercase tracking-[0.06em] text-foreground border-b-2 border-lime-500">
-                            {s.v}
-                          </span>
-                          <div className="absolute left-0 top-full mt-2 hidden flex-col gap-1 rounded bg-zinc-900 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.06em] text-foreground shadow-lg group-hover:flex">
-                            <span>ARC</span>
-                            <span>BASE</span>
-                            <span>BNB</span>
-                            <span>ROBIN</span>
-                            <span>HYPE</span>
-                          </div>
-                        </div>
-                      ) : (
-                        <span className="ml-2.5 font-mono text-[13px] font-semibold uppercase tracking-[0.06em] text-foreground">
-                          {s.v}
-                        </span>
-                      )}
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </div>
           </div>
 
           <div
             ref={coinRef}
-            className="relative mx-auto aspect-square w-full max-w-[620px] will-change-transform"
+            className="relative mx-auto h-[500px] w-[500px] translate-x-4 shrink-0 max-w-[500px] will-change-transform"
           >
             <div
               className="absolute inset-[6%] rounded-full blur-3xl"
@@ -286,6 +240,53 @@ export function Hero() {
               animate={reduced ? undefined : { y: [0, -12, 0], rotate: [0, 2.5, 0, -2.5, 0] }}
               transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
             />
+          </div>
+        </div>
+
+        <div className="mt-32 flex w-full justify-center">
+          <div
+            data-testid="hero-info-bar"
+            className="mx-auto flex w-full max-w-[1700px] flex-nowrap items-center justify-center overflow-x-auto whitespace-nowrap px-6 py-5 [scrollbar-width:none] xl:overflow-visible [&::-webkit-scrollbar]:hidden"
+          >
+            {STATS.map((s, i) => {
+              const isChain = s.k === "CHAIN";
+              return (
+                <motion.div
+                  key={s.k}
+                  initial={reduced ? false : { opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 + i * 0.06, duration: 0.5 }}
+                  className="group relative flex shrink-0 items-center"
+                >
+                  {i > 0 && (
+                    <span aria-hidden className="mx-6 text-[9px] leading-none text-primary">
+                      ◆
+                    </span>
+                  )}
+                  <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+                    {s.k}
+                  </span>
+                  {isChain ? (
+                    <div className="relative ml-2.5">
+                      <span className="font-mono text-[13px] font-semibold uppercase tracking-[0.06em] text-foreground border-b-2 border-lime-500">
+                        {s.v}
+                      </span>
+                      <div className="absolute left-0 top-full mt-2 hidden flex-col gap-1 rounded bg-zinc-900 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.06em] text-foreground shadow-lg group-hover:flex">
+                        <span>ARC</span>
+                        <span>BASE</span>
+                        <span>BNB</span>
+                        <span>ROBIN</span>
+                        <span>HYPE</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <span className="ml-2.5 font-mono text-[13px] font-semibold uppercase tracking-[0.06em] text-foreground">
+                      {s.v}
+                    </span>
+                  )}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </div>
