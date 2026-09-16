@@ -299,25 +299,16 @@ function BridgeRoundInner() {
       .catch(() => {});
   }, [step, digi]);
 
-  const connectWallet = () => {
-    setConnecting(true);
-    window.setTimeout(() => {
-      setConnecting(false);
-      setWalletConnected(true);
-    }, 1400);
-  };
-
   const toggleUseConnected = (v: boolean) => {
     setUseConnected(v);
-    setReceiving(v ? FAKE_ADDRESS : "");
+    setReceiving(v && account?.address ? account.address : "");
   };
 
-  const sign = () => {
+  const sign = async () => {
     setProcessing(true);
-    window.setTimeout(() => {
-      setProcessing(false);
-      setStep(5);
-    }, 2000);
+    await sendConfirmationEmail(directDeposit ? transactionHash : undefined);
+    setProcessing(false);
+    setStep(5);
   };
 
   const enterDirectDeposit = () => {
