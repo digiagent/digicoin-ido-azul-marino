@@ -485,6 +485,17 @@ function BridgeRoundInner() {
                           >
                             Continue
                           </button>
+                          <button
+                            type="button"
+                            className="self-start text-sm font-semibold text-zinc-400 underline decoration-zinc-600 underline-offset-4 transition-colors hover:text-primary hover:decoration-primary"
+                            onClick={() => {
+                              setDirectDeposit(false);
+                              setEmail("");
+                              setStep(1);
+                            }}
+                          >
+                            ← Connect a wallet instead
+                          </button>
                         </>
                       ) : (
                         <>
