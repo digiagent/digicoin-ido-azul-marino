@@ -656,9 +656,9 @@ function BridgeRoundInner() {
                       </div>
                       <Check
                         checked={useConnected}
-                        onChange={(v) => walletConnected && toggleUseConnected(v)}
+                        onChange={(v) => account && toggleUseConnected(v)}
                       >
-                        Use my connected Privy wallet
+                        Use my connected wallet
                       </Check>
                       <div className="flex gap-3">
                         <button type="button" className={ghostBtn} onClick={() => setStep(1)}>
