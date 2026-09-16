@@ -810,7 +810,7 @@ function BridgeRoundInner() {
                               inputMode="decimal"
                               value={amount}
                               onChange={(e) => setAmount(e.target.value.replace(/[^0-9.]/g, ""))}
-                              placeholder="5000"
+                              placeholder="100"
                               className={field}
                               data-testid="bridge-amount-input"
                             />
