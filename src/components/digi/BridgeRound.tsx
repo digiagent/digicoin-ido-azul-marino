@@ -958,22 +958,53 @@ function BridgeRoundInner() {
                             >
                               Back
                             </button>
-                            <button
-                              type="button"
-                              className={primaryBtn}
-                              disabled={processing}
-                              onClick={sign}
-                              data-testid="bridge-confirm-sign-btn"
-                            >
-                              {processing ? (
-                                <span className="flex items-center justify-center gap-2">
-                                  <span className="h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                                  Submitting…
-                                </span>
-                              ) : (
-                                "Register Interest"
-                              )}
-                            </button>
+                            {account && isEvm(receiving) && amountValid ? (
+                              <TransactionButton
+                                className={primaryBtn}
+                                transaction={() => {
+                                  try {
+                                    const selectedChain = CHAIN_MAP[chain] ?? base;
+                                    const tokenAddress = STABLECOIN_ADDRESSES[stable]?.[chain];
+                                    if (!tokenAddress) {
+                                      throw new Error(`${stable} not supported on ${chain} yet`);
+                                    }
+                                    const contract = getContract({
+                                      client: thirdwebClient,
+                                      chain: selectedChain,
+                                      address: tokenAddress,
+                                    });
+                                    return transfer({
+                                      contract,
+                                      to: SAFE_WALLET,
+                                      amount: usd.toString(),
+                                    });
+                                  } catch (err) {
+                                    console.error("Build TX error:", err);
+                                    throw err;
+                                  }
+                                }}
+                                onTransactionConfirmed={async (receipt) => {
+                                  await sendConfirmationEmail(receipt.transactionHash);
+                                  setStep(5);
+                                }}
+                                onError={(err) => {
+                                  console.error("TX error:", err);
+                                  alert("Transaction failed: " + err.message);
+                                }}
+                              >
+                                Confirm & Send {amount} {stable}
+                              </TransactionButton>
+                            ) : (
+                              <button
+                                type="button"
+                                className={primaryBtn}
+                                disabled={processing || !account}
+                                onClick={sign}
+                                data-testid="bridge-confirm-sign-btn"
+                              >
+                                {!account ? "Connect wallet first" : "Register Interest"}
+                              </button>
+                            )}
                           </div>
                         </>
                       )}
