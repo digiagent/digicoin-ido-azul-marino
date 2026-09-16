@@ -601,25 +601,41 @@ function BridgeRoundInner() {
                             </button>
                           </div>
                         </>
-                      ) : walletConnected ? (
-                        <div className="flex items-center justify-between rounded-xl border border-primary/40 bg-primary/10 px-5 py-4">
-                          <span className="text-xs font-bold uppercase tracking-widest text-primary">
-                            Privy connected
-                          </span>
-                          <span className="font-mono text-xl font-bold text-white">
-                            {truncate(FAKE_ADDRESS)}
-                          </span>
-                        </div>
                       ) : (
-                        <button
-                          type="button"
-                          className={primaryBtn}
-                          disabled={connecting}
-                          onClick={connectWallet}
-                          data-testid="bridge-connect-wallet-btn"
-                        >
-                          {connecting ? "Connecting…" : "Connect Wallet (Privy)"}
-                        </button>
+                        <div className="flex flex-col gap-4">
+                          {account ? (
+                            <div className="flex items-center justify-between rounded-xl border border-primary/40 bg-primary/10 px-5 py-4">
+                              <span className="text-xs font-bold uppercase tracking-widest text-primary">
+                                Wallet connected
+                              </span>
+                              <span className="font-mono text-xl font-bold text-white">
+                                {truncate(account.address)}
+                              </span>
+                            </div>
+                          ) : (
+                            <ConnectButton
+                              client={thirdwebClient}
+                              chains={[base, bsc, arbitrum, mainnet, optimism, polygon]}
+                              theme="dark"
+                              connectButton={{
+                                label: "Connect Wallet",
+                                className: primaryBtn,
+                              }}
+                              wallets={[
+                                createWallet("io.metamask"),
+                                createWallet("com.coinbase.wallet"),
+                                createWallet("io.rabby"),
+                                createWallet("com.okex.wallet"),
+                                inAppWallet({
+                                  auth: {
+                                    options: ["google", "email"],
+                                  },
+                                }),
+                              ]}
+                              switchButton={{ label: "Switch Network" }}
+                            />
+                          )}
+                        </div>
                       )}
                       <div>
                         <span className={label}>EVM receiving wallet address</span>
