@@ -1138,7 +1138,18 @@ function BridgeRoundInner() {
                           <button
                             type="button"
                             className={ghostBtn}
-                            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                            onClick={() => {
+                              setStep(1);
+                              setDirectDeposit(false);
+                              setEmail("");
+                              setReceiving("");
+                              setAmount("");
+                              setTransactionHash("");
+                              setNotUsa(false);
+                              setNotOfac(false);
+                              setTerms(false);
+                              window.scrollTo({ top: 0, behavior: "smooth" });
+                            }}
                           >
                             Back to top
                           </button>
