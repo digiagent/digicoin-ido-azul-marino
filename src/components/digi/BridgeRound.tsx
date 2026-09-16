@@ -898,10 +898,16 @@ function BridgeRoundInner() {
                             <input
                               value={transactionHash}
                               onChange={(e) => setTransactionHash(e.target.value)}
-                              placeholder="Transaction hash or explorer URL"
+                              placeholder="0x... transaction hash or basescan.org/tx/0x... URL"
                               className={`${field} font-mono text-lg`}
                               data-testid="direct-deposit-transaction-input"
                             />
+                            {transactionHash !== "" && !transactionValid && (
+                              <p className="mt-2 text-lg text-destructive">
+                                Enter a valid transaction hash (0x...) or block explorer URL for a
+                                completed transaction.
+                              </p>
+                            )}
                           </div>
                           {processing && (
                             <div className="rounded-xl border border-primary/30 bg-primary/10 px-4 py-3 text-sm text-primary">
