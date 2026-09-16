@@ -238,6 +238,12 @@ function BridgeRoundInner() {
   }, [step]);
 
   useEffect(() => {
+    if (account?.address && !directDeposit && step === 2 && !receiving) {
+      setReceiving(account.address);
+    }
+  }, [account?.address, step, directDeposit]);
+
+  useEffect(() => {
     if (step !== 5) return;
     if (chimeRef.current) {
       chimeRef.current.currentTime = 0;
