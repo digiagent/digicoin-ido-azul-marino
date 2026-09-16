@@ -146,6 +146,14 @@ function StaggerText({ text, className }: { text: string; className?: string }) 
 }
 
 export function BridgeRound() {
+  return (
+    <ThirdwebProvider>
+      <BridgeRoundInner />
+    </ThirdwebProvider>
+  );
+}
+
+function BridgeRoundInner() {
   const reduced = useReducedMotion();
   const chimeRef = useRef<HTMLAudioElement>(null);
   const [step, setStep] = useState(1);
