@@ -174,12 +174,62 @@ function BridgeRoundInner() {
   const [cardUrl, setCardUrl] = useState("");
   const [copied, setCopied] = useState(false);
   const [transactionHash, setTransactionHash] = useState("");
+  const account = useActiveAccount();
+
+  const CHAIN_MAP: Record<string, typeof base> = {
+    Base: base,
+    BNB: bsc,
+    Arbitrum: arbitrum,
+    Ethereum: mainnet,
+    Optimism: optimism,
+    Polygon: polygon,
+    Hyper: base,
+  };
+
+  const sendConfirmationEmail = async (txHash?: string) => {
+    try {
+      await fetch("/api/send-confirmation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          amount,
+          stable,
+          chain,
+          digi,
+          txHash,
+          receivingWallet: receiving,
+          isDirectDeposit: directDeposit,
+        }),
+      });
+    } catch (err) {
+      console.error("Email send failed:", err);
+    }
+  };
 
   const usd = Number(amount);
   const amountValid = amount !== "" && !Number.isNaN(usd) && usd >= MIN_USD && usd <= MAX_USD;
   const digi = useMemo(() => (Number.isNaN(usd) ? 0 : Math.max(0, usd) * DIGI_PER_USD), [usd]);
   const directAmountValid = amount !== "" && Number.isFinite(usd) && usd > 0;
-  const transactionValid = transactionHash.trim().length > 0;
+  const isValidTxHash = (v: string) => /^0x([A-Fa-f0-9]{64})$/.test(v.trim());
+
+  const isValidExplorerUrl = (v: string) => {
+    try {
+      const url = new URL(v.trim());
+      return (
+        url.hostname.endsWith("scan.org") ||
+        url.hostname.endsWith("scan.com") ||
+        url.hostname.endsWith("etherscan.io") ||
+        url.hostname.includes("basescan") ||
+        url.hostname.includes("arbiscan") ||
+        url.hostname.includes("bscscan")
+      );
+    } catch {
+      return false;
+    }
+  };
+
+  const transactionValid = isValidTxHash(transactionHash) || isValidExplorerUrl(transactionHash);
 
   // Page height changes with each step — keep downstream pins in sync.
   useEffect(() => {
