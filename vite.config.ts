@@ -6,11 +6,12 @@ export default defineConfig({
 
     ssr: {
       noExternal: ['mailgun.js'],
+      external: ['@x402/evm']
     },
 
     build: {
       rollupOptions: {
-        external: ['mailgun.js']
+        external: ['mailgun.js', '@x402/evm']
       }
     }
   },
