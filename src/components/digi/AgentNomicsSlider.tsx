@@ -1,12 +1,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { Bot, ChevronLeft, ChevronRight, Flame, Gamepad2, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import {
-  AI_ACCESS_TIERS,
-  ILLUSTRATIVE_BREAK_SERIES,
-  ILLUSTRATIVE_DIGI_MODEL_SERIES,
-  INCINERATOR_EXAMPLE,
-} from "./data";
+import { ILLUSTRATIVE_BREAK_SERIES, ILLUSTRATIVE_DIGI_MODEL_SERIES } from "./data";
 import burner from "@/assets/digi_burner_supply.png.asset.json";
 
 type Series = { label: string; color: string; data: number[]; dashed?: boolean };
@@ -40,7 +35,15 @@ function toPath(data: number[]) {
     .join(" ");
 }
 
-function MiniChart({ series, testId }: { series: Series[]; testId: string }) {
+function MiniChart({
+  series,
+  testId,
+  xLabels,
+}: {
+  series: Series[];
+  testId: string;
+  xLabels?: string[];
+}) {
   return (
     <div data-testid={testId}>
       <svg viewBox="0 0 100 56" preserveAspectRatio="none" className="h-48 w-full">
@@ -64,6 +67,13 @@ function MiniChart({ series, testId }: { series: Series[]; testId: string }) {
           />
         ))}
       </svg>
+      {xLabels ? (
+        <div className="mt-2 flex justify-between font-mono text-[9px] uppercase tracking-widest text-foreground/45">
+          {xLabels.map((label) => (
+            <span key={label}>{label}</span>
+          ))}
+        </div>
+      ) : null}
       <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
         {series.map((item) => (
           <span
@@ -81,75 +91,137 @@ function MiniChart({ series, testId }: { series: Series[]; testId: string }) {
 
 const Badge = () => (
   <span className="inline-block rounded-full border border-hairline px-3 py-1 font-mono text-[9px] uppercase tracking-[0.16em] text-foreground/50">
-    Illustrative data — real tokenomics data pending
+    ILLUSTRATIVE DATA — REAL TOKENOMICS DATA PENDING
   </span>
 );
 
 function IncineratorSlide() {
-  const [scenario, setScenario] = useState(0);
   return (
-    <div className="space-y-7">
-      <FlowChips
-        steps={[
-          "User",
-          "AI Access",
-          "Stablecoin Payment",
-          "DIGI Required",
-          "Incinerator",
-          "DIGI Removed",
-        ]}
-        testId="incinerator-flow"
-      />
-      <div>
-        <div className="eyebrow">AI access tiers</div>
-        <div className="mt-3 flex flex-wrap items-center gap-2">
-          {AI_ACCESS_TIERS.map((tier) => (
-            <span
-              key={tier}
-              className="rounded-full border border-primary/25 px-4 py-1.5 font-mono text-xs text-foreground/85"
-            >
-              {tier}/mo
-            </span>
-          ))}
-          <span className="ml-1 text-xs text-muted-foreground">paid in USDC / USDT</span>
+    <div className={STANDARD_SLIDE}>
+      <div className={`${STANDARD_VISUAL} flex items-center justify-center`}>
+        <img
+          src={burner.url}
+          alt="DIGI incinerator robot burning supply"
+          loading="lazy"
+          className="h-auto max-h-155 w-full object-contain"
+        />
+      </div>
+      <div className="group min-w-0 flex-1 space-y-8 transition-transform duration-300 hover:-translate-y-0.5">
+        <div>
+          <div className="eyebrow text-primary">01 // THE INCINERATOR</div>
+          <h3 className="mt-4 max-w-3xl font-display text-4xl font-bold leading-[1.02] tracking-tight text-white lg:text-5xl">
+            Defeating Inflation with Active AI Tokenomics.
+          </h3>
+        </div>
+        <div className="space-y-8 text-base leading-relaxed text-slate-300 lg:text-lg">
+          <div>
+            <h4 className="mb-3 text-lg font-bold text-primary transition-colors duration-300 group-hover:text-primary/90 lg:text-xl">
+              The Supply Balancer
+            </h4>
+            <p>
+              The Incinerator holds 15% of the total supply, with the potential to reach 30% through
+              governance voting or team burns to offset vesting cliffs. Before any new supply enters
+              circulation, the Incinerator autonomously burns an equivalent amount. This creates a
+              deflationary gravity that prevents market dilution and stabilizes the token&apos;s
+              value.
+            </p>
+          </div>
+          <div>
+            <h4 className="mb-3 text-lg font-bold text-primary transition-colors duration-300 group-hover:text-primary/90 lg:text-xl">
+              Real-Utility Burns (AI &amp; Gaming)
+            </h4>
+            <p>
+              Every user interaction drives permanent burns. When users purchase DIGI AI MCP
+              credits, they effectively execute an OTC-style buy from the Incinerator Treasury; the
+              project receives stablecoins, and the corresponding DIGI is permanently retired.
+              Similarly, accessing the Digi Digital World Game requires buying DIGI from the
+              orderbook, which the Incinerator immediately burns.
+            </p>
+          </div>
+          <div>
+            <h4 className="mb-3 text-lg font-bold text-primary transition-colors duration-300 group-hover:text-primary/90 lg:text-xl">
+              Deflationary by Design
+            </h4>
+            <p>
+              Most token projects keep increasing circulating supply long after usability fades.
+              DIGI is designed differently: it acts as a balancer for dynamic token circulation,
+              responding to network activity across both centralized and decentralized environments.
+              By programmatically removing supply based on real network usage, we establish a
+              deflationary gravity that protects long-term holders.
+            </p>
+          </div>
+        </div>
+        <Badge />
+      </div>
+    </div>
+  );
+}
+
+const BREAK_YEARS = [
+  "2020",
+  "2021",
+  "2022",
+  "2023",
+  "2024",
+  "2025",
+  "2026",
+  "2027",
+  "2028",
+  "2029",
+  "2030",
+];
+
+const MODEL_TEXT_COLUMN =
+  "group min-w-0 flex-1 space-y-8 transition-transform duration-300 hover:-translate-y-0.5";
+const MODEL_TEXT = "space-y-8 text-base leading-relaxed text-slate-300 lg:text-lg";
+const MODEL_HEADING =
+  "mt-4 max-w-3xl font-display text-4xl font-bold leading-[1.02] tracking-tight text-white lg:text-5xl";
+const MODEL_SECTION_TITLE =
+  "mb-3 text-lg font-bold text-primary transition-colors duration-300 group-hover:text-primary/90 lg:text-xl";
+
+const STANDARD_SLIDE = "flex h-full flex-col gap-10 md:flex-row md:items-center md:gap-12";
+const STANDARD_VISUAL = "w-full shrink-0 md:w-[44%]";
+
+function EcosystemBurnDiagram() {
+  return (
+    <div
+      className="flex w-full flex-col items-center justify-center gap-5"
+      data-testid="ecosystem-burn-diagram"
+    >
+      <div className="flex w-full items-center justify-between gap-2">
+        <div className="flex w-[31%] flex-col items-center gap-3 text-center">
+          <div className="flex h-20 w-20 items-center justify-center rounded-full border border-primary/30 bg-primary/5 text-primary">
+            <Gamepad2 className="h-9 w-9" aria-hidden />
+          </div>
+          <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-foreground/75">
+            Gaming Burns
+          </span>
+        </div>
+        <span className="text-xl text-primary/70" aria-hidden>
+          →
+        </span>
+        <div className="flex w-[31%] flex-col items-center gap-3 text-center">
+          <div className="flex h-20 w-20 items-center justify-center rounded-full border border-primary/30 bg-primary/5 text-primary">
+            <Bot className="h-9 w-9" aria-hidden />
+          </div>
+          <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-foreground/75">
+            AI Credits Burns
+          </span>
+        </div>
+        <span className="text-xl text-primary/70" aria-hidden>
+          →
+        </span>
+        <div className="flex w-[31%] flex-col items-center gap-3 text-center">
+          <div className="flex h-20 w-20 items-center justify-center rounded-full border border-primary/30 bg-primary/5 text-primary">
+            <Flame className="h-9 w-9" aria-hidden />
+          </div>
+          <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-foreground/75">
+            Permanent Supply Reduction
+          </span>
         </div>
       </div>
-      <div
-        className="rounded-xl border border-hairline bg-card/40 p-6"
-        data-testid="incinerator-example"
-      >
-        <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <span className="font-display text-3xl tracking-tight text-primary">
-            {INCINERATOR_EXAMPLE.accessUsd}
-          </span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-foreground/50">
-            access level stays fixed in dollars
-          </span>
-        </div>
-        <div className="mt-5 flex flex-wrap gap-2">
-          {INCINERATOR_EXAMPLE.scenarios.map((item, index) => (
-            <button
-              key={item.digiPrice}
-              type="button"
-              data-testid={`incinerator-price-btn-${index}`}
-              onClick={() => setScenario(index)}
-              className={`rounded-full border px-4 py-2 font-mono text-xs transition-transform hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${scenario === index ? "border-primary bg-primary/10 text-primary" : "border-hairline text-foreground/70 hover:border-primary/50"}`}
-            >
-              If DIGI = {item.digiPrice}
-            </button>
-          ))}
-        </div>
-        <div
-          className="mt-5 font-display text-[clamp(2rem,4vw,3rem)] leading-none tracking-tight"
-          data-testid="incinerator-digi-required"
-        >
-          {INCINERATOR_EXAMPLE.scenarios[scenario].digiRequired}
-          <span className="ml-2 text-base text-muted-foreground">required</span>
-        </div>
-        <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-          The DIGI amount required changes with DIGI&apos;s price — the dollar-denominated access
-          level stays fixed. DIGI consumed / burned. {INCINATOR_EXAMPLE.accessNote}
-        </p>
+      <div className="w-full border-t border-dashed border-primary/30 pt-5 text-center font-mono text-[10px] uppercase tracking-[0.16em] text-primary/70">
+        Users → Buy DIGI → Incinerator Treasury → DIGI Burned
       </div>
     </div>
   );
@@ -158,47 +230,156 @@ function IncineratorSlide() {
 function BreakSlide() {
   const s = ILLUSTRATIVE_BREAK_SERIES;
   return (
-    <div className="space-y-6">
-      <MiniChart
-        testId="break-chart"
-        series={[
-          { label: "Circulating supply", color: "var(--destructive)", data: s.circulatingSupply },
-          { label: "Demand", color: "var(--chart-2)", data: s.demand, dashed: true },
-          { label: "Trading volume", color: "var(--chart-3)", data: s.tradingVolume, dashed: true },
-          { label: "Adoption", color: "var(--chart-4)", data: s.adoption, dashed: true },
-        ]}
-      />
-      <p className="text-sm leading-relaxed text-foreground/85">
-        Continuously increasing circulating supply while ecosystem demand and utility weaken can
-        create economic pressure.
-      </p>
-      <p className="text-xs leading-relaxed text-muted-foreground">
-        This is a common failure pattern in token design — not the fate of every token.
-      </p>
-      <Badge />
+    <div className={STANDARD_SLIDE}>
+      <div className={STANDARD_VISUAL}>
+        <MiniChart
+          testId="break-chart"
+          xLabels={BREAK_YEARS}
+          series={[
+            { label: "Circulating Supply", color: "#ef4444", data: s.circulatingSupply },
+            { label: "Market Demand", color: "#60a5fa", data: s.demand },
+            { label: "Trading Volume", color: "#f97316", data: s.tradingVolume },
+            { label: "Ecosystem Utility", color: "#84cc16", data: s.adoption },
+          ]}
+        />
+        <a
+          href="#faq"
+          className="mt-6 inline-flex font-mono text-xs uppercase tracking-[0.16em] text-primary transition-colors hover:text-primary/75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+        >
+          Read more{" "}
+          <span aria-hidden className="ml-2 text-base leading-none">
+            →
+          </span>
+        </a>
+        <div className="mt-6">
+          <Badge />
+        </div>
+      </div>
+      <div className={MODEL_TEXT_COLUMN}>
+        <div>
+          <div className="eyebrow text-primary">02 // WHY TOKENOMICS FAIL</div>
+          <h3 className={MODEL_HEADING}>Trapped in the 4-Year Cycle.</h3>
+        </div>
+        <div className={MODEL_TEXT}>
+          <div>
+            <h4 className={MODEL_SECTION_TITLE}>The Problem</h4>
+            <p>
+              Most tokenomics follow a linear supply unlock schedule (vesting, cliffs, team
+              allocations) while utility, demand, and trading volume decay cyclically. This creates
+              a fatal divergence: maximum dilution coincides with minimum market demand.
+            </p>
+          </div>
+          <div>
+            <h4 className={MODEL_SECTION_TITLE}>The Solution</h4>
+            <p>
+              The Digi Incinerator neutralizes this by burning supply in real-time, counterbalancing
+              vesting schedules and protecting against the 4-year cycle collapse that destroys 99%
+              of token projects.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
 function DigiModelSlide() {
-  const s = ILLUSTRATIVE_DIGI_MODEL_SERIES;
+  const years = [
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025",
+    "2026",
+    "2027",
+    "2028",
+    "2029",
+    "2030",
+  ];
   return (
-    <div className="space-y-6">
-      <FlowChips
-        steps={["AI Usage", "DIGI Required", "DIGI Burned", "DIGI Removed From Circulation"]}
-        testId="digi-model-flow"
-      />
-      <MiniChart
-        testId="digi-model-chart"
-        series={[
-          { label: "Utility consumption", color: "var(--primary)", data: s.utilityConsumption },
-          { label: "DIGI removed", color: "var(--chart-2)", data: s.tokensRemoved, dashed: true },
-        ]}
-      />
-      <div className="rounded-lg border border-primary/25 bg-primary/5 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.18em] text-primary">
-        Designed to align token consumption with ecosystem utility
+    <div className={STANDARD_SLIDE}>
+      <div className={STANDARD_VISUAL}>
+        <MiniChart
+          testId="digi-model-chart"
+          xLabels={years}
+          series={[
+            {
+              label: "Scheduled Supply Unlocks",
+              color: "#ef4444",
+              data: [20, 20, 38, 38, 56, 56, 74, 74, 92, 92, 100],
+            },
+            {
+              label: "Incinerator Burns",
+              color: "#84cc16",
+              data: [20, 8, 30, 8, 48, 8, 66, 8, 84, 8, 8],
+            },
+            {
+              label: "Net Circulating Supply",
+              color: "#60a5fa",
+              data: [42, 41, 41, 40, 40, 39, 39, 38, 38, 37, 36],
+            },
+          ]}
+        />
+        <div className="mt-6">
+          <Badge />
+        </div>
       </div>
-      <Badge />
+      <div className={MODEL_TEXT_COLUMN}>
+        <div>
+          <div className="eyebrow text-primary">03 // THE DIGI MODEL</div>
+          <h3 className={MODEL_HEADING}>Proactive Supply Defense.</h3>
+        </div>
+        <div className={MODEL_TEXT}>
+          <p>
+            The Incinerator operates preemptively. Before any scheduled unlock, vesting event, or
+            supply increase, it burns an equivalent amount—neutralizing dilution before it impacts
+            the market.
+          </p>
+          <p>
+            While other projects experience supply shocks, DIGI&apos;s circulating supply remains
+            stable or contracts. This predictive burn mechanism ensures the token economy is always
+            moving toward scarcity, never inflation.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function EcosystemSlide() {
+  return (
+    <div className={STANDARD_SLIDE}>
+      <div className={`${STANDARD_VISUAL} flex items-center justify-center`}>
+        <EcosystemBurnDiagram />
+      </div>
+      <div className={MODEL_TEXT_COLUMN}>
+        <div>
+          <div className="eyebrow text-primary">04 // LONG-TERM DEFLATIONARY SUPPLY</div>
+          <h3 className={MODEL_HEADING}>Deflationary Through Gaming &amp; AI Usage.</h3>
+        </div>
+        <div className={MODEL_TEXT}>
+          <p>
+            The Digi Economy World transforms DIGI into an arcade token. Users must purchase DIGI
+            from the orderbook to explore virtual worlds, hunt treasures (real gold, stablecoins,
+            Bitcoin), and access premium gameplay. Every entry fee burns DIGI immediately—turning
+            entertainment into permanent supply reduction.
+          </p>
+          <p>
+            Businesses and users paying for DigiPaga AI automation, premium invoicing, reduced fees,
+            or advanced payment tooling purchase DIGI directly from the Incinerator Treasury. These
+            AI credits aren&apos;t just consumed—they permanently burn supply. Every premium feature
+            activation contracts the total supply.
+          </p>
+          <p>
+            As ecosystem adoption grows, so does the burn rate. Gaming, AI credits, marketplace
+            access, and governance participation all feed the incinerator. This creates a
+            deflationary flywheel: more utility → more burns → increased scarcity → higher value →
+            more utility.
+          </p>
+        </div>
+        <Badge />
+      </div>
     </div>
   );
 }
@@ -254,17 +435,9 @@ const slides = [
   {
     id: "roadmap",
     number: "04",
-    title: "Ecosystem Expansion",
-    description: "Future utility integrations and cross-chain scalability.",
-    body: () => (
-      <div className="flex min-h-[280px] flex-col items-start justify-center rounded-xl border border-hairline bg-card/30 p-6 text-sm leading-relaxed text-slate-300">
-        <span className="mb-4 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-primary">
-          Coming Q2 2027
-        </span>
-        New integrations are designed to extend the burn loop across products, networks, and
-        agent-to-agent commerce.
-      </div>
-    ),
+    title: "Long-Term Deflationary Supply",
+    description: "Gaming and AI utility feed the permanent burn loop.",
+    body: EcosystemSlide,
     visual: "roadmap",
   },
 ];
@@ -357,7 +530,7 @@ export function AgentNomicsSlider() {
   return (
     <div className="relative mx-auto w-full max-w-7xl">
       <div
-        className="relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/50 p-8 backdrop-blur md:p-12"
+        className="relative h-300 overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/50 p-8 backdrop-blur md:h-190 md:p-12"
         onTouchStart={(event) => {
           touchStart.current = event.touches[0].clientX;
         }}
@@ -381,29 +554,9 @@ export function AgentNomicsSlider() {
             role="tabpanel"
             aria-live="polite"
             aria-label={`${slide.number} ${slide.title}`}
-            className="grid min-h-[600px] grid-cols-1 gap-10 lg:grid-cols-5 lg:gap-14"
+            className="scrollbar-none h-full overflow-y-auto pb-8 [&::-webkit-scrollbar]:hidden"
           >
-            <div className="flex flex-col justify-center lg:col-span-3">
-              <motion.div
-                initial={reducedMotion ? false : { opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: reducedMotion ? 0 : 0.1 }}
-              >
-                <div className="mb-4 font-mono text-sm text-primary">{slide.number}</div>
-                <h3 className="text-3xl font-bold tracking-tight text-primary md:text-4xl">
-                  {slide.title}
-                </h3>
-                <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-300">
-                  {slide.description}
-                </p>
-              </motion.div>
-              <div className="mt-8">
-                <slide.body />
-              </div>
-            </div>
-            <div className="flex items-center lg:col-span-2">
-              <Visual type={slide.visual} />
-            </div>
+            <slide.body />
           </motion.div>
         </AnimatePresence>
         <button

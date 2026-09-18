@@ -344,10 +344,10 @@ export const INCINERATOR_EXAMPLE = {
 // TEMPORARY ILLUSTRATIVE CHART DATA — replace these arrays with real
 // tokenomics series when available. Values are relative (0–100).
 export const ILLUSTRATIVE_BREAK_SERIES = {
-  circulatingSupply: [18, 30, 42, 55, 68, 82, 95],
-  demand: [72, 66, 57, 47, 37, 29, 22],
-  tradingVolume: [62, 58, 50, 41, 32, 25, 19],
-  adoption: [56, 53, 46, 38, 30, 23, 17],
+  circulatingSupply: [18, 27, 36, 45, 54, 63, 72, 81, 90, 99, 108],
+  demand: [56, 86, 38, 52, 78, 73, 39, 33, 68, 31, 24],
+  tradingVolume: [48, 91, 30, 60, 84, 66, 31, 42, 76, 25, 19],
+  adoption: [43, 63, 37, 48, 67, 61, 43, 39, 57, 36, 29],
 };
 
 export const ILLUSTRATIVE_DIGI_MODEL_SERIES = {

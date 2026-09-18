@@ -55,10 +55,7 @@ export function Summary() {
               "Digi Agent",
               " serves as the AI-guided avatar layer across both platforms, helping users navigate payments, stablecoins, wallets, and market tools with greater clarity.",
             ],
-            [
-              "DIGI ROBOTICS",
-              " is an open marketplace for robotics education and training. Companies and builders can publish vetted video and voice tutorials, customized knowledge modules, and training content. A platform where anyone can educate robots to earn — democratizing access to robotics expertise.",
-            ],
+            ["DIGI ROBOTICS", " is an open marketplace for robotics More details, to be Realease."],
           ].map(([b, rest]) => (
             <div
               key={b}
